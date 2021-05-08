@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.News.newsFrag">
 
     <TextView
@@ -13,6 +14,15 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:text="@string/News"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/text_dashboard2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="this is news fragment"
         android:textSize="20sp"/>
         
 </LinearLayout>
