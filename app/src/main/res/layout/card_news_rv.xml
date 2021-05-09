@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/maintitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:autoSizeMaxTextSize="17dp"
+        android:autoSizeMinTextSize="15dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/merriweather_black"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:baselineAligned="false"
+        android:text="@string/sample_title" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/maintitle"
+        android:background="#404040"
+        android:backgroundTint="#404040"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cricket_testimage" />
+
+            <TextView
+                android:baselineAligned="false"
+                android:id="@+id/secondarytitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/poster"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:autoSizeMaxTextSize="17dp"
+                android:autoSizeMinTextSize="15dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/merriweather_black"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="@string/sample_title" />
+
+            <TextView
+                android:baselineAligned="false"
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/secondarytitle"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:autoSizeMaxTextSize="17dp"
+                android:autoSizeMinTextSize="15dp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/merriweather_light"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="2 hour ago"
+                android:textAlignment="textEnd" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

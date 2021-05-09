@@ -19,7 +19,8 @@
                     android:background="#191919"
                     app:tabMode="auto"
                     android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@color/purple_200"
+                    app:tabIndicator="@drawable/gradient_tabindicator"
+
                     app:tabIndicatorFullWidth="false"
                     app:tabIndicatorHeight="3dp"
                     app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
@@ -66,6 +67,7 @@
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
