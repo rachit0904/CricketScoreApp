@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.NewsDetails"
-    android:scrollbars="none"
-
-    tools:deviceIds="wear">
+    android:scrollbars="none">
 
 
     <RelativeLayout
@@ -15,6 +13,7 @@
 
         <LinearLayout
             android:id="@+id/linear1"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -24,7 +23,7 @@
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="8"
                 android:padding="5dp"
                 android:src="@drawable/ic_outline_close_24" />
 
@@ -37,7 +36,7 @@
                 android:id="@+id/share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="30"
                 android:padding="5dp"
                 android:src="@drawable/ic_outline_share_24" />
 
@@ -55,9 +54,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="17dp"
-                android:autoSizeMinTextSize="15dp"
-                android:autoSizeTextType="uniform"
+               android:textSize="16sp"
                 android:fontFamily="@font/merriweather_bold"
                 android:maxLines="2"
                 android:layout_margin="10dp"
@@ -68,6 +65,8 @@
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_below="@id/title"
                 android:scaleType="centerCrop"
                 android:src="@drawable/cricket_testimage" />
@@ -78,10 +77,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/poster"
-                android:layout_margin="10dp"
-                android:autoSizeMaxTextSize="17dp"
-                android:autoSizeMinTextSize="15dp"
-                android:autoSizeTextType="uniform"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:maxLength="600"
+                android:layout_marginRight="10dp"
+                android:lineSpacingExtra="6sp"
+                android:textSize="14sp"
                 android:fontFamily="@font/merriweather_bold"
                 android:padding="10dp"
                 android:text="@string/sample_description" />

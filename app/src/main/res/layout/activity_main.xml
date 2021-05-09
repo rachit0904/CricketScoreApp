@@ -14,13 +14,13 @@
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
+                    android:elevation="@dimen/cardview_compat_inset_shadow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#191919"
                     app:tabMode="auto"
                     android:layout_gravity="bottom"
-                    app:tabIndicator="@drawable/gradient_tabindicator"
-
+                    app:tabIndicatorColor="@color/purple_200"
                     app:tabIndicatorFullWidth="false"
                     app:tabIndicatorHeight="3dp"
                     app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"

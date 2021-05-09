@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:padding="10dp">
 
     <TextView
@@ -11,11 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:autoSizeMaxTextSize="17dp"
-        android:autoSizeMinTextSize="15dp"
-        android:autoSizeTextType="uniform"
         android:fontFamily="@font/merriweather_black"
         android:maxLines="1"
+        android:textSize="16sp"
         android:padding="5dp"
         android:baselineAligned="false"
         android:text="@string/sample_title" />
@@ -25,11 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/maintitle"
-        android:background="#404040"
-        android:backgroundTint="#404040"
+        android:backgroundTint="#323232"
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -46,12 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/poster"
+                android:textSize="14sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:autoSizeMaxTextSize="17dp"
-                android:autoSizeMinTextSize="15dp"
-                android:autoSizeTextType="uniform"
+                android:layout_marginBottom="0dp"
                 android:fontFamily="@font/merriweather_black"
                 android:maxLines="2"
                 android:padding="5dp"
@@ -63,17 +59,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/secondarytitle"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:autoSizeMaxTextSize="17dp"
-                android:autoSizeMinTextSize="15dp"
-                android:autoSizeTextType="uniform"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/merriweather_light"
                 android:maxLines="2"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:gravity="right"
                 android:padding="5dp"
-                android:text="2 hour ago"
-                android:textAlignment="textEnd" />
+                android:text="2 hour ago" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
