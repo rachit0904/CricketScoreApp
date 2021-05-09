@@ -19,7 +19,8 @@
                     android:background="#191919"
                     app:tabMode="auto"
                     android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@color/purple_200"
+                    app:tabIndicator="@drawable/gradient_tabindicator"
+
                     app:tabIndicatorFullWidth="false"
                     app:tabIndicatorHeight="3dp"
                     app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"

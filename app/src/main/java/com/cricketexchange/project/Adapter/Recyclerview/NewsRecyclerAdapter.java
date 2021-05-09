@@ -17,6 +17,7 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cricketexchange.project.Activity.NewsDetails;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.formats.NativeAd;
@@ -132,13 +133,15 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case MENU_ITEM_VIEW_TYPE:
                 MenuItemViewHolder menuItemHolder = (MenuItemViewHolder) holder;
                 NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position);//content holder
-                if (menuItem!=null){
+                if (menuItem != null) {
                     (menuItemHolder).maintitle.setText(menuItem.getMaintitle());
                     (menuItemHolder).secondarytitle.setText(menuItem.getSecondarytitle());
                     Picasso.get().load(mContext.getString(R.string.sampleimageurl)).into((menuItemHolder).poster);
                     (menuItemHolder).time.setText(menuItem.getTime());
                     menuItemHolder.card.setOnClickListener(view -> {
-                        Toast.makeText(mContext, "item clicked : " + position, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, NewsDetails.class);
+                        intent.putExtra("id", menuItem.getId());
+                        mContext.startActivity(intent);
                     });
                 }
 

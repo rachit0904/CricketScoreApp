@@ -2,43 +2,51 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cricketexchange.project">
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CricketExchange"
-        android:usesCleartextTraffic="true"
-        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="true">
 
-        >
-        <activity android:name="com.cricketexchange.project.Activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".Activity.NewsDetails"
+            android:label="@string/title_activity_news_details">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
+        <activity
+            android:name=".Activity.MainActivity"
+            android:hardwareAccelerated="true">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
 
-
-        <!-- For activities that use ads, hardwareAcceleration should be true.
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+        </activity>
+        <!--
+        For activities that use ads, hardwareAcceleration should be true.
         <activity android:hardwareAccelerated="true" />
        For activities that don't use ads, hardwareAcceleration can be false.
-        <activity android:hardwareAccelerated="false" /> -->
-
-
-        <!--        admob meta starts      -->
+        <activity android:hardwareAccelerated="false" />
+        -->
+        <!-- admob meta starts -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id" />
-        <!--        admob meta ends      -->
-
-        <!--        Newtwork Config-->
+            android:value="@string/admob_app_id" /> <!-- admob meta ends -->
+        <!-- Newtwork Config -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-
 
 </manifest>

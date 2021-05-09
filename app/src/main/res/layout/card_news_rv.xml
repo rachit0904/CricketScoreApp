@@ -17,6 +17,7 @@
         android:fontFamily="@font/merriweather_black"
         android:maxLines="1"
         android:padding="5dp"
+        android:baselineAligned="false"
         android:text="@string/sample_title" />
 
     <androidx.cardview.widget.CardView
@@ -40,6 +41,7 @@
                 android:src="@drawable/cricket_testimage" />
 
             <TextView
+                android:baselineAligned="false"
                 android:id="@+id/secondarytitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
                 android:text="@string/sample_title" />
 
             <TextView
+                android:baselineAligned="false"
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
