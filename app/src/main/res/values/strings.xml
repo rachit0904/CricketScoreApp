@@ -6,4 +6,8 @@
     <string name="Schedule">Schedule</string>
     <string name="More">more</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_nativ_ads_id1">	ca-app-pub-3940256099942544/2247696110</string>
+    <string name="sample_title">Ishan Kishan &amp; Mumbai Indians: A saga that might see epilogue soon</string>
+    <string name="sampleimageurl">https://www.learningcontainer.com/wp-content/uploads/2020/07/Sample-JPEG-Image-File-Download-scaled.jpg</string>
 </resources>

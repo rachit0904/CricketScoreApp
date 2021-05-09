@@ -8,7 +8,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CricketExchange">
+        android:theme="@style/Theme.CricketExchange"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+
+        >
         <activity android:name="com.cricketexchange.project.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +20,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <!-- For activities that use ads, hardwareAcceleration should be true.
+        <activity android:hardwareAccelerated="true" />
+       For activities that don't use ads, hardwareAcceleration can be false.
+        <activity android:hardwareAccelerated="false" /> -->
+
+
+        <!--        admob meta starts      -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+        <!--        admob meta ends      -->
+
+        <!--        Newtwork Config-->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+
 
 </manifest>
