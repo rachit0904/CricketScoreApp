@@ -29,6 +29,7 @@ public class newsFrag extends Fragment {
     public static final int NUMBER_OF_ADS = 5;
     public static final int ADS_PER_POST = 4;
 
+
     // The AdLoader used to load ads.
     private AdLoader adLoader;
 
