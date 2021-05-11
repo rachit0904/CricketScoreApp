@@ -1,24 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:backgroundTint="#fff"
-    android:background="#fff"
     android:layout_height="match_parent"
     tools:context=".ui.more.moreFrag">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_gravity="center"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="#000"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:text="@string/More"
-        android:textSize="20sp" />
+        android:background="#131313"
+        android:elevation="5dp"
+        android:padding="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iccranking_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/iccranking_lv"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iccranking_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="Settings"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/setting_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title1"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/setting_lv"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="Visit"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/visit_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title2"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/visit_lv"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/visit_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="Support"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/support_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title3"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/support_lv"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/support_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="About"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/about_cv"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title4"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/about_lv"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
