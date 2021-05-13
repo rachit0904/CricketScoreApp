@@ -10,6 +10,6 @@
     <color name="winDispColor">#7BCC35</color>
     <color name="winTeamName">#C7CC35</color>
     <color name="live">#FF4747</color>
-
+    <color name="scoreRowBckgrnd">#323232</color>
 
 </resources>

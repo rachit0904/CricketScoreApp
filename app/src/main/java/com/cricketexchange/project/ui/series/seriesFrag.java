@@ -22,7 +22,6 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
 public class seriesFrag extends Fragment implements View.OnClickListener {
-    MainActivity m=new MainActivity();
     RecyclerView seriesRv;
     Button seeAllBtn;
     RecyclerView.Adapter adapter;
