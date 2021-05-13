@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cricketexchange.project">
 
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,20 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CricketExchange"
         android:usesCleartextTraffic="true">
-
-
+        <activity android:name=".Activity.SeriesDetail" />
         <activity
             android:name=".Activity.NewsDetails"
-            android:label="@string/title_activity_news_details">
-        </activity>
+            android:label="@string/title_activity_news_details" />
         <activity
             android:name=".Activity.MainActivity"
             android:hardwareAccelerated="true">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!--
         For activities that use ads, hardwareAcceleration should be true.

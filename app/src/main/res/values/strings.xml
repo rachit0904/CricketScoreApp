@@ -83,4 +83,9 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="latest_news">Latest News</string>
+    <string name="seriesname">Indian Premiere League 2021</string>
+    <string name="matchDate">12 May, Wednesday</string>
+    <string name="winTeamName">DC Won</string>
+    <string name="live">Live</string>
 </resources>

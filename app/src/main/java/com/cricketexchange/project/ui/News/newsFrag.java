@@ -65,7 +65,7 @@ public class newsFrag extends Fragment {
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
-        loadNativeAds();
+//        loadNativeAds();
         addMenuItemsFromJson();
         return view;
     }
@@ -90,37 +90,37 @@ public class newsFrag extends Fragment {
 
     }
 
-    private void loadNativeAds() {
-
-        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), getString(R.string.admob_nativ_ads_id1));
-        adLoader = builder.forUnifiedNativeAd(
-                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-                    @Override
-                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                        // A native ad loaded successfully, check if the ad loader has finished loading
-                        // and if so, insert the ads into the list.
-                        mNativeAds.add(unifiedNativeAd);
-                        if (!adLoader.isLoading()) {
-                            insertAdsInMenuItems();
-                        }
-                    }
-                }).withAdListener(
-                new AdListener() {
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
-                        // A native ad failed to load, check if the ad loader has finished loading
-                        // and if so, insert the ads into the list.
-                        Log.e("MainActivity", "The previous native ad failed to load. Attempting to"
-                                + " load another.");
-                        if (!adLoader.isLoading()) {
-                            insertAdsInMenuItems();
-                        }
-                    }
-                }).build();
-
-        // Load the Native ads.
-        adLoader.loadAds(new AdRequest.Builder().build(), NUMBER_OF_ADS);
-    }
+//    private void loadNativeAds() {
+//
+//        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), getString(R.string.admob_nativ_ads_id1));
+//        adLoader = builder.forUnifiedNativeAd(
+//                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+//                    @Override
+//                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+//                        // A native ad loaded successfully, check if the ad loader has finished loading
+//                        // and if so, insert the ads into the list.
+//                        mNativeAds.add(unifiedNativeAd);
+//                        if (!adLoader.isLoading()) {
+//                            insertAdsInMenuItems();
+//                        }
+//                    }
+//                }).withAdListener(
+//                new AdListener() {
+//                    @Override
+//                    public void onAdFailedToLoad(int errorCode) {
+//                        // A native ad failed to load, check if the ad loader has finished loading
+//                        // and if so, insert the ads into the list.
+//                        Log.e("MainActivity", "The previous native ad failed to load. Attempting to"
+//                                + " load another.");
+//                        if (!adLoader.isLoading()) {
+//                            insertAdsInMenuItems();
+//                        }
+//                    }
+//                }).build();
+//
+//        // Load the Native ads.
+//        adLoader.loadAds(new AdRequest.Builder().build(), NUMBER_OF_ADS);
+//    }
 
 
     private void insertAdsInMenuItems() {

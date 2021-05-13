@@ -1,6 +1,7 @@
 package com.cricketexchange.project.Models;
 
 public class NewsModel {
+
     public NewsModel() {
     }
 
