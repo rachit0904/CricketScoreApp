@@ -1,6 +1,5 @@
 package com.cricketexchange.project.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -16,18 +15,16 @@ import java.util.ArrayList;
 
 public class NewsDetails extends AppCompatActivity {
 
-    private ImageView close, share;
+    private ImageView close;
     RecyclerView mRecyclerView;
-    ArrayList<NewsModel> newslist = new ArrayList<>();
+    ArrayList<NewsModel> newsList = new ArrayList<>();
     NewsNormalAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
-        share = findViewById(R.id.share);
         close = findViewById(R.id.close);
-        share.setOnClickListener(view -> share());
         close.setOnClickListener(view -> finish());
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         // Use this setting to improve performance if you know that changes
@@ -39,7 +36,7 @@ public class NewsDetails extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter.
-        adapter = new NewsNormalAdapter(this, newslist);
+        adapter = new NewsNormalAdapter(this, newsList);
         mRecyclerView.setAdapter(adapter);
 
         load();
@@ -55,27 +52,11 @@ public class NewsDetails extends AppCompatActivity {
 //
 //            }
             NewsModel newsModel = new NewsModel("" + i, this.getString(R.string.sample_title), this.getString(R.string.sample_title), "2 hours ago", "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png");
-            newslist.add(newsModel);
+            newsList.add(newsModel);
 
 
         }
         adapter.notifyDataSetChanged();
     }
-
-
-    private void share() {
-        /*Create an ACTION_SEND Intent*/
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        /*This will be the actual content you wish you share.*/
-        String shareBody = "Here is the share content body";
-        /*The type of the content is text, obviously.*/
-        intent.setType("text/plain");
-        /*Applying information Subject and Body.*/
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Sharing the news");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        /*Fire!*/
-        startActivity(Intent.createChooser(intent, "Sharing the news"));
-    }
-
 
 }

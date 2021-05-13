@@ -32,17 +32,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.google.android.gms.ads.formats.MediaView;
-import com.google.android.gms.ads.formats.NativeAd.Image;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 
-/** Base class for a template view. * */
 public class TemplateView extends FrameLayout {
 
   private int templateType;
   private NativeTemplateStyle styles;
   private UnifiedNativeAd nativeAd;
-  private UnifiedNativeAdView nativeAdView;
+  UnifiedNativeAd nativeAdView;
 
   private TextView primaryView;
   private TextView secondaryView;
@@ -81,7 +78,7 @@ public class TemplateView extends FrameLayout {
     this.applyStyles();
   }
 
-  public UnifiedNativeAdView getNativeAdView() {
+  public UnifiedNativeAd getNativeAdView() {
     return nativeAdView;
   }
 
@@ -231,7 +228,6 @@ public class TemplateView extends FrameLayout {
   @Override
   public void onFinishInflate() {
     super.onFinishInflate();
-    nativeAdView = (UnifiedNativeAdView) findViewById(R.id.native_ad_view);
     primaryView = (TextView) findViewById(R.id.primary);
     secondaryView = (TextView) findViewById(R.id.secondary);
     tertiaryView = (TextView) findViewById(R.id.body);

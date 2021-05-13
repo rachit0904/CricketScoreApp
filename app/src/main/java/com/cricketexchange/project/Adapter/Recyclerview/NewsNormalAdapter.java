@@ -69,7 +69,7 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
         CardView card;
         public ViewHolder(@NonNull View v) {
             super(v);
-            maintitle = v.findViewById(R.id.maintitle);
+            maintitle = v.findViewById(R.id.mainTitle);
             secondarytitle = v.findViewById(R.id.secondarytitle);
             time = v.findViewById(R.id.time);
             poster = v.findViewById(R.id.poster);
