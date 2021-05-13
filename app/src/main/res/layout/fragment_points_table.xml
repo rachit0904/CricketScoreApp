@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="@dimen/cardview_default_elevation"
         android:backgroundTint="#232323"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -30,7 +30,7 @@
                    android:layout_height="wrap_content"/>
                <TextView
                    android:text="Team Name"
-                   android:layout_marginStart="15dp"
+                   android:layout_marginStart="20dp"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"/>
                <TextView
@@ -65,162 +65,13 @@
                    android:layout_height="wrap_content"/>
            </TableRow>
         </TableLayout>
-        <TableLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/scoresRowRv"
+            tools:itemCount="1"
+            android:overScrollMode="never"
+            tools:listitem="@layout/scorerow_rv_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow
-                android:background="#323232"
-                android:padding="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-                <TextView
-                    android:layout_marginStart="10dp"
-                    android:text="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:layout_marginStart="25dp"
-                    android:src="@drawable/trophyicon"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"/>
-                <TextView
-                    android:text="RR"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="36dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="19dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="25dp"
-                    android:text="9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="+0.0927"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:padding="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-                <TextView
-                    android:layout_marginStart="10dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:layout_marginStart="25dp"
-                    android:src="@drawable/trophyicon"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"/>
-                <TextView
-                    android:text="CSK"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="36dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="19dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="25dp"
-                    android:text="9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="+0.0927"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-            <TableRow
-                android:background="#323232"
-                android:padding="5dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-                <TextView
-                    android:layout_marginStart="10dp"
-                    android:text="3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:layout_marginStart="25dp"
-                    android:src="@drawable/trophyicon"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"/>
-                <TextView
-                    android:text="DC"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="36dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="19dp"
-                    android:text="0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="25dp"
-                    android:text="9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginStart="17dp"
-                    android:text="+0.0927"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-        </TableLayout>
+            android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
