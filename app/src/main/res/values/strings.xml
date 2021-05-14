@@ -111,4 +111,8 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     <string name="twitter">Twitter</string>
     <string name="instagram">Instagram</string>
     <string name="latest_news">Latest News</string>
+    <string name="title_activity_about">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_notification">FullscreenActivity</string>
 </resources>

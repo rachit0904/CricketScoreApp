@@ -5,34 +5,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:src="@drawable/person_25" />
-
         <TextView
-            android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="60"
+            android:layout_below="@+id/settings"
+            android:layout_margin="10dp"
+            android:layout_weight="80"
             android:fontFamily="@font/merriweather_bold"
-            android:text="ICC Men's Ranking"
-            android:textSize="15dp" />
+            android:padding="10dp"
+            android:text="Change Language"
+            android:textSize="17sp" />
 
         <ImageView
-            android:id="@+id/next"
+            android:id="@+id/close"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:src="@drawable/ic_outline_navigate_next_24" />
+            android:src="@drawable/ic_outline_close_24" />
+
     </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -14,7 +14,7 @@ import com.cricketexchange.project.R;
 
 import java.util.ArrayList;
 
-public class NewsDetails extends AppCompatActivity {
+public class NewsDetailsActivity extends AppCompatActivity {
 
     private ImageView close, share;
     RecyclerView mRecyclerView;

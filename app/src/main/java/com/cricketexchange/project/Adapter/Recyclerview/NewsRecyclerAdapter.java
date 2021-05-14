@@ -29,7 +29,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cricketexchange.project.Activity.NewsDetails;
+import com.cricketexchange.project.Activity.NewsDetailsActivity;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.formats.NativeAd;
@@ -139,7 +139,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Picasso.get().load(mContext.getString(R.string.sampleimageurl)).into((menuItemHolder).poster);
                     (menuItemHolder).time.setText(menuItem.getTime());
                     menuItemHolder.card.setOnClickListener(view -> {
-                        Intent intent = new Intent(mContext, NewsDetails.class);
+                        Intent intent = new Intent(mContext, NewsDetailsActivity.class);
                         intent.putExtra("id", menuItem.getId());
                         mContext.startActivity(intent);
                     });

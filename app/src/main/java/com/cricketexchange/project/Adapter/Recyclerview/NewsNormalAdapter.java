@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cricketexchange.project.Activity.NewsDetails;
+import com.cricketexchange.project.Activity.NewsDetailsActivity;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
@@ -51,7 +51,7 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
             Picasso.get().load(mContext.getString(R.string.sampleimageurl)).into((menuItemHolder).poster);
             (menuItemHolder).time.setText(menuItem.getTime());
             menuItemHolder.card.setOnClickListener(view -> {
-                Intent intent = new Intent(mContext, NewsDetails.class);
+                Intent intent = new Intent(mContext, NewsDetailsActivity.class);
                 intent.putExtra("id", menuItem.getId());
                 mContext.startActivity(intent);
             });
