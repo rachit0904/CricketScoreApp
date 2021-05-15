@@ -5,6 +5,9 @@
     <string name="Home">Home</string>
     <string name="Schedule">Schedule</string>
     <string name="More">more</string>
+    <string name="api_key">4S6Q3dyhOU5kT7iJHHUBUi93k</string>
+    <string name="api_Secret_Key">YS5mJHMRJLhpnZT81QDZo1TiXUeMCEmyuUDrStCC3QqTNYhAQw</string>
+    <string name="bearer_Token">AAAAAAAAAAAAAAAAAAAAAO%2BLPMRJLhpnZT81QDZo1TiXUeMCEmyuUDrStCC%3DWCdNwAwQAAzE2CHsyUqEUkrKSgVj9ncnH6HW4YRyphBNcMiDxL</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="admob_nativ_ads_id1">	ca-app-pub-3940256099942544/2247696110</string>
@@ -83,6 +86,36 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_test">TestActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="report_a_problem">Report a problem</string>
+    <string name="check_for_update">Check For Update</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="notifications_settings">Notifications settings</string>
+    <string name="app_language">App Language</string>
+    <string name="icc_men_s_ranking">ICC Men\'s Ranking</string>
+    <string name="icc_women_s_ranking">ICC Women\'s Ranking</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="share_app">Share App</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us_for_branding">Contact us for Branding</string>
+    <string name="privacy_police">Privacy Police</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="instagram">Instagram</string>
+    <string name="latest_news">Latest News</string>
+    <string name="title_activity_about">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_notification">FullscreenActivity</string>
+    <string name="admob_banner">ca-app-pub-3940256099942544/6300978111</string>
     <string name="latest_news">Latest News</string>
     <string name="seriesname">Indian Premiere League 2021</string>
     <string name="matchDate">12 May, Wednesday</string>

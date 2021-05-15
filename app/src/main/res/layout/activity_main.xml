@@ -3,65 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#232323"
     android:layout_height="match_parent"
+    android:background="#131313"
     tools:context=".Activity.MainActivity">
-
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabs"
-                    android:elevation="@dimen/cardview_compat_inset_shadow"
-                    android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:elevation="@dimen/cardview_compat_inset_shadow"
+            android:gravity="bottom">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/adView"
+                android:layout_gravity="bottom"
+                android:background="#191919"
+                app:tabIndicatorColor="@color/purple_200"
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="3dp"
+                app:tabMode="auto"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
+                app:tabTextColor="@android:color/white">
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab0"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#191919"
-                    app:tabMode="auto"
-                    android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@color/purple_200"
-                    app:tabIndicatorFullWidth="false"
-                    app:tabIndicatorHeight="3dp"
-                    app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:tabTextColor="@android:color/white">
+                    android:icon="@drawable/newsicon"
+                    android:text="@string/News" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab0"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/News"
-                        android:icon="@drawable/newsicon"/>
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/trophyicon"
+                    android:text="@string/Series" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Series"
-                        android:icon="@drawable/trophyicon" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/homebtn"
+                    android:text="@string/Home" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Home"
-                        android:icon="@drawable/homebtn" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/calendericon"
+                    android:text="Matches" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Matches"
-                        android:icon="@drawable/calendericon" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/moreicon"
+                    android:text="@string/More" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:id="@+id/tab4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/More"
-                        android:icon="@drawable/moreicon" />
+            </com.google.android.material.tabs.TabLayout>
 
-                </com.google.android.material.tabs.TabLayout>
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/admob_banner" />
+
+
+        </RelativeLayout>
+
 
         <FrameLayout
             android:id="@+id/frameLayout"

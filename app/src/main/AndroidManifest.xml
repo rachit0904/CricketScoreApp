@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cricketexchange.project">
-
+<uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CricketExchange"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="n">
+        <activity android:name=".Activity.ContactActivity"></activity>
+        <activity android:name=".Activity.PrivacyActivity" />
+        <activity android:name=".Activity.TermsActivity" />
+        <activity android:name=".Activity.ReportActivity" />
+        <activity
+            android:name=".Activity.NotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_notification"
+            android:theme="@style/Theme.CricketExchange.Fullscreen" />
+        <activity
+            android:name=".Activity.AboutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_about"
+            android:theme="@style/Theme.CricketExchange.Fullscreen" />
+        <activity
+            android:name=".Activity.NewsDetailsActivity"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activity.SeriesDetail" />
         <activity

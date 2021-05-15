@@ -5,13 +5,6 @@ public class NewsModel {
     public NewsModel() {
     }
 
-    public NewsModel(String id, String maintitle, String secondarytitle, String time, String posterurl) {
-        this.id = id;
-        this.maintitle = maintitle;
-        this.secondarytitle = secondarytitle;
-        this.time = time;
-        this.posterurl = posterurl;
-    }
 
     public String getId() {
         return id;
@@ -53,5 +46,22 @@ public class NewsModel {
         this.posterurl = posterurl;
     }
 
-    String id, maintitle, secondarytitle, time, posterurl;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public NewsModel(String id, String maintitle, String secondarytitle, String time, String posterurl, String description) {
+        this.id = id;
+        this.maintitle = maintitle;
+        this.secondarytitle = secondarytitle;
+        this.time = time;
+        this.posterurl = posterurl;
+        this.description = description;
+    }
+
+    String id, maintitle, secondarytitle, time, posterurl, description;
 }

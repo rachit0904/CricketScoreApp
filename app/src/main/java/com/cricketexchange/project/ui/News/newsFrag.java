@@ -1,10 +1,12 @@
 package com.cricketexchange.project.ui.News;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +21,17 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class newsFrag extends Fragment {
@@ -40,6 +51,7 @@ public class newsFrag extends Fragment {
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     NewsRecyclerAdapter adapter;
     RecyclerView mRecyclerView;
+    ProgressBar progressBar;
 
 
     @Override
@@ -47,10 +59,11 @@ public class newsFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         //init the ads
+
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
 
-
+        progressBar = view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView.
@@ -65,62 +78,49 @@ public class newsFrag extends Fragment {
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
-//        loadNativeAds();
         addMenuItemsFromJson();
+        loadNativeAds();
         return view;
     }
 
-    int size = 0;
 
     private void addMenuItemsFromJson() {
-        size = 60 + NUMBER_OF_ADS;
-
-        for (int i = 0; i < size; i++) {
-//            if (i != 0 && i % ADS_PER_POST == 0) {
-//                mRecyclerViewItems.add(null);
-//            } else {
-//
-//            }
-            NewsModel newsModel = new NewsModel("" + i, this.getString(R.string.sample_title), this.getString(R.string.sample_title), "2 hours ago", "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png");
-            mRecyclerViewItems.add(newsModel);
-
-
-        }
-        adapter.notifyDataSetChanged();
-
+        progressBar.setVisibility(View.VISIBLE);
+        new LoadData().execute("https://temp.booksmotion.com/newsapi.json");
     }
 
-//    private void loadNativeAds() {
-//
-//        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), getString(R.string.admob_nativ_ads_id1));
-//        adLoader = builder.forUnifiedNativeAd(
-//                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-//                    @Override
-//                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-//                        // A native ad loaded successfully, check if the ad loader has finished loading
-//                        // and if so, insert the ads into the list.
-//                        mNativeAds.add(unifiedNativeAd);
-//                        if (!adLoader.isLoading()) {
-//                            insertAdsInMenuItems();
-//                        }
-//                    }
-//                }).withAdListener(
-//                new AdListener() {
-//                    @Override
-//                    public void onAdFailedToLoad(int errorCode) {
-//                        // A native ad failed to load, check if the ad loader has finished loading
-//                        // and if so, insert the ads into the list.
-//                        Log.e("MainActivity", "The previous native ad failed to load. Attempting to"
-//                                + " load another.");
-//                        if (!adLoader.isLoading()) {
-//                            insertAdsInMenuItems();
-//                        }
-//                    }
-//                }).build();
-//
-//        // Load the Native ads.
-//        adLoader.loadAds(new AdRequest.Builder().build(), NUMBER_OF_ADS);
-//    }
+    private void loadNativeAds() {
+
+
+        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), getString(R.string.admob_nativ_ads_id1));
+        adLoader = builder.forUnifiedNativeAd(
+                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        // A native ad loaded successfully, check if the ad loader has finished loading
+                        // and if so, insert the ads into the list.
+                        mNativeAds.add(unifiedNativeAd);
+                        if (!adLoader.isLoading()) {
+                            insertAdsInMenuItems();
+                        }
+                    }
+                }).withAdListener(
+                new AdListener() {
+                    @Override
+                    public void onAdFailedToLoad(int errorCode) {
+                        // A native ad failed to load, check if the ad loader has finished loading
+                        // and if so, insert the ads into the list.
+                        Log.e("MainActivity", "The previous native ad failed to load. Attempting to"
+                                + " load another.");
+                        if (!adLoader.isLoading()) {
+                            insertAdsInMenuItems();
+                        }
+                    }
+                }).build();
+
+        // Load the Native ads.
+        adLoader.loadAds(new AdRequest.Builder().build(), 2);
+    }
 
 
     private void insertAdsInMenuItems() {
@@ -146,11 +146,69 @@ public class newsFrag extends Fragment {
             index = index + offset;
 
         }
+
+    }
+
+    private void update() {
+        progressBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
 
-    // public List<Object> getRecyclerViewItems() {
-    //     return mRecyclerViewItems;
-    //  }
+    private class LoadData extends AsyncTask<String, Integer, Long> {
+        protected Long doInBackground(String... urls) {
+            String url = null;
+            long a = 34534534;
+            int count = urls.length;
+            for (int j = 0; j < count; j++) {
+                url = urls[j];
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            for (int i = 0; i < 6; i++) {
+
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                String id = object.getString("id");
+                                String Maintitle = object.getString("tit");
+                                String Secondarytitle = object.getString("des");
+                                String img = object.getString("img");
+                                String con = object.getString("con");
+                                NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
+                                mRecyclerViewItems.add(newsModel);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                if (isCancelled()) break;
+            }
+            return a;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        protected void onPostExecute(Long result) {
+            update();
+        }
+    }
+
 
 }
