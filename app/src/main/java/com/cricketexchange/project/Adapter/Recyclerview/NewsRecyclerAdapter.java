@@ -131,22 +131,26 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 populateNativeAdView(nativeAd, ((UnifiedNativeAdViewHolder) holder).getAdView());
                 break;
             case MENU_ITEM_VIEW_TYPE:
+
+
+            default:
                 MenuItemViewHolder menuItemHolder = (MenuItemViewHolder) holder;
                 NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position);//content holder
                 if (menuItem != null) {
                     (menuItemHolder).maintitle.setText(menuItem.getMaintitle());
                     (menuItemHolder).secondarytitle.setText(menuItem.getSecondarytitle());
-                    Picasso.get().load(mContext.getString(R.string.sampleimageurl)).into((menuItemHolder).poster);
+                    Picasso.get().load(menuItem.getPosterurl()).into((menuItemHolder).poster);
                     (menuItemHolder).time.setText(menuItem.getTime());
                     menuItemHolder.card.setOnClickListener(view -> {
                         Intent intent = new Intent(mContext, NewsDetailsActivity.class);
                         intent.putExtra("id", menuItem.getId());
+                        intent.putExtra("title", menuItem.getMaintitle());
+                        intent.putExtra("imageposter", menuItem.getPosterurl());
+                        intent.putExtra("html", menuItem.getDescription());
+
                         mContext.startActivity(intent);
                     });
                 }
-
-                break;
-            default:
                 break;
 
         }

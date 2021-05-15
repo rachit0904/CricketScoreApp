@@ -1,7 +1,6 @@
 package com.cricketexchange.project.Activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,18 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.News.newsFrag;
 import com.cricketexchange.project.ui.home.homeFrag;
 import com.cricketexchange.project.ui.more.moreFrag;
 import com.cricketexchange.project.ui.schedule.scheduleFrag;
 import com.cricketexchange.project.ui.series.seriesFrag;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The AdLoader used to load ads.
     private AdLoader adLoader;
+    private AdView mAdView;
 
     // List of MenuItems and native ads that populate the RecyclerView.
     private List<Object> mRecyclerViewItems = new ArrayList<>();
@@ -45,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.selectTab(tabLayout.getTabAt(2));
@@ -105,10 +117,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //ads setting
-
-
-
-
 
 
 }

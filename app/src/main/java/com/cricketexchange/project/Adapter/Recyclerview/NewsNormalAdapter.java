@@ -37,22 +37,27 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View menuItemLayoutView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.card_news_rv, parent, false);
+                R.layout.card_news_grid_rv, parent, false);
         return new NewsNormalAdapter.ViewHolder(menuItemLayoutView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsNormalAdapter.ViewHolder menuItemHolder =  holder;
-        NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position);//content holder
+        NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position); //content holder
         if (menuItem != null) {
-            (menuItemHolder).maintitle.setText(menuItem.getMaintitle());
             (menuItemHolder).secondarytitle.setText(menuItem.getSecondarytitle());
-            Picasso.get().load(mContext.getString(R.string.sampleimageurl)).into((menuItemHolder).poster);
+            Picasso.get().load(menuItem.getPosterurl()).into((menuItemHolder).poster);
             (menuItemHolder).time.setText(menuItem.getTime());
             menuItemHolder.card.setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, NewsDetailsActivity.class);
-                intent.putExtra("id", menuItem.getId());
+                menuItemHolder.card.setOnClickListener(view1 -> {
+                    intent.putExtra("id", menuItem.getId());
+                    intent.putExtra("title", menuItem.getMaintitle());
+                    intent.putExtra("imageposter", menuItem.getPosterurl());
+                    intent.putExtra("html", menuItem.getDescription());
+                    mContext.startActivity(intent);
+                });
                 mContext.startActivity(intent);
             });
         }
@@ -64,12 +69,12 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView maintitle, secondarytitle, time;
+        TextView  secondarytitle, time;
         ImageView poster;
         CardView card;
         public ViewHolder(@NonNull View v) {
             super(v);
-            maintitle = v.findViewById(R.id.maintitle);
+
             secondarytitle = v.findViewById(R.id.secondarytitle);
             time = v.findViewById(R.id.time);
             poster = v.findViewById(R.id.poster);
