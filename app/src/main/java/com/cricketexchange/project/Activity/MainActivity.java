@@ -1,24 +1,19 @@
 package com.cricketexchange.project.Activity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.News.newsFrag;
 import com.cricketexchange.project.ui.home.homeFrag;
 import com.cricketexchange.project.ui.more.moreFrag;
-import com.cricketexchange.project.ui.schedule.scheduleFrag;
-import com.cricketexchange.project.ui.series.seriesFrag;
-import com.google.android.gms.ads.AdListener;
+import com.cricketexchange.project.ui.schedule.ScheduleFrag;
+import com.cricketexchange.project.ui.series.SeriesFrag;
 import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.material.tabs.TabLayout;
 
@@ -43,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.selectTab(tabLayout.getTabAt(2));
         addFragment(new homeFrag());
@@ -77,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 2: {
-                addFragment(new seriesFrag());
+                addFragment(new SeriesFrag());
                 break;
             }
             case 3: {
@@ -85,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 4: {
-                addFragment(new scheduleFrag());
+                addFragment(new ScheduleFrag());
                 break;
             }
             case 5: {
