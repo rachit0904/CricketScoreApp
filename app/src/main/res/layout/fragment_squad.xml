@@ -7,7 +7,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/squadRv"
-        android:layout_marginBottom="40dp"
         android:overScrollMode="never"
         android:layout_marginTop="10dp"
         tools:itemCount="5"

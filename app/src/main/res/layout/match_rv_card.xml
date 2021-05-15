@@ -19,9 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
             android:id="@+id/matchCardRv"
             tools:itemCount="2"
+            tools:listitem="@layout/match_rv_childcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
