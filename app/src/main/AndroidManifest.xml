@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cricketexchange.project">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
+<uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,6 +29,10 @@
             android:theme="@style/Theme.CricketExchange.Fullscreen" />
         <activity
             android:name=".Activity.NewsDetailsActivity"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.SeriesDetail" />
+        <activity
+            android:name=".Activity.NewsDetails"
             android:label="@string/title_activity_news_details" />
         <activity
             android:name=".Activity.MainActivity"

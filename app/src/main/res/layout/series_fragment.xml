@@ -1,21 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="vertical"
+    android:background="#191919"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.series.seriesFrag">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.series.SeriesFrag">
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_gravity="center"
+    <RelativeLayout
+        android:background="#131313"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Series"
-        android:textAlignment="center"
-        android:textSize="20sp"/>
-        
-</LinearLayout>
+        android:layout_height="wrap_content">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/seriesBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:alpha="0.3"
+        android:background="@drawable/icon4"
+        android:layout_width="match_parent"
+        android:layout_height="100pt"/>
+        <TextView
+            android:layout_marginStart="18pt"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:text="All Series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/seriesRv"
+        android:overScrollMode="never"
+        android:layout_below="@id/seriesBanner"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/series_rv_card"
+        tools:itemCount="4"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"/>
+
+    <Button
+        android:id="@+id/allSeries"
+        android:text="View upcoming series"
+        android:textSize="16sp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="120dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:textAllCaps="false"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/seriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</ScrollView>
