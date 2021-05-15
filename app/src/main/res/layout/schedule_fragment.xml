@@ -8,6 +8,9 @@
     <TextView
         android:id="@+id/text_dashboard"
         android:layout_gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.schedule.scheduleFrag">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

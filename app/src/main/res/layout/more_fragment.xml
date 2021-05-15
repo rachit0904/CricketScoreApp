@@ -1,22 +1,581 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.more.moreFrag">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_gravity="center"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:text="@string/More"
-        android:textSize="20sp" />
+        android:background="#131313"
+        android:elevation="5dp"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout">
+
+        <RelativeLayout
+            android:paddingBottom="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/settings"
+                android:backgroundTint="#2E2E2E"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPadding="5dp">
+
+                <RelativeLayout
+                    android:backgroundTint="#2E2E2E"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-</FrameLayout>
+                    <LinearLayout
+                        android:id="@+id/l1"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/app_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_language_24" />
+
+                        <TextView
+                            android:id="@+id/app_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="App Language"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/app_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l1"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l2"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/noti_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_notifications_24" />
+
+                        <TextView
+                            android:id="@+id/noti_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Notification Setting"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/noti_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settings"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="Social Media"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/setting_cv"
+                android:backgroundTint="#2E2E2E"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title1"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPadding="5dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/l3"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/fb_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_facebook_24" />
+
+                        <TextView
+                            android:id="@+id/fb_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Facebook"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/fb_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <!--                    <LinearLayout-->
+                    <!--                        android:id="@+id/l4"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="50dp"-->
+                    <!--                        android:layout_below="@+id/l3"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:orientation="horizontal"-->
+                    <!--                        android:weightSum="100">-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/twit_set_logo"-->
+                    <!--                            android:layout_width="0dp"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_weight="20"-->
+                    <!--                            android:src="@drawable/ic_outline_facebook_24" />-->
+
+                    <!--                        <TextView-->
+                    <!--                            android:id="@+id/twit_set_name"-->
+                    <!--                            android:layout_width="0dp"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_weight="60"-->
+                    <!--                            android:fontFamily="@font/merriweather_bold"-->
+                    <!--                            android:text="Twitter"-->
+                    <!--                            android:textSize="15dp" />-->
+
+                    <!--                        <ImageView-->
+                    <!--                            android:id="@+id/twit_set_nexicon"-->
+                    <!--                            android:layout_width="0dp"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:layout_weight="20"-->
+                    <!--                            android:src="@drawable/ic_outline_navigate_next_24" />-->
+                    <!--                    </LinearLayout>-->
+
+
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="Help"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/visit_cv"
+                android:backgroundTint="#2E2E2E"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title2"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPadding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/l5"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/rate_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_rating_24" />
+
+                        <TextView
+                            android:id="@+id/rate_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Rate us"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/rate_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l5"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l6"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l5"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/check_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_download_24" />
+
+                        <TextView
+                            android:id="@+id/check_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Check Updates"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/check_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l6"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l7"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l6"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/report_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_report_24" />
+
+                        <TextView
+                            android:id="@+id/report_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Report"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/report_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l7"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l8"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l7"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:id="@+id/share_set_logo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_share_24" />
+
+                        <TextView
+                            android:id="@+id/share_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Share with Friends"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/share_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/title4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/visit_cv"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/merriweather_bold"
+                android:padding="10dp"
+                android:text="About"
+                android:textSize="17sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/about_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title4"
+                android:backgroundTint="#2E2E2E"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPadding="5dp">
+
+                <RelativeLayout
+                    android:backgroundTint="#2E2E2E"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/l9"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <TextView
+                            android:id="@+id/about_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="About us"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/about_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l9"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l10"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l9"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <TextView
+                            android:id="@+id/privacy_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Privacy Policy"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/privacy_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l10"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l11"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l10"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <TextView
+                            android:id="@+id/tnc_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Terms and Conditions"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/tnc_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/l11"
+                        android:background="#464549" />
+
+                    <LinearLayout
+                        android:id="@+id/l12"
+                        android:backgroundTint="#2E2E2E"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/l11"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <TextView
+                            android:id="@+id/contact_set_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/merriweather_bold"
+                            android:text="Contact us"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/contact_set_nexicon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="20"
+                            android:src="@drawable/ic_outline_navigate_next_24" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

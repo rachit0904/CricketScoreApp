@@ -3,19 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.NewsDetails"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    tools:context=".Activity.NewsDetailsActivity">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="2dp"
+            android:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/linear1"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="100">
 
@@ -30,7 +41,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="70" />
+                android:layout_weight="90" />/>
         </LinearLayout>
 
 
@@ -41,52 +52,58 @@
             android:layout_below="@+id/linear1">
 
             <TextView
-                android:baselineAligned="false"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               android:textSize="16sp"
-                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                android:baselineAligned="false"
                 android:fontFamily="@font/merriweather_bold"
                 android:maxLines="2"
-                android:layout_margin="10dp"
                 android:padding="10dp"
-                android:text="@string/sample_title" />
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_below="@id/title"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_below="@id/title"
-                android:scaleType="centerCrop"
-                android:src="@drawable/cricket_testimage" />
+                android:scaleType="centerCrop" />
 
-            <TextView
-                android:baselineAligned="false"
+            <WebView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/poster"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="5dp"
-                android:maxLength="600"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:lineSpacingExtra="6sp"
-                android:textSize="14sp"
-                android:fontFamily="@font/merriweather_bold"
-                android:padding="10dp"
-                android:text="@string/sample_description" />
+                android:layout_marginBottom="5dp" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relative1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/merriweather_bold"
+            android:padding="5dp"
+            android:text="Suggestions"
+            android:textSize="12sp" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relative1"
-            />
+            android:layout_below="@id/text" />
 
     </RelativeLayout>
 

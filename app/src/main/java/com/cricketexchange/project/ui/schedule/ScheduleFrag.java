@@ -10,8 +10,16 @@ import android.view.ViewGroup;
 
 import com.cricketexchange.project.R;
 
-public class scheduleFrag extends Fragment {
-
+    public class scheduleFrag extends Fragment implements View.OnClickListener {
+    ImageView notifyBtn,filterBtn;
+    boolean flag=false;
+    View view;
+    int page;
+    String notify;
+    TabLayout tabLayout;
+    ViewPager pager;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
