@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 2: {
-                addFragment(new SeriesFrag());
+                addFragment(new seriesFrag());
                 break;
             }
             case 3: {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 4: {
-                addFragment(new ScheduleFrag());
+                addFragment(new scheduleFrag());
                 break;
             }
             case 5: {

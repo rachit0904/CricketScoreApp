@@ -18,7 +18,7 @@ import com.cricketexchange.project.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-public class ScheduleFrag extends Fragment implements View.OnClickListener {
+    public class scheduleFrag extends Fragment implements View.OnClickListener {
     ImageView notifyBtn,filterBtn;
     boolean flag=false;
     View view;

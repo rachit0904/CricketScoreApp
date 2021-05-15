@@ -106,7 +106,6 @@ public class newsFrag extends Fragment {
                     }
                 }).withAdListener(
                 new AdListener() {
-                    @Override
                     public void onAdFailedToLoad(int errorCode) {
                         // A native ad failed to load, check if the ad loader has finished loading
                         // and if so, insert the ads into the list.

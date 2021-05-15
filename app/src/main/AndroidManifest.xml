@@ -29,11 +29,8 @@
             android:theme="@style/Theme.CricketExchange.Fullscreen" />
         <activity
             android:name=".Activity.NewsDetailsActivity"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"/>
         <activity android:name=".Activity.SeriesDetail" />
-        <activity
-            android:name=".Activity.NewsDetails"
-            android:label="@string/title_activity_news_details" />
         <activity
             android:name=".Activity.MainActivity"
             android:hardwareAccelerated="true">
@@ -43,17 +40,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        For activities that use ads, hardwareAcceleration should be true.
-        <activity android:hardwareAccelerated="true" />
-       For activities that don't use ads, hardwareAcceleration can be false.
-        <activity android:hardwareAccelerated="false" />
-        -->
-        <!-- admob meta starts -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id" /> <!-- admob meta ends -->
-        <!-- Newtwork Config -->
+            android:value="@string/admob_app_id" />
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

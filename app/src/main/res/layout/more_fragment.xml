@@ -24,16 +24,19 @@
     </RelativeLayout>
 
     <ScrollView
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout">
 
         <RelativeLayout
+            android:paddingBottom="120dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/settings"
+                android:backgroundTint="#2E2E2E"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -43,12 +46,14 @@
                 app:contentPadding="5dp">
 
                 <RelativeLayout
+                    android:backgroundTint="#2E2E2E"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
 
                     <LinearLayout
                         android:id="@+id/l1"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -87,6 +92,7 @@
 
                     <LinearLayout
                         android:id="@+id/l2"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l1"
@@ -135,6 +141,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/setting_cv"
+                android:backgroundTint="#2E2E2E"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title1"
@@ -152,6 +159,7 @@
 
                     <LinearLayout
                         android:id="@+id/l3"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -234,6 +242,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/visit_cv"
+                android:backgroundTint="#2E2E2E"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title2"
@@ -250,6 +259,7 @@
 
                     <LinearLayout
                         android:id="@+id/l5"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -288,6 +298,7 @@
 
                     <LinearLayout
                         android:id="@+id/l6"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l5"
@@ -327,6 +338,7 @@
 
                     <LinearLayout
                         android:id="@+id/l7"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l6"
@@ -366,6 +378,7 @@
 
                     <LinearLayout
                         android:id="@+id/l8"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l7"
@@ -418,6 +431,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title4"
+                android:backgroundTint="#2E2E2E"
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 app:cardCornerRadius="5dp"
@@ -425,12 +439,14 @@
                 app:contentPadding="5dp">
 
                 <RelativeLayout
+                    android:backgroundTint="#2E2E2E"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
 
                     <LinearLayout
                         android:id="@+id/l9"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -463,6 +479,7 @@
 
                     <LinearLayout
                         android:id="@+id/l10"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l9"
@@ -496,6 +513,7 @@
 
                     <LinearLayout
                         android:id="@+id/l11"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l10"
@@ -529,6 +547,7 @@
 
                     <LinearLayout
                         android:id="@+id/l12"
+                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l11"

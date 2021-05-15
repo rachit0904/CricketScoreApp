@@ -28,7 +28,8 @@
         android:layout_marginTop="30dp"
         android:layout_below="@id/searchTeam"
         android:overScrollMode="never"
-        tools:listitem="@layout/match_rv_card"
+        tools:itemCount="1"
+        tools:listitem="@layout/teamrv_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
