@@ -36,7 +36,7 @@ public class moreFrag extends Fragment implements View.OnClickListener {
         update = v.findViewById(R.id.l6);
         report = v.findViewById(R.id.l7);
         share = v.findViewById(R.id.l8);
-        about = v.findViewById(R.id.l9);
+        about = v.findViewById(R.id.l19);
         privacy = v.findViewById(R.id.l10);
         terms = v.findViewById(R.id.l11);
         contact = v.findViewById(R.id.l12);
@@ -82,7 +82,7 @@ public class moreFrag extends Fragment implements View.OnClickListener {
             case R.id.l8: //share
                 share();
                 break;
-            case R.id.l9: //about
+            case R.id.l19: //about
                 myIntent = new Intent(getActivity(), AboutActivity.class);
                 getActivity().startActivity(myIntent);
                 break;
