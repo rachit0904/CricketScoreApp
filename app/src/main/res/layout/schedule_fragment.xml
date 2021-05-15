@@ -3,69 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ui.schedule.scheduleFrag">
+
+    <TextView
+        android:id="@+id/text_dashboard"
+        android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.schedule.scheduleFrag">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/scheduleFragAppBar"
-    android:background="#191919"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="30dp"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/notifyBtn"
-        android:background="@drawable/notify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/filterBtn"
-        android:layout_marginStart="25dp"
-        android:layout_toRightOf="@id/notifyBtn"
-        android:src="@drawable/filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    </RelativeLayout>
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout2"
-        android:elevation="@dimen/cardview_compat_inset_shadow"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="15dp"
-        android:background="#191919"
-        app:tabMode="auto"
-        app:tabIndicatorColor="@android:color/holo_green_light"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorHeight="3dp"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
-        app:tabTextColor="@android:color/white">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Series" />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Days" />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Teams"/>
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:text="@string/Schedule"
+        android:textSize="20sp" />
 
-</com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager2"
-        android:layout_below="@id/scheduleFragAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </RelativeLayout>
 </FrameLayout>

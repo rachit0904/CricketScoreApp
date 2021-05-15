@@ -7,13 +7,9 @@
     tools:context=".ui.series.pointstable.PointsTableFrag">
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="8dp"
-        android:elevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="@dimen/cardview_default_elevation"
         android:backgroundTint="#232323"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
