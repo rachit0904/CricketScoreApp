@@ -3,16 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.series.squad.SquadFrag">
+    android:background="#131313"
+    tools:context=".ui.schedule.series.UpcomingSeriesFrag">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/squadRv"
-        android:layout_marginBottom="40dp"
+        android:id="@+id/upcomingSeriesRv"
         android:overScrollMode="never"
-        android:layout_marginTop="10dp"
-        tools:itemCount="5"
-        tools:listitem="@layout/squad_rv_card"
+        tools:listitem="@layout/match_rv_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
