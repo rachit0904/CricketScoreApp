@@ -1,7 +1,6 @@
 package com.cricketexchange.project.Activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,14 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.News.newsFrag;
 import com.cricketexchange.project.ui.home.homeFrag;
 import com.cricketexchange.project.ui.more.moreFrag;
-import com.cricketexchange.project.ui.schedule.scheduleFrag;
+import com.cricketexchange.project.ui.schedule.schdeule;
 import com.cricketexchange.project.ui.series.seriesFrag;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -102,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case 4: {
-                addFragment(new scheduleFrag());
+                addFragment(new schdeule());
                 break;
             }
             case 5: {

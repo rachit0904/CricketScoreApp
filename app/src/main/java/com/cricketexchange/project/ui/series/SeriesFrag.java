@@ -12,11 +12,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cricketexchange.project.Activity.MainActivity;
 import com.cricketexchange.project.Adapter.Recyclerview.SeriesNameAdapter;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.schedule.scheduleFrag;
+import com.cricketexchange.project.ui.schedule.schdeule;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         if(v.getId()==R.id.allSeries){
             TabLayout tabLayout = getActivity().findViewById(R.id.tabs);
             tabLayout.selectTab(tabLayout.getTabAt(3));
-            addFragment(new scheduleFrag());
+            addFragment(new schdeule());
         }
     }
 
