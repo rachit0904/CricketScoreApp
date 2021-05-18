@@ -53,9 +53,9 @@
 
                     <LinearLayout
                         android:id="@+id/l1"
-                        android:backgroundTint="#2E2E2E"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:backgroundTint="#252525"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="100">
@@ -70,10 +70,10 @@
                         <TextView
                             android:id="@+id/app_set_name"
                             android:layout_width="0dp"
-                            android:textColor="@color/white"
                             android:layout_height="wrap_content"
                             android:layout_weight="60"
                             android:text="App Language"
+                            android:textColor="@color/white"
                             android:textSize="15dp" />
 
                         <ImageView

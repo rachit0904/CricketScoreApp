@@ -29,7 +29,14 @@
            android:id="@+id/filterBtn"
            android:layout_marginStart="25dp"
            android:layout_toRightOf="@id/notifyBtn"
-           android:src="@drawable/filter"
+           android:background="@drawable/filter"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
+       <ImageView
+           android:id="@+id/syncBtn"
+           android:layout_marginStart="25dp"
+           android:layout_toRightOf="@id/filterBtn"
+           android:src="@drawable/sync"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>
    </RelativeLayout>
@@ -62,12 +69,11 @@
 </com.google.android.material.tabs.TabLayout>
 
 </com.google.android.material.appbar.AppBarLayout>
-
 <androidx.viewpager.widget.ViewPager
-   android:id="@+id/pager2"
-   android:layout_below="@id/scheduleFragAppBar"
-   android:layout_width="match_parent"
-   android:layout_height="match_parent"/>
+    android:id="@+id/pager2"
+    android:layout_below="@id/scheduleFragAppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
 </RelativeLayout>
 
 </FrameLayout>

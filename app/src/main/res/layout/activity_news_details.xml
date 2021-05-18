@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
+    android:overScrollMode="never"
     tools:context=".Activity.NewsDetailsActivity">
 
 
@@ -41,7 +42,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="90" />/>
+                android:layout_weight="90" />
         </LinearLayout>
 
 
@@ -101,6 +102,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/text" />

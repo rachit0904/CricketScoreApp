@@ -2,15 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#131313"
     tools:context=".ui.schedule.UpcomingSeries.UpcomingSeriesFrag">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upcomingSeriesRv"
         android:overScrollMode="never"
+        tools:itemCount="2"
+        android:paddingBottom="120dp"
         tools:listitem="@layout/match_rv_card"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

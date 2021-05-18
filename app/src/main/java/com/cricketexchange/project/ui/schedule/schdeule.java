@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 public class schdeule extends Fragment implements View.OnClickListener {
-    ImageView notifyBtn, filterBtn;
+    ImageView notifyBtn, filterBtn,syncBtn;
     boolean flag = false;
     View view;
     String notify;
@@ -33,20 +33,24 @@ public class schdeule extends Fragment implements View.OnClickListener {
         view= inflater.inflate(R.layout.fragment_schdeule, container, false);
         preferences = getActivity().getSharedPreferences("prefs", 0);
         notifyBtn = view.findViewById(R.id.notifyBtn);
+        filterBtn = view.findViewById(R.id.filterBtn);
+        syncBtn = view.findViewById(R.id.syncBtn);
         tabLayout = view.findViewById(R.id.tabLayout2);
         pager = view.findViewById(R.id.pager2);
-        ScheduleViewPager adapter = new ScheduleViewPager(getActivity().getSupportFragmentManager(), tabLayout.getTabCount(), getContext());
+        ScheduleViewPager adapter = new ScheduleViewPager(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         setDefault();
         notifyBtn.setOnClickListener(this);
+        syncBtn.setOnClickListener(this);
         return view;
     }
+
 
     @Override
     public void onClick(View v) {
         if (v == notifyBtn) {
-            if (flag == false) {
+            if (!flag) {
                 notifyBtn.setBackground(notifyBtn.getContext().getResources().getDrawable(R.drawable.notifyon));
                 Snackbar.make(view, "notification turned on for all upcoming matches!", Snackbar.LENGTH_SHORT).show();
                 flag = true;
@@ -58,7 +62,15 @@ public class schdeule extends Fragment implements View.OnClickListener {
                 setPreference();
             }
         }
+        if(v == syncBtn){
+            refresh();
+        }
     }
+
+    private void refresh(){
+        getParentFragmentManager().beginTransaction().detach(this).add(R.id.frameLayout,new schdeule()).commit();
+    }
+
 
     private void setDefault() {
         notify = String.valueOf(getActivity().getSharedPreferences("prefs", 0).getBoolean("notify user", false));
@@ -74,7 +86,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
     private void setPreference() {
         editor = preferences.edit();
         editor.putBoolean("notify user", flag);
-        editor.commit();
+        editor.apply();
     }
 
 }
