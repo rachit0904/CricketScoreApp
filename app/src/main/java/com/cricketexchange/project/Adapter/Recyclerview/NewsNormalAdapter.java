@@ -52,11 +52,13 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
             menuItemHolder.card.setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, NewsDetailsActivity.class);
                 menuItemHolder.card.setOnClickListener(view1 -> {
+
                     intent.putExtra("id", menuItem.getId());
                     intent.putExtra("title", menuItem.getMaintitle());
                     intent.putExtra("imageposter", menuItem.getPosterurl());
                     intent.putExtra("html", menuItem.getDescription());
                     mContext.startActivity(intent);
+
                 });
                 mContext.startActivity(intent);
             });

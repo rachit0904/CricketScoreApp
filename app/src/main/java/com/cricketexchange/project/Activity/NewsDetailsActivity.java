@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -39,14 +38,11 @@ public class NewsDetailsActivity extends AppCompatActivity {
     NewsNormalAdapter adapter;
     TextView t_title;
     ImageView i_poster;
-    ProgressBar progressBar;
+    ProgressBar progressBar, progressBar2;
     String id = null;
-    String posturl = null;
-
     boolean isupdated = false;
-
     String title, imageposter, description;
-    WebView mDesc;
+    WebView des;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +56,8 @@ public class NewsDetailsActivity extends AppCompatActivity {
         close.setOnClickListener(view -> finish());
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         progressBar = findViewById(R.id.progressBar);
-        mDesc = findViewById(R.id.description);
+        progressBar2 = findViewById(R.id.progressBar2);
+        des = findViewById(R.id.webview);
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView.
         mRecyclerView.setHasFixedSize(true);
@@ -72,25 +69,22 @@ public class NewsDetailsActivity extends AppCompatActivity {
         // Specify an adapter.
         adapter = new NewsNormalAdapter(this, newslist);
         mRecyclerView.setAdapter(adapter);
-        //posturl = "https://subject-orifice.000webhostapp.com/api/newsapi.php?id=" + id;
 
 
         String extras = getIntent().getStringExtra("id");
-        if (extras.equals(null)) {
+        if (extras == null) {
             Toast.makeText(this, "Something Wents Wrong", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            id = extras;
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             imageposter = getIntent().getStringExtra("imageposter");
             description = getIntent().getStringExtra("html");
             t_title.setText(title);
             Picasso.get().load(imageposter).into(i_poster);
-            WebSettings settings = mDesc.getSettings();
-            settings.setDefaultTextEncodingName("utf-8");
-            mDesc.setBackgroundColor(000000);
-            mDesc.loadData("<html><head><style>body{background:#FF000000;color:white}</style></head><body>" + description + "</body></html>", "text/html; charset=utf-8", null);
+            String testhtml = "<html><head><style>body{background:#FF000000;color:white}</style></head><body>" + description + "</body></html>";
+            des.loadDataWithBaseURL(null, testhtml, "text/html", null, null);
+            Log.e("Testhtml", testhtml);
             progressBar.setVisibility(View.GONE);
             load();
         }
@@ -100,6 +94,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
 
     public void update() {
+        progressBar2.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
 
 

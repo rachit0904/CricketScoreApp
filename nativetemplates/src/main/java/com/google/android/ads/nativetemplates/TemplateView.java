@@ -18,11 +18,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -31,15 +26,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import com.google.android.gms.ads.formats.MediaView;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.ads.formats.MediaView;
+import com.google.android.gms.ads.formats.NativeAd.Image;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAdView;
+
+/** Base class for a template view. * */
 public class TemplateView extends FrameLayout {
 
   private int templateType;
   private NativeTemplateStyle styles;
   private UnifiedNativeAd nativeAd;
-  UnifiedNativeAd nativeAdView;
+  private UnifiedNativeAdView nativeAdView;
 
   private TextView primaryView;
   private TextView secondaryView;
@@ -67,7 +69,6 @@ public class TemplateView extends FrameLayout {
     initView(context, attrs);
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   public TemplateView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
     initView(context, attrs);
@@ -78,7 +79,7 @@ public class TemplateView extends FrameLayout {
     this.applyStyles();
   }
 
-  public UnifiedNativeAd getNativeAdView() {
+  public UnifiedNativeAdView getNativeAdView() {
     return nativeAdView;
   }
 
@@ -188,7 +189,62 @@ public class TemplateView extends FrameLayout {
     return !TextUtils.isEmpty(store) && TextUtils.isEmpty(advertiser);
   }
 
+  public void setNativeAd(UnifiedNativeAd nativeAd) {
+    this.nativeAd = nativeAd;
 
+    String store = nativeAd.getStore();
+    String advertiser = nativeAd.getAdvertiser();
+    String headline = nativeAd.getHeadline();
+    String body = nativeAd.getBody();
+    String cta = nativeAd.getCallToAction();
+    Double starRating = nativeAd.getStarRating();
+    Image icon = nativeAd.getIcon();
+
+    String secondaryText;
+
+    nativeAdView.setCallToActionView(callToActionView);
+    nativeAdView.setHeadlineView(primaryView);
+    nativeAdView.setMediaView(mediaView);
+    secondaryView.setVisibility(VISIBLE);
+    if (adHasOnlyStore(nativeAd)) {
+      nativeAdView.setStoreView(secondaryView);
+      secondaryText = store;
+    } else if (!TextUtils.isEmpty(advertiser)) {
+      nativeAdView.setAdvertiserView(secondaryView);
+      secondaryText = advertiser;
+    } else {
+      secondaryText = "";
+    }
+
+    primaryView.setText(headline);
+    callToActionView.setText(cta);
+
+    //  Set the secondary view to be the star rating if available.
+    if (starRating != null && starRating > 0) {
+      secondaryView.setVisibility(GONE);
+      ratingBar.setVisibility(VISIBLE);
+      ratingBar.setMax(5);
+      nativeAdView.setStarRatingView(ratingBar);
+    } else {
+      secondaryView.setText(secondaryText);
+      secondaryView.setVisibility(VISIBLE);
+      ratingBar.setVisibility(GONE);
+    }
+
+    if (icon != null) {
+      iconView.setVisibility(VISIBLE);
+      iconView.setImageDrawable(icon.getDrawable());
+    } else {
+      iconView.setVisibility(GONE);
+    }
+
+    if (tertiaryView != null) {
+      tertiaryView.setText(body);
+      nativeAdView.setBodyView(tertiaryView);
+    }
+
+    nativeAdView.setNativeAd(nativeAd);
+  }
 
   /**
    * To prevent memory leaks, make sure to destroy your ad when you don't need it anymore. This
@@ -228,6 +284,7 @@ public class TemplateView extends FrameLayout {
   @Override
   public void onFinishInflate() {
     super.onFinishInflate();
+    nativeAdView = (UnifiedNativeAdView) findViewById(R.id.native_ad_view);
     primaryView = (TextView) findViewById(R.id.primary);
     secondaryView = (TextView) findViewById(R.id.secondary);
     tertiaryView = (TextView) findViewById(R.id.body);

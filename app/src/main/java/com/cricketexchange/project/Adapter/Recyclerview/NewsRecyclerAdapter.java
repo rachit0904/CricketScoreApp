@@ -1,70 +1,318 @@
-/*
- * Copyright (C) 2017 Google, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Activity.NewsDetailsActivity;
+import com.cricketexchange.project.Ads.AdTemplateViewHolder;
+import com.cricketexchange.project.Ads.AdUnifiedListening;
+import com.cricketexchange.project.Ads.AdsManager;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MediaContent;
+import com.google.android.gms.ads.MuteThisAdListener;
+import com.google.android.gms.ads.MuteThisAdReason;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.android.gms.ads.ResponseInfo;
+import com.google.android.gms.ads.VideoController;
+import com.google.android.gms.ads.formats.NativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-/**
- * The {@link NewsRecyclerAdapter} class.
- * <p>The adapter provides access to the items in the {@link MenuItemViewHolder}
- */
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    // A menu item view type.
-    private static final int MENU_ITEM_VIEW_TYPE = 0;
+    private static final int AD_COUNT = 2;
+    static int OFFSET = 5;
+    private static final int TYPE_AD = 0;
+    private static final int TYPE_NORMAL = 1;
+    Context context;
+    int count = 0;
+    private ArrayList<Object> data = new ArrayList<>();
+    private ArrayList<UnifiedNativeAd> ads = new ArrayList<>();
 
-    private static final int UNIFIED_NATIVE_AD_VIEW_TYPE = 1;
-
-    // An Activity's Context.
-    private final Context mContext;
-
-    // The list of Native ads and menu items.
-    private final List<Object> mRecyclerViewItems;
-
-    public NewsRecyclerAdapter(Context context, List<Object> recyclerViewItems) {
-        this.mContext = context;
-        this.mRecyclerViewItems = recyclerViewItems;
+    public NewsRecyclerAdapter(Context context) {
+        this.context = context;
     }
 
-    /**
-     * The {@link MenuItemViewHolder} class.
-     * Provides a reference to each view in the menu item view.
-     */
-    public class MenuItemViewHolder extends RecyclerView.ViewHolder {
+    public void setData(List<Object> emp) {
+        this.data.addAll(emp);
+    }
+
+    public void MixData() {
+
+        addFakeAds();
+        List<Object> o = new ArrayList<>();
+        int num = 0;
+        for (int i = 0; i < data.size(); i++) {
+            if (num + OFFSET == i) {
+                //REMOVE +1
+                num += OFFSET;
+                int x = new Random().nextInt(ads.size());
+                o.add(ads.get(x));
+                //                    //REMOVE THIS CONTINUE NOT TO SKIP INSERT DATA
+                //continue;
+            }
+            o.add(data.get(i));
+        }
+        data.clear();
+        data.addAll(o);
+
+        notifyDataSetChanged();
+
+    }
+
+    private void addFakeAds() {
+        UnifiedNativeAd unifiedNativeAd = new UnifiedNativeAd() {
+            @Override
+            public String getHeadline() {
+                return null;
+            }
+
+            @Override
+            public List<NativeAd.Image> getImages() {
+                return null;
+            }
+
+            @Override
+            public String getBody() {
+                return null;
+            }
+
+            @Override
+            public NativeAd.Image getIcon() {
+                return null;
+            }
+
+            @Override
+            public String getCallToAction() {
+                return null;
+            }
+
+            @Override
+            public String getAdvertiser() {
+                return null;
+            }
+
+            @Override
+            public Double getStarRating() {
+                return null;
+            }
+
+            @Override
+            public String getStore() {
+                return null;
+            }
+
+            @Override
+            public String getPrice() {
+                return null;
+            }
+
+            @Override
+            public VideoController getVideoController() {
+                return null;
+            }
+
+            @Override
+            public NativeAd.AdChoicesInfo getAdChoicesInfo() {
+                return null;
+            }
+
+            @Override
+            public String getMediationAdapterClassName() {
+                return null;
+            }
+
+            @Override
+            public boolean isCustomMuteThisAdEnabled() {
+                return false;
+            }
+
+            @Override
+            public List<MuteThisAdReason> getMuteThisAdReasons() {
+                return null;
+            }
+
+            @Override
+            public void muteThisAd(MuteThisAdReason muteThisAdReason) {
+
+            }
+
+            @Override
+            public void setMuteThisAdListener(MuteThisAdListener muteThisAdListener) {
+
+            }
+
+            @Override
+            public Bundle getExtras() {
+                return null;
+            }
+
+            @Override
+            public void destroy() {
+
+            }
+
+            @Override
+            public void setUnconfirmedClickListener(UnconfirmedClickListener unconfirmedClickListener) {
+
+            }
+
+            @Override
+            public void cancelUnconfirmedClick() {
+
+            }
+
+            @Override
+            public void enableCustomClickGesture() {
+
+            }
+
+            @Override
+            public boolean isCustomClickGestureEnabled() {
+                return false;
+            }
+
+            @Override
+            public void recordCustomClickGesture() {
+
+            }
+
+            @Override
+            public void performClick(Bundle bundle) {
+
+            }
+
+            @Override
+            public boolean recordImpression(Bundle bundle) {
+                return false;
+            }
+
+            @Override
+            public void reportTouchEvent(Bundle bundle) {
+
+            }
+
+            @Override
+            public MediaContent getMediaContent() {
+                return null;
+            }
+
+            @Override
+            protected Object zzjq() {
+                return null;
+            }
+
+            @Override
+            public Object zzjv() {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public ResponseInfo getResponseInfo() {
+                return null;
+            }
+
+            @Override
+            public void setOnPaidEventListener(@Nullable OnPaidEventListener onPaidEventListener) {
+
+            }
+        };
+        setAds(unifiedNativeAd);
+    }
+
+    public void setAds(UnifiedNativeAd ads) {
+        this.ads.add(ads);
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == TYPE_AD) {
+            View view = LayoutInflater.from(this.context).inflate(R.layout.card_medium_ads, parent, false);
+            return new AdTemplateViewHolder(view);
+        }
+        View view = LayoutInflater.from(this.context).inflate(R.layout.card_news_rv, parent, false);
+        return new NewsViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        int viewtype = getItemViewType(position);
+        if (viewtype == TYPE_AD) {
+            AdTemplateViewHolder vh = (AdTemplateViewHolder) holder;
+            AdsManager adsManager = new AdsManager(context);
+            adsManager.createUnifiedAds(5, R.string.admob_nativ_ads_id1, new AdUnifiedListening() {
+                @Override
+                public void onAdFailedToLoad(LoadAdError loadAdError) {
+                    Log.e("LoadAdError", loadAdError.getMessage());
+                }
+
+                @Override
+                public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                    count++;
+                    vh.setUnifiedNativeAd((unifiedNativeAd));
+                    //Toast.makeText(SecondActivity.this, getAdLoader().isLoading()+" Succ "+v, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+            return;
+        }
+        NewsModel menuItem = (NewsModel) data.get(position);
+        NewsViewHolder vh = (NewsViewHolder) holder;
+        NewsViewHolder menuItemHolder = (NewsViewHolder) holder;
+        if (menuItem != null) {
+            vh.maintitle.setText(menuItem.getMaintitle());
+            vh.secondarytitle.setText(menuItem.getSecondarytitle());
+
+            Picasso.get().load(menuItem.getPosterurl()).into(vh.poster);
+            (menuItemHolder).time.setText(menuItem.getTime());
+            menuItemHolder.card.setOnClickListener(view -> {
+                Intent intent = new Intent(context, NewsDetailsActivity.class);
+                intent.putExtra("id", menuItem.getId());
+                intent.putExtra("title", menuItem.getMaintitle());
+                intent.putExtra("imageposter", menuItem.getPosterurl());
+                intent.putExtra("html", menuItem.getDescription());
+
+                context.startActivity(intent);
+            });
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return data.get(position) instanceof UnifiedNativeAd ? TYPE_AD : TYPE_NORMAL;
+    }
+
+    public class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView maintitle, secondarytitle, time;
         ImageView poster;
         CardView card;
 
-        MenuItemViewHolder(View v) {
+        NewsViewHolder(View v) {
             super(v);
             maintitle = v.findViewById(R.id.mainTitle);
             secondarytitle = v.findViewById(R.id.secondarytitle);
@@ -73,132 +321,4 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             card = v.findViewById(R.id.card);
         }
     }
-
-    @Override
-    public int getItemCount() {
-        return mRecyclerViewItems.size();
-    }
-
-    /**
-     * Determines the view type for the given position.
-     */
-    @Override
-    public int getItemViewType(int position) {
-
-        Object recyclerViewItem = mRecyclerViewItems.get(position);
-        if (recyclerViewItem instanceof UnifiedNativeAd) {
-            return UNIFIED_NATIVE_AD_VIEW_TYPE;
-        }
-        return MENU_ITEM_VIEW_TYPE;
-    }
-
-    /**
-     * Creates a new view for a menu item view or a Native ad view
-     * based on the viewType. This method is invoked by the layout manager.
-     */
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        switch (viewType) {
-//            case UNIFIED_NATIVE_AD_VIEW_TYPE:
-//                View unifiedNativeLayoutView = LayoutInflater.from(
-//                        viewGroup.getContext()).inflate(R.layout.ad_unified,
-//                        viewGroup, false);
-//                return new UnifiedNativeAdViewHolder(unifiedNativeLayoutView);
-            case MENU_ITEM_VIEW_TYPE:
-                // Fall through.
-            default:
-                View menuItemLayoutView = LayoutInflater.from(viewGroup.getContext()).inflate(
-                        R.layout.card_news_rv, viewGroup, false);
-                return new MenuItemViewHolder(menuItemLayoutView);
-        }
-    }
-
-    /**
-     * Replaces the content in the views that make up the menu item view and the
-     * Native ad view. This method is invoked by the layout manager.
-     */
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        int viewType = getItemViewType(position);
-        switch (viewType) {
-            case UNIFIED_NATIVE_AD_VIEW_TYPE:
-                UnifiedNativeAd nativeAd = (UnifiedNativeAd) mRecyclerViewItems.get(position);
-//                populateNativeAdView(nativeAd, ((UnifiedNativeAdViewHolder) holder).getAdView());
-                break;
-            case MENU_ITEM_VIEW_TYPE:
-
-
-            default:
-                MenuItemViewHolder menuItemHolder = (MenuItemViewHolder) holder;
-                NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position);//content holder
-                if (menuItem != null) {
-                    (menuItemHolder).maintitle.setText(menuItem.getMaintitle());
-                    (menuItemHolder).secondarytitle.setText(menuItem.getSecondarytitle());
-                    Picasso.get().load(menuItem.getPosterurl()).into((menuItemHolder).poster);
-                    (menuItemHolder).time.setText(menuItem.getTime());
-                    menuItemHolder.card.setOnClickListener(view -> {
-                        Intent intent = new Intent(mContext, NewsDetailsActivity.class);
-                        intent.putExtra("id", menuItem.getId());
-                        intent.putExtra("title", menuItem.getMaintitle());
-                        intent.putExtra("imageposter", menuItem.getPosterurl());
-                        intent.putExtra("html", menuItem.getDescription());
-
-                        mContext.startActivity(intent);
-                    });
-                }
-                break;
-
-        }
-    }
-
-//    private void populateNativeAdView(UnifiedNativeAd nativeAd,
-//                                      UnifiedNativeAdView adView) {
-//        // Some assets are guaranteed to be in every UnifiedNativeAd.
-//        ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
-//        ((TextView) adView.getBodyView()).setText(nativeAd.getBody());
-//        ((Button) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
-//
-//        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
-//        // check before trying to display them.
-//        NativeAd.Image icon = nativeAd.getIcon();
-//
-//        if (icon == null) {
-//            adView.getIconView().setVisibility(View.INVISIBLE);
-//        } else {
-//            ((ImageView) adView.getIconView()).setImageDrawable(icon.getDrawable());
-//            adView.getIconView().setVisibility(View.VISIBLE);
-//        }
-//
-//        if (nativeAd.getPrice() == null) {
-//            adView.getPriceView().setVisibility(View.INVISIBLE);
-//        } else {
-//            adView.getPriceView().setVisibility(View.VISIBLE);
-//            ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
-//        }
-//
-//        if (nativeAd.getStore() == null) {
-//            adView.getStoreView().setVisibility(View.INVISIBLE);
-//        } else {
-//            adView.getStoreView().setVisibility(View.VISIBLE);
-//            ((TextView) adView.getStoreView()).setText(nativeAd.getStore());
-//        }
-//
-//        if (nativeAd.getStarRating() == null) {
-//            adView.getStarRatingView().setVisibility(View.INVISIBLE);
-//        } else {
-//            ((RatingBar) adView.getStarRatingView())
-//                    .setRating(nativeAd.getStarRating().floatValue());
-//            adView.getStarRatingView().setVisibility(View.VISIBLE);
-//        }
-//
-//        if (nativeAd.getAdvertiser() == null) {
-//            adView.getAdvertiserView().setVisibility(View.INVISIBLE);
-//        } else {
-//            ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
-//            adView.getAdvertiserView().setVisibility(View.VISIBLE);
-//        }
-//
-//        // Assign native ad object to the native view.
-//        adView.setNativeAd(nativeAd);
-//    }
 }

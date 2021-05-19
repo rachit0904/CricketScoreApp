@@ -28,18 +28,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // The number of native ads to load.
-    public static final int NUMBER_OF_ADS = 5;
 
-    // The AdLoader used to load ads.
-    private AdLoader adLoader;
     private AdView mAdView;
 
-    // List of MenuItems and native ads that populate the RecyclerView.
-    private List<Object> mRecyclerViewItems = new ArrayList<>();
 
-    // List of native ads that have been successfully loaded.
-    private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,7 +2,6 @@ package com.cricketexchange.project.ui.News;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cricketexchange.project.Adapter.Recyclerview.NewsRecyclerAdapter;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,14 +52,13 @@ public class newsFrag extends Fragment {
     ProgressBar progressBar;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         //init the ads
 
-        MobileAds.initialize(getActivity(), initializationStatus -> {
-        });
 
         progressBar = view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -74,12 +71,16 @@ public class newsFrag extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter.
-        adapter = new NewsRecyclerAdapter(getActivity(), mRecyclerViewItems);
+        adapter = new NewsRecyclerAdapter(getActivity());
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
+        Picasso.setSingletonInstance(new Picasso.Builder(getActivity()).build());
         addMenuItemsFromJson();
-        loadNativeAds();
+
+
+
+
         return view;
     }
 
@@ -89,66 +90,9 @@ public class newsFrag extends Fragment {
         new LoadData().execute("https://temp.booksmotion.com/newsapi.json");
     }
 
-    private void loadNativeAds() {
-
-
-        AdLoader.Builder builder = new AdLoader.Builder(getActivity(), getString(R.string.admob_nativ_ads_id1));
-        adLoader = builder.forUnifiedNativeAd(
-                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
-                    @Override
-                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                        // A native ad loaded successfully, check if the ad loader has finished loading
-                        // and if so, insert the ads into the list.
-                        mNativeAds.add(unifiedNativeAd);
-                        if (!adLoader.isLoading()) {
-                            insertAdsInMenuItems();
-                        }
-                    }
-                }).withAdListener(
-                new AdListener() {
-                    public void onAdFailedToLoad(int errorCode) {
-                        // A native ad failed to load, check if the ad loader has finished loading
-                        // and if so, insert the ads into the list.
-                        Log.e("MainActivity", "The previous native ad failed to load. Attempting to"
-                                + " load another.");
-                        if (!adLoader.isLoading()) {
-                            insertAdsInMenuItems();
-                        }
-                    }
-                }).build();
-
-        // Load the Native ads.
-        adLoader.loadAds(new AdRequest.Builder().build(), 2);
-    }
-
-
-    private void insertAdsInMenuItems() {
-        if (mNativeAds.size() <= 0) {
-            return;
-        }
-
-        int offset = 5;
-        int index = 0;
-        int indx = 0;
-        for (int i = 0; i < mRecyclerViewItems.size(); i++) {
-            if (indx > mNativeAds.size() - 1) {
-                indx = 0;
-            }
-            if (index > mRecyclerViewItems.size()) {
-                break;
-            }
-            if (index != 0) {
-                UnifiedNativeAd ad = mNativeAds.get(indx);
-                mRecyclerViewItems.add(index, ad);
-            }
-
-            index = index + offset;
-
-        }
-
-    }
 
     private void update() {
+        adapter.MixData();
         progressBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
@@ -172,7 +116,7 @@ public class newsFrag extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < 6; i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 String id = object.getString("id");
@@ -182,7 +126,9 @@ public class newsFrag extends Fragment {
                                 String con = object.getString("con");
                                 NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
                                 mRecyclerViewItems.add(newsModel);
+
                             }
+                            adapter.setData(mRecyclerViewItems);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
