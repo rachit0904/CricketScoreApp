@@ -1,9 +1,16 @@
 package com.cricketexchange.project.ui.schedule;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -58,6 +65,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
                 notifyBtn.setBackground(notifyBtn.getContext().getResources().getDrawable(R.drawable.notifyon));
                 Snackbar.make(view, "notification turned on for all upcoming matches!", Snackbar.LENGTH_SHORT).show();
                 flag = true;
+                demoNotification();
                 setPreference();
             } else {
                 notifyBtn.setBackground(notifyBtn.getContext().getResources().getDrawable(R.drawable.notify));
@@ -78,6 +86,8 @@ public class schdeule extends Fragment implements View.OnClickListener {
             RadioGroup group=view.findViewById(R.id.radioGroup);
             group.check(R.id.all);
             Button reset=view.findViewById(R.id.reset);Button apply=view.findViewById(R.id.apply);
+            AlertDialog dialog=builder.create();
+            dialog.show();
             reset.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -87,11 +97,10 @@ public class schdeule extends Fragment implements View.OnClickListener {
             apply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    dialog.dismiss();
                     //TODO - apply filter to R.V.
                 }
             });
-            AlertDialog dialog=builder.create();
-            dialog.show();
             close.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,6 +108,28 @@ public class schdeule extends Fragment implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    private void demoNotification() {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel("demo","Daily Match Update", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager=getActivity().getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText("you are getting this notification as you subscribed to get notification");
+
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(getContext(),"demo");
+        builder.setContentTitle("Congratulations !");
+        builder.setSmallIcon(R.drawable.trophyicon);
+        builder.setPriority(Notification.PRIORITY_MAX);
+        builder.setStyle(bigText);
+        builder.setAutoCancel(true);
+        NotificationManagerCompat managerCompat=NotificationManagerCompat.from(getContext());
+        managerCompat.notify(1,builder.build());
+
     }
 
     private void refresh(){
