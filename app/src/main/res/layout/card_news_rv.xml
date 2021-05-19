@@ -47,6 +47,7 @@
                 android:layout_below="@id/poster"
                 android:textSize="14sp"
                 android:layout_marginLeft="10dp"
+                android:textColor="#C6C6C6"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="0dp"
                 android:fontFamily="@font/merriweather_black"

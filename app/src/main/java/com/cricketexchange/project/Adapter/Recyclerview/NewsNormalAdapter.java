@@ -60,7 +60,6 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
                     mContext.startActivity(intent);
 
                 });
-                mContext.startActivity(intent);
             });
         }
     }
