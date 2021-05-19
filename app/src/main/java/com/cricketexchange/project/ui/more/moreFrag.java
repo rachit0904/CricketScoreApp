@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
 import com.cricketexchange.project.Activity.AboutActivity;
@@ -19,7 +20,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 
 public class moreFrag extends Fragment implements View.OnClickListener {
-    LinearLayout AppLanguage, Notification, fb, rate, update, report, share, about, privacy, terms, contact;
+    LinearLayout AppLanguage, Notification, fb, rate, update, report, share;
+    CoordinatorLayout about, privacy, terms, contact;
     final static String FBPAGEURL = "https://facebook.com/";
     Intent myIntent;
 

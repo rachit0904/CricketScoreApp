@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#131313"
+    android:background="@color/black_overlay"
     tools:context=".Activity.MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:elevation="@dimen/cardview_compat_inset_shadow"
+            android:elevation="5dp"
             android:gravity="bottom">
 
             <com.google.android.material.tabs.TabLayout
@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/adView"
                 android:layout_gravity="bottom"
-                android:background="#191919"
+                android:background="#131313"
+                android:elevation="@dimen/cardview_default_radius"
                 app:tabIndicatorColor="@color/purple_200"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="3dp"

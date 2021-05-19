@@ -1,5 +1,6 @@
 package com.cricketexchange.project.ui.schedule;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,7 +10,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.cricketexchange.project.Pager.ScheduleViewPager;
@@ -42,6 +45,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(pager);
         setDefault();
         notifyBtn.setOnClickListener(this);
+        filterBtn.setOnClickListener(this);
         syncBtn.setOnClickListener(this);
         return view;
     }
@@ -64,6 +68,36 @@ public class schdeule extends Fragment implements View.OnClickListener {
         }
         if(v == syncBtn){
             refresh();
+        }
+        if (v == filterBtn){
+            AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+            View view=(getLayoutInflater().inflate(R.layout.filter_dialog,null));
+            builder.setView(view);
+            builder.setCancelable(false);
+            ImageView close=view.findViewById(R.id.closeBtn);
+            RadioGroup group=view.findViewById(R.id.radioGroup);
+            group.check(R.id.all);
+            Button reset=view.findViewById(R.id.reset);Button apply=view.findViewById(R.id.apply);
+            reset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    group.check(R.id.all);
+                }
+            });
+            apply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO - apply filter to R.V.
+                }
+            });
+            AlertDialog dialog=builder.create();
+            dialog.show();
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
         }
     }
 

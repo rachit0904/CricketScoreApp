@@ -1,24 +1,19 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContentProviderCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Models.ScoreCardModel;
 import com.cricketexchange.project.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.ViewHolder> {
@@ -40,7 +35,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.View
     public void onBindViewHolder(@NonNull ScoreCardAdapter.ViewHolder holder, int position) {
         ScoreCardModel modelList=scoreCardModelList.get(position);
         if(Integer.parseInt(modelList.getRowCount())%2!=0){
-            holder.row.setBackground(holder.row.getResources().getDrawable(R.color.scoreRowBckgrnd));
+            holder.row.setBackground(holder.row.getResources().getDrawable(R.color.scoreRowBackground));
         }
         holder.rowCount.setText(modelList.getRowCount());
         //TODO - picasso for team logo

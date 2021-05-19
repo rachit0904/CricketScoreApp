@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.schedule.teams.teams">
 
@@ -18,7 +19,7 @@
        app:queryHint="search team"
        android:elevation="@dimen/cardview_compat_inset_shadow"
        android:background="@drawable/roundedborder"
-       android:backgroundTint="@color/scoreRowBckgrnd"
+       android:backgroundTint="@color/scoreRowBackground"
        android:layout_width="match_parent"
        android:layout_height="40dp"/>
 

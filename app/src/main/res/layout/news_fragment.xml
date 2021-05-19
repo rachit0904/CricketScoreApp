@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black_overlay"
     tools:context=".ui.News.newsFrag">
 
     <ProgressBar
@@ -18,13 +19,18 @@
         android:elevation="5dp"
         android:visibility="visible" />
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:background="@color/black_overlay"
+        android:elevation="5dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#131313"
-        android:elevation="5dp"
-        android:padding="20dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:textSize="20sp"
@@ -34,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
-
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:overScrollMode="never"
@@ -42,8 +48,7 @@
         android:paddingBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/relativeLayout"
-        android:background="#131313">
+        android:layout_below="@id/appBar">
 
     </androidx.recyclerview.widget.RecyclerView>
 

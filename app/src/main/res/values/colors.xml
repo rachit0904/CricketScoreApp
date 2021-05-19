@@ -12,10 +12,11 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
-
+    <color name="background">#121212</color>
+    <color name="darkCardBackground">#191919</color>
     <color name="winDispColor">#7BCC35</color>
     <color name="winTeamName">#C7CC35</color>
     <color name="live">#FF4747</color>
-    <color name="scoreRowBckgrnd">#323232</color>
+    <color name="scoreRowBackground">#323232</color>
 
 </resources>

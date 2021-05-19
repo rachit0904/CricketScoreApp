@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:scrollbars="vertical"
-    android:background="#191919"
+    android:background="@color/black_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.series.seriesFrag">
 
     <RelativeLayout
-        android:background="#131313"
+        android:background="@color/black_overlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -18,11 +18,12 @@
         android:id="@+id/seriesBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageView
-        android:alpha="0.3"
-        android:background="@drawable/icon4"
-        android:layout_width="match_parent"
-        android:layout_height="100pt"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100pt"
+            android:alpha="0.4"
+            android:background="@drawable/icon4" />
         <TextView
             android:layout_marginStart="18pt"
             android:layout_gravity="center_vertical"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#131313"
+    android:background="@color/black_overlay"
     tools:context=".ui.schedule.Days.DaysFrag">
 
     <androidx.recyclerview.widget.RecyclerView
