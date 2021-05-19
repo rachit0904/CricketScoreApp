@@ -43,7 +43,7 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        NewsNormalAdapter.ViewHolder menuItemHolder =  holder;
+        NewsNormalAdapter.ViewHolder menuItemHolder = holder;
         NewsModel menuItem = (NewsModel) mRecyclerViewItems.get(position); //content holder
         if (menuItem != null) {
             (menuItemHolder).secondarytitle.setText(menuItem.getSecondarytitle());
@@ -51,15 +51,11 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
             (menuItemHolder).time.setText(menuItem.getTime());
             menuItemHolder.card.setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, NewsDetailsActivity.class);
-                menuItemHolder.card.setOnClickListener(view1 -> {
-
-                    intent.putExtra("id", menuItem.getId());
-                    intent.putExtra("title", menuItem.getMaintitle());
-                    intent.putExtra("imageposter", menuItem.getPosterurl());
-                    intent.putExtra("html", menuItem.getDescription());
-                    mContext.startActivity(intent);
-
-                });
+                intent.putExtra("id", menuItem.getId());
+                intent.putExtra("title", menuItem.getMaintitle());
+                intent.putExtra("imageposter", menuItem.getPosterurl());
+                intent.putExtra("html", menuItem.getDescription());
+                mContext.startActivity(intent);
             });
         }
     }
@@ -70,9 +66,10 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView  secondarytitle, time;
+        TextView secondarytitle, time;
         ImageView poster;
         CardView card;
+
         public ViewHolder(@NonNull View v) {
             super(v);
 
