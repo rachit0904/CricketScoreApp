@@ -1,5 +1,9 @@
 package com.cricketexchange.project.Activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -14,31 +18,27 @@ import com.cricketexchange.project.ui.home.homeFrag;
 import com.cricketexchange.project.ui.more.moreFrag;
 import com.cricketexchange.project.ui.schedule.schdeule;
 import com.cricketexchange.project.ui.series.seriesFrag;
-import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
-
-
     private AdView mAdView;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
+        schdeule schdeule=new schdeule();
+        refresh();
+        //demo notify test
+        String  notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
+        if(notify=="true"){
+            schdeule.demoNotification(getBaseContext(),"CSK Vs MI","Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
+        }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -69,12 +69,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         //ads settings
-
-
     }
 
+    private void refresh() {
+        boolean connection=isNetworkAvailable();
+        if(connection==false){
+            startActivity(new Intent(MainActivity.this, NetworkFailureActivity.class));
+        }
+    }
+
+    public boolean isNetworkAvailable(){
+        ConnectivityManager connectivityManager=(ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        return networkInfo !=null;
+    }
 
     private void setFragment(int position) {
         switch (position + 1) {

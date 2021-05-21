@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cricketexchange.project">
-<uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-        android:hardwareAccelerated="true"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -14,7 +17,8 @@
         android:theme="@style/Theme.CricketExchange"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".Activity.ContactActivity"></activity>
+        <activity android:name=".Activity.NetworkFailureActivity"></activity>
+        <activity android:name=".Activity.ContactActivity" />
         <activity android:name=".Activity.PrivacyActivity" />
         <activity android:name=".Activity.TermsActivity" />
         <activity android:name=".Activity.ReportActivity" />
@@ -30,7 +34,7 @@
             android:theme="@style/Theme.CricketExchange.Fullscreen" />
         <activity
             android:name=".Activity.NewsDetailsActivity"
-        android:usesCleartextTraffic="true"/>
+            android:usesCleartextTraffic="true" />
         <activity android:name=".Activity.SeriesDetail" />
         <activity
             android:name=".Activity.MainActivity"
@@ -41,9 +45,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

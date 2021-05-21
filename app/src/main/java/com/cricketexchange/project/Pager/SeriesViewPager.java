@@ -29,9 +29,9 @@ public class SeriesViewPager extends FragmentPagerAdapter {
                 return "Matches";
             }
             case 1:{
-                return "Squad";
+                return "Teams";
             } case 2:{
-                return "Points Table";
+                return "Standings";
             } default:{
                 return null;
             }

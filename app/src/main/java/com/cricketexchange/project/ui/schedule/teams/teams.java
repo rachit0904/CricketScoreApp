@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.schedule.teams;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +20,17 @@ import java.util.List;
 
 public class teams extends Fragment {
     RecyclerView recyclerView;
+    SearchView searchView;
     List<SquadModel> list=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_teams, container, false);
         recyclerView=view.findViewById(R.id.team);
+        searchView=view.findViewById(R.id.search);
+        searchView.setIconified(false);
+        searchView.clearFocus();
+
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=getData();

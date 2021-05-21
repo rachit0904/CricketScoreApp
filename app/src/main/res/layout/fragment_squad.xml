@@ -10,8 +10,8 @@
         android:id="@+id/squadRv"
         android:overScrollMode="never"
         android:layout_marginTop="10dp"
-        tools:itemCount="5"
-        tools:listitem="@layout/squad_rv_card"
+        tools:listitem="@layout/teamrv_card"
+        tools:itemCount="7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

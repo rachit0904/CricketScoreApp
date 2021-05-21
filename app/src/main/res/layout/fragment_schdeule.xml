@@ -10,9 +10,12 @@
  <RelativeLayout
    android:layout_width="match_parent"
    android:layout_height="match_parent">
+
 <com.google.android.material.appbar.AppBarLayout
    android:id="@+id/scheduleFragAppBar"
    android:background="#191919"
+    android:elevation="5dp"
+    android:translationZ="@dimen/cardview_compat_inset_shadow"
    android:layout_width="match_parent"
    android:layout_height="wrap_content">
    <RelativeLayout
@@ -28,16 +31,9 @@
            android:layout_height="wrap_content"/>
        <ImageView
            android:id="@+id/filterBtn"
-           android:layout_marginStart="25dp"
-           android:layout_toRightOf="@id/notifyBtn"
+           android:layout_marginStart="30dp"
            android:background="@drawable/filter"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"/>
-       <ImageView
-           android:id="@+id/syncBtn"
-           android:layout_marginStart="25dp"
-           android:layout_toRightOf="@id/filterBtn"
-           android:src="@drawable/sync"
+           android:layout_toRightOf="@id/notifyBtn"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>
    </RelativeLayout>
@@ -70,11 +66,90 @@
 </com.google.android.material.tabs.TabLayout>
 
 </com.google.android.material.appbar.AppBarLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/scheduleFragAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+     <com.google.android.material.chip.ChipGroup
+         android:id="@+id/tours"
+         app:singleLine="true"
+         android:layout_marginStart="20dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content">
+
+         <com.google.android.material.chip.Chip
+             android:id="@+id/all"
+             android:text="All"
+             android:checkable="true"
+             app:checkedIconEnabled="false"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/test"
+             android:text="Test"
+             android:checkable="true"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/t20"
+             android:text="T20"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             android:checkable="true"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/odi"
+             android:text="ODI"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             android:checkable="true"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/international"
+             android:text="International"
+             android:checkable="true"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/league"
+             android:text="League"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             android:checkable="true"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <com.google.android.material.chip.Chip
+             android:id="@+id/women"
+             android:text="Women"
+             android:layout_marginEnd="30dp"
+             app:chipBackgroundColor="@color/scoreRowBackground"
+             android:checkable="true"
+             app:checkedIconEnabled="false"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+     </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
 <androidx.viewpager.widget.ViewPager
     android:id="@+id/pager2"
-    android:layout_below="@id/scheduleFragAppBar"
+    android:layout_below="@id/scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
+
 </RelativeLayout>
 
 </FrameLayout>

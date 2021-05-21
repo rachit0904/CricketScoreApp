@@ -28,7 +28,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
     @NonNull
     @Override
     public SquadParentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.squad_rv_card,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.teamrv_card,parent,false);
         return new ViewHolder(view);
     }
 
@@ -37,26 +37,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
         SquadModel model=squadModelList.get(position);
         holder.SquadName.setText(model.getSquadName());
         //TODO - set squad logo
-        List<SeriesModel> playerNamesList=new ArrayList<>();
-        List<SeriesModel> playerNamesList2=new ArrayList<>();
-        int i;
-        for(i=1;i<=9;i++) {
-            SeriesModel model1 = new SeriesModel("Player "+i);
-            playerNamesList.add(model1);
-        }
-        for(int j=1;j<8;j++) {
-            SeriesModel model1 = new SeriesModel("Player "+i);
-            playerNamesList2.add(model1);
-            i++;
-        }
-        holder.rv1.hasFixedSize();
-        holder.rv1.setLayoutManager(new LinearLayoutManager(holder.rv1.getContext()));
-        holder.adapter1=new SquadRvChildAdapter(playerNamesList);
-        holder.rv1.setAdapter(holder.adapter1);
-        holder.rv2.hasFixedSize();
-        holder.rv2.setLayoutManager(new LinearLayoutManager(holder.rv2.getContext()));
-        holder.adapter2=new SquadRvChildAdapter(playerNamesList2);
-        holder.rv2.setAdapter(holder.adapter2);
+
     }
 
     @Override
@@ -64,42 +45,15 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
         return squadModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView squadLogo,collapseBtn;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView squadLogo;
         TextView SquadName;
-        View divider;
-        LinearLayout layout;
-        RecyclerView rv1,rv2;
-        List<SeriesModel> list,list2;
-        Boolean flag=false;
-        RecyclerView.Adapter adapter1,adapter2;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            squadLogo=itemView.findViewById(R.id.squadIcon);
-            collapseBtn=itemView.findViewById(R.id.viewSwitch);
-            SquadName=itemView.findViewById(R.id.squadName);
-            divider=itemView.findViewById(R.id.squadRvDivider);
-            layout=itemView.findViewById(R.id.squadMemeberLayout);
-            rv1=itemView.findViewById(R.id.membersListRv1);
-            rv2=itemView.findViewById(R.id.membersListRv2);
-            collapseBtn.setOnClickListener(this);
+            squadLogo = itemView.findViewById(R.id.teamlogo);
+            SquadName = itemView.findViewById(R.id.teamname);
         }
 
-        @Override
-        public void onClick(View v) {
-            if(v==collapseBtn){
-                if(flag==false) {
-                    collapseBtn.setBackground(v.getResources().getDrawable(R.drawable.showless));
-                    layout.setVisibility(View.VISIBLE);
-                    divider.setVisibility(View.VISIBLE);
-                    flag=true;
-                }else{
-                    collapseBtn.setBackground(v.getResources().getDrawable(R.drawable.showmore));
-                    layout.setVisibility(View.GONE);
-                    divider.setVisibility(View.GONE);
-                    flag=false;
-                }
-            }
-        }
     }
 }

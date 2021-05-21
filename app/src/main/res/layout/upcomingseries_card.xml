@@ -9,6 +9,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/matchcard"
         android:backgroundTint="#292929"
         android:layout_width="match_parent"
         app:cardCornerRadius="5dp"

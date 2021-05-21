@@ -44,7 +44,7 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
         seriesModelList.add(model2);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
-        UpcomingSeriesChildAdapter adapter=new UpcomingSeriesChildAdapter(seriesModelList);
+        UpcomingSeriesChildAdapter adapter=new UpcomingSeriesChildAdapter(seriesModelList,context);
         holder.series.hasFixedSize();
         holder.series.setAdapter(adapter);
     }
