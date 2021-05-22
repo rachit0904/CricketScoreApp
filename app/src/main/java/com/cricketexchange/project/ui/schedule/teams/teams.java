@@ -34,7 +34,7 @@ public class teams extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=getData();
-        TeamRecycleAdapter adapter=new TeamRecycleAdapter(list);
+        TeamRecycleAdapter adapter=new TeamRecycleAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
         return view;
     }

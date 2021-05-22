@@ -84,7 +84,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
                 notifyBtn.setBackground(notifyBtn.getContext().getResources().getDrawable(R.drawable.notifyon));
                 Snackbar.make(view, "notification turned on for all upcoming matches!", Snackbar.LENGTH_SHORT).show();
                 notifyFlag = true;
-                demoNotification(getContext(),
+                upcomingMatchesNotification(getContext(),
                         "Congratulations !",
                         "you are getting this notification as you subscribed to get notification"
                         );
@@ -182,7 +182,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void demoNotification(Context context, String title, String text) {
+    public void upcomingMatchesNotification(Context context, String title, String text) {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel=new NotificationChannel("demo","Daily Match Update", NotificationManager.IMPORTANCE_HIGH);

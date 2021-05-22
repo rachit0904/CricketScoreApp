@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //demo notify test
         String  notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
         if(notify=="true"){
-            schdeule.demoNotification(getBaseContext(),"CSK Vs MI","Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
+            schdeule.upcomingMatchesNotification(getBaseContext(),"CSK Vs MI","Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
         }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {

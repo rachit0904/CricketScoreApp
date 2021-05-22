@@ -29,7 +29,7 @@ public class SquadFrag extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=getData();
-        adapter=new SquadParentAdapter(list);
+        adapter=new SquadParentAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
         return view;
     }
