@@ -70,12 +70,12 @@ public class PlayerDataAdapter extends RecyclerView.Adapter<PlayerDataAdapter.Vi
         public void onClick(View v) {
             if(v==layout){
                 if(flag){
-                    collapseBtn.setBackgroundResource(R.drawable.showless);
+                    collapseBtn.setBackgroundResource(R.drawable.showmore);
                     layout2.setVisibility(View.GONE);
                     flag=false;
                 }else{
                     layout2.setVisibility(View.VISIBLE);
-                    collapseBtn.setBackgroundResource(R.drawable.showmore);
+                    collapseBtn.setBackgroundResource(R.drawable.showless);
                     flag=true;
                 }
             }
