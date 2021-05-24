@@ -1,24 +1,30 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapter.ViewHolder> {
+    Context context;
     List<MatchesChildModel> childModelList;
 
-    public MatchesChildAdapter(List<MatchesChildModel> childModelList) {
+    public MatchesChildAdapter(Context context, List<MatchesChildModel> childModelList) {
+        this.context = context;
         this.childModelList = childModelList;
     }
 
@@ -32,39 +38,36 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     @Override
     public void onBindViewHolder(@NonNull MatchesChildAdapter.ViewHolder holder, int position) {
         MatchesChildModel childModel=childModelList.get(position);
-        //TODO - picassoo setup for loading team symbol
+        //TODO - picassoo setup for loading team1,2 symbol
         holder.league.setText(childModel.getPremiure());
         holder.team1.setText(childModel.getTeam1());
         holder.team2.setText(childModel.getTeam2());
-        if (!childModel.getStartTime().isEmpty()) {
-            holder.startTime.setText(childModel.getStartTime());
-            holder.winTeam.setVisibility(View.GONE);
-            holder.status.setVisibility(View.GONE);
-            holder.startTime.setVisibility(View.VISIBLE);
-            holder.startTitle.setVisibility(View.VISIBLE);
-        }else if(childModel.getStatus().equals("Live")){
-            holder.winTeam.setText(childModel.getWinTeamName());
-            holder.status.setText(childModel.getStatus());
-            holder.winTeam.setVisibility(View.VISIBLE);
-            holder.status.setVisibility(View.VISIBLE);
-            holder.status.setTextColor(Color.parseColor("#FF4747"));
-            holder.startTime.setVisibility(View.GONE);
-            holder.startTitle.setVisibility(View.GONE);
-        }else if(!childModel.getStatus().isEmpty()){
-            holder.winTeam.setVisibility(View.VISIBLE);
-            holder.winTeam.setText(childModel.getWinTeamName());
-            holder.winTeam.setTextColor(Color.parseColor("#C7CC35"));
-            holder.status.setVisibility(View.GONE);
-            holder.startTime.setVisibility(View.GONE);
-            holder.startTitle.setVisibility(View.GONE);
-        }else if(!childModel.getStatus().equals("Live")){
-            holder.winTeam.setText(childModel.getWinTeamName());
-            holder.winTeam.setTextColor(Color.parseColor("#C7CC35"));
-            holder.status.setTextColor(Color.parseColor("#7BCC35"));
-            holder.winTeam.setVisibility(View.VISIBLE);
-            holder.status.setVisibility(View.VISIBLE);
-            holder.startTime.setVisibility(View.GONE);
-            holder.startTitle.setVisibility(View.GONE);
+        String status=childModel.getStatus();
+        switch(status){
+            case "INPROGRESS":{
+                String t1=childModel.getTeam1score()+"  ("+childModel.getTeam1over()+")";
+                String t2=childModel.getTeam2score()+"  ("+childModel.getTeam2over()+")";
+                holder.t1score.setText(t1);
+                holder.t2score.setText(t2);
+                holder.matchSummery.setText(childModel.getMatchSummery());
+                break;
+            } case "COMPLETED":{
+                holder.liveIcon.setVisibility(View.GONE);
+                holder.status.setTextColor(context.getColor(R.color.winDispColor));
+                holder.status.setText(childModel.getWinTeamName()+" Won");
+                holder.t1score.setText(childModel.getTeam1score()+"  ("+childModel.getTeam1over()+")");
+                holder.t2score.setText(childModel.getTeam2score()+"  ("+childModel.getTeam2over()+")");
+                holder.matchSummery.setText(childModel.getMatchSummery());
+                break;
+            } case "UPCOMING":{
+                holder.layout.setVisibility(View.GONE);
+                holder.t1score.setVisibility(View.INVISIBLE);
+                holder.t2score.setVisibility(View.INVISIBLE);
+                holder.matchSummery.setVisibility(View.GONE);
+                holder.startTimeLayout.setVisibility(View.VISIBLE);
+                holder.startTime.setText("14:00");
+                break;
+            }
         }
     }
 
@@ -74,19 +77,26 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView team1,team2,status,winTeam,startTime,startTitle,league;
+        TextView team1,team2,status, matchSummery,startTime,league,t1score,t2score;
+        LinearLayout startTimeLayout;
+        RelativeLayout layout;
         ImageView team1Icon,team2Icon;
+        LottieAnimationView liveIcon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layout=itemView.findViewById(R.id.layout2);
             league=itemView.findViewById(R.id.premiereName);
             team1=itemView.findViewById(R.id.team1Name);
+            liveIcon=itemView.findViewById(R.id.isLive);
+            t1score=itemView.findViewById(R.id.team1Score);
+            t2score=itemView.findViewById(R.id.team2Score);
             team1Icon=itemView.findViewById(R.id.team1Icon);
             team2=itemView.findViewById(R.id.team2Name);
             team2Icon=itemView.findViewById(R.id.team2Icon);
             status=itemView.findViewById(R.id.status);
             startTime=itemView.findViewById(R.id.startTime);
-            startTitle=itemView.findViewById(R.id.startStatus);
-            winTeam=itemView.findViewById(R.id.statusCaption);
+            startTimeLayout=itemView.findViewById(R.id.startStat);
+            matchSummery =itemView.findViewById(R.id.statusCaption);
         }
     }
 }

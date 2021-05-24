@@ -1,20 +1,65 @@
 package com.cricketexchange.project.Models;
 
 public class MatchesChildModel {
-    String team1,team2,premiure,winTeamName,status,startTime,team1Url,Team2Url;
+    String team1,team2,premiure,winTeamName,matchSummery,status,startTime,team1Url,Team2Url,team1score,team2score,team1over,team2over;
 
     public MatchesChildModel() {
     }
 
-    public MatchesChildModel(String team1, String team2, String premiure, String winTeamName, String status, String startTime, String team1Url, String team2Url) {
+    public MatchesChildModel(String team1, String team2, String premiure, String winTeamName, String matchSummery, String status, String startTime, String team1Url, String team2Url, String team1score, String team2score, String team1over, String team2over) {
         this.team1 = team1;
         this.team2 = team2;
         this.premiure = premiure;
         this.winTeamName = winTeamName;
+        this.matchSummery = matchSummery;
         this.status = status;
         this.startTime = startTime;
         this.team1Url = team1Url;
         Team2Url = team2Url;
+        this.team1score = team1score;
+        this.team2score = team2score;
+        this.team1over = team1over;
+        this.team2over = team2over;
+    }
+
+    public String getMatchSummery() {
+        return matchSummery;
+    }
+
+    public void setMatchSummery(String matchSummery) {
+        this.matchSummery = matchSummery;
+    }
+
+    public String getTeam1score() {
+        return team1score;
+    }
+
+    public void setTeam1score(String team1score) {
+        this.team1score = team1score;
+    }
+
+    public String getTeam2score() {
+        return team2score;
+    }
+
+    public void setTeam2score(String team2score) {
+        this.team2score = team2score;
+    }
+
+    public String getTeam1over() {
+        return team1over;
+    }
+
+    public void setTeam1over(String team1over) {
+        this.team1over = team1over;
+    }
+
+    public String getTeam2over() {
+        return team2over;
+    }
+
+    public void setTeam2over(String team2over) {
+        this.team2over = team2over;
     }
 
     public String getTeam1Url() {

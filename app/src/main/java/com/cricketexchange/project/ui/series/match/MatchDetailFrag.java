@@ -30,9 +30,21 @@ public class MatchDetailFrag extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterList=getData();
-        adapter=new MatchesAdapter(adapterList);
+        List<MatchesChildModel> childModelList=getChildData();
+        MatchesAdapter adapter=new MatchesAdapter(getContext(),adapterList,childModelList);
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private List<MatchesChildModel> getChildData(){
+        List<MatchesChildModel> childModelList=new ArrayList<>();
+        MatchesChildModel matchesChildModel=new MatchesChildModel("CSK","MI","Indian Premiure League","MI","MI won by 4wkts","COMPLETED","1","","","176-5","150-7","19.5","20.0");
+        childModelList.add(matchesChildModel);
+        MatchesChildModel matchesChildModel2=new MatchesChildModel("DC","MI","Indian Premiure League","DC","DC won by 30 runs","INPROGRESS","12","","","126-2","180-9","7.5","20.0");
+        childModelList.add(matchesChildModel2);
+        MatchesChildModel matchesChildModel3=new MatchesChildModel("DC","MI","Indian Premiure League","DC","DC won by 30 runs","UPCOMING","12","","","126-2","180-9","7.5","20.0");
+        childModelList.add(matchesChildModel3);
+        return childModelList;
     }
 
     private List<MatchesModel> getData() {

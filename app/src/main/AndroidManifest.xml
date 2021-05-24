@@ -17,7 +17,7 @@
         android:theme="@style/Theme.CricketExchange"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".Activity.TeamPlayersInfo"></activity>
+        <activity android:name=".Activity.TeamPlayersInfo" />
         <activity android:name=".Activity.NetworkFailureActivity" />
         <activity android:name=".Activity.ContactActivity" />
         <activity android:name=".Activity.PrivacyActivity" />

@@ -120,4 +120,7 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     <string name="matchDate">12 May, Wednesday</string>
     <string name="winTeamName">DC Won</string>
     <string name="live">Live</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

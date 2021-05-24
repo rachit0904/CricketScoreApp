@@ -1,6 +1,7 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
-    Activity activity;
+    Context context;
     List<MatchesModel> matchesModels;
+    List<MatchesChildModel> childModelList;
 
-    public MatchesAdapter(List<MatchesModel> matchesModels) {
+    public MatchesAdapter(Context context, List<MatchesModel> matchesModels, List<MatchesChildModel> childModelList) {
+        this.context = context;
         this.matchesModels = matchesModels;
+        this.childModelList = childModelList;
     }
 
     @NonNull
@@ -36,16 +40,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position) {
         MatchesModel data=matchesModels.get(position);
         holder.date.setText(data.getDate());
-        List<MatchesChildModel> childModelList=new ArrayList<>();
-        MatchesChildModel childModel=new MatchesChildModel("Mumbai Indians","Chennai Super Kings","Indian Premiure League","","","03:15pm","","");
-        childModelList.add(childModel);
-        MatchesChildModel childModel2=new MatchesChildModel("Mumbai Indians","Delhi Capitals","Indian Premiure League","24 runs in 6 balls for DC","Live","","","");
-        childModelList.add(childModel2);
-        MatchesChildModel childModel3=new MatchesChildModel("Rajasthan Royals","Delhi Capitals","Indian Premiure League","DC won by 10 balls and 5 wkts","DC Won","","","");
-        childModelList.add(childModel3);
-        MatchesChildModel childModel4=new MatchesChildModel("Rajasthan Royals","Delhi Capitals","Indian Premiure League","DC won by 10 balls and 5 wkts","","","","");
-        childModelList.add(childModel4);
-        MatchesChildAdapter childAdapter=new MatchesChildAdapter(childModelList);
+        MatchesChildAdapter childAdapter=new MatchesChildAdapter(context,childModelList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
         holder.childRv.setLayoutManager(layoutManager);
         holder.childRv.hasFixedSize();
