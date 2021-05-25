@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black_overlay"
+    tools:context=".TeamPlayersInfo">
+<RelativeLayout
+    android:background="@color/black_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginStart="20dp"
+                android:src="@drawable/bck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/trophyicon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toRightOf="@id/logo"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/teamShortName"
+                android:text="RCB"
+                android:textStyle="bold"
+                android:textColor="@color/live"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/teamFullName"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="Royal Challengers Bangalore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/players"
+    tools:listitem="@layout/playercard"
+    tools:itemCount="7"
+    android:layout_marginTop="30dp"
+    android:layout_below="@id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</RelativeLayout>
+</FrameLayout>

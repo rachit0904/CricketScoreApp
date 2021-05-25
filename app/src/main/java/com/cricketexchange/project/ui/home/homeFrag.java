@@ -22,7 +22,7 @@ public class homeFrag extends Fragment {
         View view= inflater.inflate(R.layout.home_fragment, container, false);
         pager=view.findViewById(R.id.homePager);
         tabLayout=view.findViewById(R.id.tabLayout3);
-        HomePager adapter = new HomePager(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        HomePager adapter = new HomePager(getChildFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         return view;

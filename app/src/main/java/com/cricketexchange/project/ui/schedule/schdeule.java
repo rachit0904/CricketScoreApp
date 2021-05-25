@@ -54,7 +54,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
         filterBtn.setOnClickListener(this);
         tabLayout = view.findViewById(R.id.tabLayout2);
         pager = view.findViewById(R.id.pager2);
-        ScheduleViewPager adapter = new ScheduleViewPager(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        ScheduleViewPager adapter = new ScheduleViewPager(getChildFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         tours=view.findViewById(R.id.tours);
