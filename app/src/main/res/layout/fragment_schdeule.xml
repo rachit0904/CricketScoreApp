@@ -104,6 +104,7 @@
          <com.google.android.material.chip.Chip
              android:id="@+id/t20"
              android:text="T20"
+             android:overScrollMode="never"
              app:chipBackgroundColor="@color/scoreRowBackground"
              android:checkable="true"
              app:checkedIconEnabled="false"
@@ -147,6 +148,7 @@
 
 <androidx.viewpager.widget.ViewPager
     android:id="@+id/pager2"
+    android:overScrollMode="never"
     android:layout_below="@id/scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>

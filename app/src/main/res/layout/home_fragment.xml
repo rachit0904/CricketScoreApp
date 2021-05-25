@@ -47,6 +47,7 @@
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/homePager"
+        android:overScrollMode="never"
         android:layout_below="@id/appBarLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

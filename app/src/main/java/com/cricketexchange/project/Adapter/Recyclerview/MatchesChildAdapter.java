@@ -1,5 +1,6 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.cricketexchange.project.Activity.MatchDetails;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
 
@@ -76,14 +79,17 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
         return childModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView team1,team2,status, matchSummery,startTime,league,t1score,t2score;
         LinearLayout startTimeLayout;
         RelativeLayout layout;
+        RelativeLayout matchCard;
         ImageView team1Icon,team2Icon;
         LottieAnimationView liveIcon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            matchCard=itemView.findViewById(R.id.matchCard);
+            matchCard.setOnClickListener(this);
             layout=itemView.findViewById(R.id.layout2);
             league=itemView.findViewById(R.id.premiereName);
             team1=itemView.findViewById(R.id.team1Name);
@@ -97,6 +103,13 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             startTime=itemView.findViewById(R.id.startTime);
             startTimeLayout=itemView.findViewById(R.id.startStat);
             matchSummery =itemView.findViewById(R.id.statusCaption);
+        }
+
+        @Override
+        public void onClick(View v) {
+            //TODO pass intent mID sId
+            Intent intent=new Intent(context, MatchDetails.class);
+            context.startActivity(intent);
         }
     }
 }
