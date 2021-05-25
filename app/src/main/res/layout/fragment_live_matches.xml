@@ -6,8 +6,16 @@
     android:background="@color/black_overlay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.live.LiveMatches">
-
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:elevation="5dp"
+        android:layout_gravity="center"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="nointernet6.json"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <ScrollView
+        android:overScrollMode="never"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,7 +38,8 @@
         android:id="@+id/liveMatches"
         android:layout_below="@id/txv1"
         android:paddingBottom="15dp"
-        tools:itemCount="2"
+        android:nestedScrollingEnabled="false"
+        tools:itemCount="3"
         tools:listitem="@layout/match_rv_childcard"
         android:overScrollMode="never"
         android:layout_width="match_parent"

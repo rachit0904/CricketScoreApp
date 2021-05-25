@@ -19,7 +19,7 @@
         app:queryHint="search teams"
             android:elevation="@dimen/cardview_compat_inset_shadow"
         android:background="@drawable/roundedborder"
-        android:backgroundTint="@color/scoreRowBckgrnd"
+        android:backgroundTint="@color/scoreRowBackground"
         android:layout_width="match_parent"
         android:layout_height="40dp"/>
 
