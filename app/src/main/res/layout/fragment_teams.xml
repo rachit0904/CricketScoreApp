@@ -17,10 +17,9 @@
    <androidx.appcompat.widget.SearchView
        android:id="@+id/search"
        app:queryHint="search team"
-       android:elevation="@dimen/cardview_compat_inset_shadow"
        android:gravity="center"
        android:background="@drawable/roundedborder"
-       android:backgroundTint="@color/scoreRowBackground"
+       android:backgroundTint="@color/darkCardBackground"
        android:layout_width="match_parent"
        android:layout_height="40dp"/>
 

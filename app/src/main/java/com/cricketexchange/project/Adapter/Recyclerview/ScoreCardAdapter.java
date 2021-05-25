@@ -35,7 +35,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.View
     public void onBindViewHolder(@NonNull ScoreCardAdapter.ViewHolder holder, int position) {
         ScoreCardModel modelList=scoreCardModelList.get(position);
         if(Integer.parseInt(modelList.getRowCount())%2!=0){
-            holder.row.setBackground(holder.row.getResources().getDrawable(R.color.scoreRowBackground));
+            holder.row.setBackground(holder.row.getResources().getDrawable(R.color.background));
         }
         holder.rowCount.setText(modelList.getRowCount());
         //TODO - picasso for team logo

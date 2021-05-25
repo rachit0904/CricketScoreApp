@@ -4,7 +4,7 @@
 
     <!-- fill/color -->
     <solid
-        android:color="#0c0c0c"/>
+        android:color="@color/background"/>
 
     <!-- Control the width and height of the shape -->
 

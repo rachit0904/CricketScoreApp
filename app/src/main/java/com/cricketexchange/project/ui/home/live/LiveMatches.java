@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
+import com.cricketexchange.project.Adapter.Recyclerview.MatchesChildAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
@@ -27,20 +28,9 @@ public class LiveMatches extends Fragment {
         recyclerView=view.findViewById(R.id.liveMatches);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        MatchesAdapter adapter=new MatchesAdapter(getContext(),getData(),getChildData());
+        MatchesChildAdapter adapter=new MatchesChildAdapter(getContext(),getChildData());
         recyclerView.setAdapter(adapter);
         return view;
-    }
-
-    private List<MatchesModel> getData() {
-        List<MatchesModel> matchesModelList=new ArrayList<>();
-        MatchesModel model=new MatchesModel("2 april, Monday");
-        matchesModelList.add(model);
-        MatchesModel model2=new MatchesModel("8 October, Sunday");
-        matchesModelList.add(model2);
-        MatchesModel model3=new MatchesModel("27 Jun, Thursday");
-        matchesModelList.add(model3);
-        return matchesModelList;
     }
 
     private List<MatchesChildModel> getChildData(){

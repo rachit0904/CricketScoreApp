@@ -10,7 +10,7 @@
         android:id="@+id/upcomingSeriesRv"
         android:overScrollMode="never"
         tools:itemCount="2"
-        android:paddingBottom="120dp"
+        android:paddingBottom="130dp"
         tools:listitem="@layout/match_rv_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -26,6 +26,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:background="@color/black_overlay"
         android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,14 +45,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/darkCardBackground"
+                android:backgroundTint="@color/background"
                 android:padding="10dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="3dp"
                 app:contentPadding="5dp">
 
                 <RelativeLayout
-                    android:backgroundTint="@color/darkCardBackground"
+                    android:backgroundTint="@color/background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -133,12 +134,13 @@
                 android:layout_below="@+id/settings"
                 android:layout_margin="10dp"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 android:text="Social Media"
                 android:textSize="17sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/setting_cv"
-                android:backgroundTint="@color/darkCardBackground"
+                android:backgroundTint="@color/background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title1"
@@ -156,7 +158,7 @@
 
                     <LinearLayout
                         android:id="@+id/l3"
-                        android:background="@color/darkCardBackground"
+                        android:background="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -200,11 +202,12 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:text="Help"
+                android:textColor="@color/white"
                 android:textSize="17sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/visit_cv"
-                android:backgroundTint="@color/darkCardBackground"
+                android:backgroundTint="@color/background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title2"
@@ -221,7 +224,7 @@
 
                     <LinearLayout
                         android:id="@+id/l5"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:gravity="center"
@@ -256,7 +259,7 @@
 
                     <LinearLayout
                         android:id="@+id/l6"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l5"
@@ -291,7 +294,7 @@
 
                     <LinearLayout
                         android:id="@+id/l7"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l6"
@@ -327,7 +330,7 @@
 
                     <LinearLayout
                         android:id="@+id/l8"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l7"
@@ -370,7 +373,6 @@
                 android:layout_below="@+id/visit_cv"
                 android:layout_margin="10dp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/merriweather_bold"
                 android:padding="10dp"
                 android:text="About"
                 android:textSize="17sp" />
@@ -380,7 +382,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title4"
-                android:backgroundTint="@color/darkCardBackground"
+                android:backgroundTint="@color/background"
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 app:cardCornerRadius="5dp"
@@ -388,14 +390,14 @@
                 app:contentPadding="5dp">
 
                 <RelativeLayout
-                    android:backgroundTint="@color/darkCardBackground"
+                    android:backgroundTint="@color/background"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <androidx.coordinatorlayout.widget.CoordinatorLayout
                         android:id="@+id/l19"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:orientation="horizontal"
                         android:weightSum="100">
 
@@ -422,7 +424,7 @@
 
                     <androidx.coordinatorlayout.widget.CoordinatorLayout
                         android:id="@+id/l10"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l19"
@@ -453,7 +455,7 @@
 
                     <androidx.coordinatorlayout.widget.CoordinatorLayout
                         android:id="@+id/l11"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l10"
@@ -484,7 +486,7 @@
 
                     <androidx.coordinatorlayout.widget.CoordinatorLayout
                         android:id="@+id/l12"
-                        android:backgroundTint="@color/darkCardBackground"
+                        android:backgroundTint="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/l11"

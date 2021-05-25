@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
     tools:context=".ui.home.finished.CompletedMatches">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/finishedMatches"
         android:overScrollMode="never"
+        tools:listitem="@layout/upcomingmatches_rv_card"
+        android:paddingBottom="130dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

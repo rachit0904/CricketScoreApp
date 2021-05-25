@@ -8,6 +8,7 @@
     tools:context=".ui.schedule.schdeule">
 
  <RelativeLayout
+     android:background="@color/black_overlay"
    android:layout_width="match_parent"
    android:layout_height="match_parent">
 
