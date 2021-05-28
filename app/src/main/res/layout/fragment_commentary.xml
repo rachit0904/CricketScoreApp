@@ -3,12 +3,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.matchdetail.commentary.Commentary">
+        <RelativeLayout
+            android:background="@color/black_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+            <LinearLayout
+                android:id="@+id/overScore"
+                android:background="@color/darkCardBackground"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:padding="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="Over : "
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/over"
+                    android:layout_marginStart="5dp"
+                    android:text="19.1"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginStart="25pt"
+                    android:text="Runs : "
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/runs"
+                    android:layout_marginStart="5dp"
+                    android:text="207"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginStart="25pt"
+                    android:text="Wkts : "
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/wkts"
+                    android:layout_marginStart="5dp"
+                    android:text="7"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/overScoreGroup"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/overScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball1"
+                    android:text="  "
+                    app:chipBackgroundColor="@color/background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball2"
+                    app:chipBackgroundColor="@color/background"
+                    android:text="  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball3"
+                    app:chipBackgroundColor="@color/background"
+                    android:text="  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball4"
+                    app:chipBackgroundColor="@color/background"
+                    android:text="  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball5"
+                    app:chipBackgroundColor="@color/background"
+                    android:text="  "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/ball6"
+                    android:text="  "
+                    app:chipBackgroundColor="@color/background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/commentary"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+            android:overScrollMode="never"
+                tools:listitem="@layout/commentary_card"
+                tools:itemCount="12"
+            android:nestedScrollingEnabled="false"
+            android:layout_below="@id/overScoreGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
 
 </FrameLayout>

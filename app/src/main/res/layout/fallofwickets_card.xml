@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:id="@+id/player" android:text="Salvan Browne" android:layout_width="100dp" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/score" android:text="1-4" android:layout_marginStart="48pt" android:layout_width="40dp" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/ovr" android:text="11.4" android:layout_marginStart="16pt" android:layout_width="40dp" android:layout_height="wrap_content"/>
+</TableRow>

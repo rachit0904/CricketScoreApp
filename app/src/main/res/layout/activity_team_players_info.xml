@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/pt1Logo"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/trophyicon"
@@ -49,7 +49,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="30dp"
-                android:layout_toRightOf="@id/logo"
+                android:layout_toRightOf="@id/pt1Logo"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

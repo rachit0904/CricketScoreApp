@@ -15,19 +15,24 @@ import com.google.android.material.tabs.TabLayout;
 public class MatchDetails extends AppCompatActivity implements View.OnClickListener {
     ImageView team1,team2,back;
     TextView t1Name,t2Name,t1Score,t2Score,t1Overs,t2Overs,matchTitle,cms;
-    TabLayout tabLayout;
-    ViewPager pager;
+    public  TabLayout tabLayout;
+    public  ViewPager pager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
         initializeIds();
+        setData();
         back.setOnClickListener(this);
         MatchDetailPager matchDetailPager=new MatchDetailPager(getSupportFragmentManager(),tabLayout.getTabCount());
         pager.setAdapter(matchDetailPager);
         tabLayout.setupWithViewPager(pager);
         tabLayout.selectTab(tabLayout.getTabAt(2));
         pager.setCurrentItem(2);
+    }
+
+    private void setData() {
+
     }
 
     private void initializeIds() {

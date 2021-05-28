@@ -82,7 +82,6 @@
         app:cardCornerRadius="10dp"
         android:elevation="5dp"
         android:translationZ="5dp"
-        android:backgroundTint="@color/darkCardBackground"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
@@ -91,6 +90,7 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:padding="10dp"
+            android:background="@color/darkCardBackground"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -124,6 +124,8 @@
                 android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/t1ScoreLayout"
+                android:visibility="visible"
                 android:gravity="center"
                 android:layout_marginStart="25dp"
                 android:layout_centerVertical="true"
@@ -153,13 +155,40 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/r2"
+            <LinearLayout
+                android:id="@+id/startTimerLayout"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="35pt"
+                android:layout_marginEnd="20pt"
+                android:orientation="vertical"
                 android:layout_toRightOf="@id/r1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/white"
+                    android:text="Starts in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/matchStartTime"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/winDispColor"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="11:00 AM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/r2"
+                android:layout_toRightOf="@id/startTimerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/lay2"
+                    android:id="@+id/t2ScoreLayout"
+                    android:visibility="visible"
                     android:gravity="center"
                     android:layout_marginStart="35dp"
                     android:layout_centerVertical="true"
@@ -188,7 +217,7 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_toRightOf="@id/lay2"
+                    android:layout_toRightOf="@id/t2ScoreLayout"
                     android:gravity="center"
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="10pt"
@@ -217,6 +246,7 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/cms"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:text="MI need more 30 runs to win"
                 android:layout_marginTop="5dp"
@@ -230,8 +260,9 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/matchDetailPager"
+        android:background="@color/black_overlay"
         android:overScrollMode="never"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/highlightCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

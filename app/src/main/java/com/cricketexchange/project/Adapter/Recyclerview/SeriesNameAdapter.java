@@ -57,7 +57,8 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
 
         @Override
         public void onClick(View v) {
-            context.startActivity(new Intent(context, SeriesDetail.class));
+            Intent intent=new Intent(context, SeriesDetail.class);
+            context.startActivity(intent);
         }
     }
 }

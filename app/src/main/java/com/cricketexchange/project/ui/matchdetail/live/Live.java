@@ -2,65 +2,123 @@ package com.cricketexchange.project.ui.matchdetail.live;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.cricketexchange.project.Activity.MatchDetails;
+import com.cricketexchange.project.Adapter.Recyclerview.CurrentInningBattingAdapter;
+import com.cricketexchange.project.Adapter.Recyclerview.PartnershipsAdapter;
+import com.cricketexchange.project.Models.PartnershipsModal;
+import com.cricketexchange.project.Models.battingCardModal;
+import com.cricketexchange.project.Pager.MatchDetailPager;
 import com.cricketexchange.project.R;
+import com.cricketexchange.project.ui.matchdetail.scores.TeamScores;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Live#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Live extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Live() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Live.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Live newInstance(String param1, String param2) {
-        Live fragment = new Live();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+public class Live extends Fragment implements View.OnClickListener {
+    TextView currentBatsman1,currentBatsman2,currentBatsman1Score,currentBatsman2Score,currentBowler,currentBowlerScore,RRR,CRR;
+    TextView currentInningTeamName,currentInningTeamScore;
+    ImageView currentInningTeamLogo;
+    RecyclerView inningBattingRv,inningYetToBat,inningPartnerShips;
+    CardView showScoreCard;
+    View view;
+    List<battingCardModal> battingCardModalList=new ArrayList<>();
+    List<battingCardModal> yetToBatList=new ArrayList<>();
+    List<PartnershipsModal> partnershipsModalList=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_live, container, false);
+        view= inflater.inflate(R.layout.fragment_live, container, false);
+        initialize();
+        setData();
+        showScoreCard.setOnClickListener(this);
+        return view;
+    }
+
+    private void setData() {
+        //batsman1 batsman2 bowler name & scores
+        //CRR RRR
+        //Current inning team name,score and logo
+
+        //RVs
+        //current inning battings
+        inningBattingRv.hasFixedSize();
+        inningBattingRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        CurrentInningBattingAdapter adapter=new CurrentInningBattingAdapter(getContext(),setCurrentBattingInningData());
+        inningBattingRv.setAdapter(adapter);
+        //yet to bat RV
+        inningYetToBat.hasFixedSize();
+        inningYetToBat.setLayoutManager(new LinearLayoutManager(getContext()));
+        CurrentInningBattingAdapter adapter2=new CurrentInningBattingAdapter(getContext(),setYetToBatData());
+        inningYetToBat.setAdapter(adapter2);
+        //partnerships data Rv
+        inningPartnerShips.hasFixedSize();
+        inningPartnerShips.setLayoutManager(new LinearLayoutManager(getContext()));
+        PartnershipsAdapter adapter3=new PartnershipsAdapter(getContext(),setPartnershipsData());
+        inningPartnerShips.setAdapter(adapter3);
+
+    }
+
+    private List<battingCardModal> setCurrentBattingInningData(){
+        battingCardModalList.clear();
+        battingCardModal modal=new battingCardModal("Dwyane Bravo","74","32");
+        battingCardModalList.add(modal);
+        battingCardModal modal2=new battingCardModal("MS Dhoni","74","32");
+        battingCardModalList.add(modal2);
+        battingCardModal modal3=new battingCardModal("Sam Curran","74","32");
+        battingCardModalList.add(modal3);
+        return battingCardModalList;
+    }
+
+    private List<battingCardModal> setYetToBatData(){
+        yetToBatList.clear();
+        battingCardModal modal=new battingCardModal("Ravindra Jadeja","","");
+        yetToBatList.add(modal);
+        battingCardModal modal2=new battingCardModal("Suresh Raina","","");
+        yetToBatList.add(modal2);
+        return yetToBatList;
+    }
+
+    private List<PartnershipsModal> setPartnershipsData(){
+        partnershipsModalList.clear();
+        PartnershipsModal modal=new PartnershipsModal("MS Dhoni","Suresh Raina","74","11","32","8");
+        partnershipsModalList.add(modal);
+        return partnershipsModalList;
+    }
+
+    private void initialize(){
+        currentBatsman1=view.findViewById(R.id.currentBatsman1);
+        currentBatsman1Score=view.findViewById(R.id.currentBatsmanScore);
+        currentBatsman2=view.findViewById(R.id.currentBatsman2);
+        currentBatsman2Score=view.findViewById(R.id.currentBatsman2Score);
+        currentBowler=view.findViewById(R.id.currentBowler);
+        currentBowlerScore=view.findViewById(R.id.currentBowlerScore);
+        RRR=view.findViewById(R.id.rrr);
+        CRR=view.findViewById(R.id.crr);
+        currentInningTeamName=view.findViewById(R.id.currentTeamName);
+        currentInningTeamScore=view.findViewById(R.id.currentTeamScore);
+        currentInningTeamLogo=view.findViewById(R.id.currentTeamLogo);
+        inningBattingRv=view.findViewById(R.id.currentInningRv);
+        showScoreCard=view.findViewById(R.id.moreScores);
+        inningYetToBat=view.findViewById(R.id.upcomingBatting);
+        inningPartnerShips=view.findViewById(R.id.partnerships);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==showScoreCard){
+        }
     }
 }

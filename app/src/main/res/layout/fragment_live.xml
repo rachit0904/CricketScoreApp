@@ -3,12 +3,301 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.matchdetail.live.Live">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:scrollbars="none"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:background="@color/black_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/stumpsCard"
+            android:layout_marginTop="20dp"
+            android:translationZ="5dp"
+            android:elevation="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/darkCardBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_gravity="start|center_vertical"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/currentBatsman1"
+                    android:textSize="13sp"
+                    android:text="Suresh Raina*"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/currentBatsmanScore"
+                    android:layout_marginTop="5dp"
+                    android:text="70 (34)"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="7pt"
+                android:layout_gravity="center|center_vertical"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/currentBowler"
+                    android:textSize="13sp"
+                    android:text="Ishan Kishan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/currentBowlerScore"
+                    android:layout_marginTop="5dp"
+                    android:text="3.4-0"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="end|center_vertical"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/currentBatsman2"
+                    android:textSize="13sp"
+                    android:text="MS dhoni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/currentBatsman2Score"
+                    android:layout_marginTop="5dp"
+                    android:text="14 (7)"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rateCard"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            android:layout_below="@id/stumpsCard"
+            android:backgroundTint="@color/darkCardBackground"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-2dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_gravity="start"
+                android:padding="9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginStart="8dp"
+                    android:text="Req RR : "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/rrr"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="5dp"
+                    android:text="0.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="end"
+                android:padding="9dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginStart="6dp"
+                    android:text="CRR : "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/crr"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="5dp"
+                    android:text="8.54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_below="@id/rateCard"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="Current Inning "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/overViewCard"
+            android:layout_below="@id/txt2"
+            app:cardCornerRadius="3dp"
+            android:backgroundTint="@color/darkCardBackground"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/currentTeamLogo"
+                    android:background="@drawable/trophyicon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+                <TextView
+                    android:id="@+id/currentTeamName"
+                    android:layout_marginStart="15dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:text="Chennai Super Kings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/currentTeamScore"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="207-5  (19.4)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/currentInningRv"
+            android:translationZ="5dp"
+            android:elevation="5dp"
+            tools:listitem="@layout/currentbatting_card"
+            tools:itemCount="3"
+            android:layout_below="@id/overViewCard"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/moreScores"
+            android:backgroundTint="@color/darkCardBackground"
+            android:layout_below="@id/currentInningRv"
+            app:cardCornerRadius="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:text="See complete scores list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/ic_outline_navigate_next_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_below="@id/moreScores"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="Yet to bat "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/upcomingBatting"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="25dp"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            tools:listitem="@layout/currentbatting_card"
+            tools:itemCount="2"
+            android:layout_below="@id/txt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <TextView
+            android:id="@+id/txt4"
+            android:layout_below="@id/upcomingBatting"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="Partnerships"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/partnerships"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="50dp"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            tools:listitem="@layout/partnership_card"
+            tools:itemCount="3"
+            android:layout_below="@id/txt4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

@@ -3,12 +3,180 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black_overlay"
     tools:context=".ui.matchdetail.scores.TeamScores">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:overScrollMode="never"
+        android:scrollbars="none"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/inningTab"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:tabIndicator="@android:color/holo_green_dark"
+        app:tabIndicatorFullWidth="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/t1InningsTab"
+            android:text="CSK Innings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/t2InningsTab"
+            android:text="MI Innings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/totScore"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_below="@id/inningTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:text="Total Score"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/totalScore"
+            android:text="207-5 (19.4)"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <TextView
+            android:id="@+id/battingTitle"
+            android:text="Batting"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="35dp"
+            android:textSize="14sp"
+            android:layout_below="@id/totScore"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/battingInningTable"
+            android:background="@color/darkCardBackground"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/battingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow android:padding="10dp" android:background="@color/darkCardBackground">
+            <TextView android:text="Batsman Name"/>
+            <TextView android:text=" R " android:layout_marginStart="26pt"/>
+            <TextView android:text=" B " android:layout_marginStart="10pt"/>
+                <TextView android:text=" 4s " android:layout_marginStart="7pt"/>
+                <TextView android:text=" 6s " android:layout_marginStart="6pt"/>
+                <TextView android:text="  SR  " android:layout_marginStart="11pt"/>
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inningBatingRv"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/inningrv_card"/>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/bowlingTitle"
+            android:text="Bowling"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="35dp"
+            android:textSize="14sp"
+            android:layout_below="@id/battingInningTable"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:id="@+id/bowlingInningTable"
+            android:background="@color/darkCardBackground"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/bowlingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow android:padding="10dp" android:background="@color/darkCardBackground">
+                <TextView android:text="Bowler Name    "/>
+                <TextView android:text=" R " android:layout_marginStart="25pt"/>
+                <TextView android:text="Wkt" android:layout_marginStart="10pt"/>
+                <TextView android:text=" W " android:layout_marginStart="5pt"/>
+                <TextView android:text=" NB " android:layout_marginStart="6pt"/>
+                <TextView android:text="  ER  " android:layout_marginStart="8pt"/>
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inningBowlingRv"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="2"
+                tools:listitem="@layout/inningrv_card"/>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/wicketsTitle"
+            android:text="Fall of Wickets"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="35dp"
+            android:textSize="14sp"
+            android:layout_below="@id/bowlingInningTable"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TableLayout
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/wicketsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow android:background="@color/darkCardBackground" android:padding="10dp">
+                <TextView android:text="Batsman Name" android:layout_width="100dp" android:layout_height="wrap_content"/>
+                <TextView android:text="Score" android:layout_marginStart="45pt" android:layout_width="40dp" android:layout_height="wrap_content"/>
+                <TextView android:text="Overs" android:layout_marginStart="15pt" android:layout_width="40dp" android:layout_height="wrap_content"/>
+            </TableRow>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wicketsRv"
+                tools:itemCount="3"
+                tools:listitem="@layout/fallofwickets_card"
+                android:layout_marginBottom="50dp"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                />
+        </TableLayout>
+
+    </RelativeLayout>
+</ScrollView>
 
 </FrameLayout>

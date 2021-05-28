@@ -24,13 +24,10 @@ import android.widget.TextView;
 import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.schedule.schdeule;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickListener {
     ImageView bck,teamLogo;
@@ -47,7 +44,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(materialToolbar);
         getSupportActionBar().setTitle("");
         bck=findViewById(R.id.back);
-        teamLogo=findViewById(R.id.logo);
+        teamLogo=findViewById(R.id.pt1Logo);
         teamShortName=findViewById(R.id.teamShortName);
         teamFullName=findViewById(R.id.teamFullName);
         bck.setOnClickListener(this);
