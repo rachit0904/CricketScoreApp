@@ -185,7 +185,7 @@ public class schdeule extends Fragment implements View.OnClickListener {
     public void upcomingMatchesNotification(Context context, String title, String text) {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel=new NotificationChannel("demo","Daily Match Update", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel=new NotificationChannel("demo","Daily Match Update", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager=context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }

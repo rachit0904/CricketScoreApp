@@ -1,20 +1,16 @@
 package com.cricketexchange.project.Models;
 
 public class UpcomingSeriesModel {
-    String matchDate;
+    String date;
 
     public UpcomingSeriesModel() {
     }
 
-    public UpcomingSeriesModel(String matchDate) {
-        this.matchDate = matchDate;
+    public String getDate() {
+        return date;
     }
 
-    public String getMatchDate() {
-        return matchDate;
-    }
-
-    public void setMatchDate(String matchDate) {
-        this.matchDate = matchDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

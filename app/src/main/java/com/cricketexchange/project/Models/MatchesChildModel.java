@@ -1,8 +1,7 @@
 package com.cricketexchange.project.Models;
 
 public class MatchesChildModel {
-    String team1,team2,premiure,winTeamName,matchSummery,status,startTime,team1Url,Team2Url,team1score,team2score,team1over,team2over;
-
+    String team1,team2,premiure,winTeamName,matchSummery,status,startTime,startDate,team1Url,Team2Url,team1score,team2score,team1over,team2over,isDraw,t1iIsBatting,t2IsBatting,mId,sId;
     public MatchesChildModel() {
     }
 
@@ -20,6 +19,54 @@ public class MatchesChildModel {
         this.team2score = team2score;
         this.team1over = team1over;
         this.team2over = team2over;
+    }
+
+    public String getT1iIsBatting() {
+        return t1iIsBatting;
+    }
+
+    public void setT1iIsBatting(String t1iIsBatting) {
+        this.t1iIsBatting = t1iIsBatting;
+    }
+
+    public String getT2IsBatting() {
+        return t2IsBatting;
+    }
+
+    public void setT2IsBatting(String t2IsBatting) {
+        this.t2IsBatting = t2IsBatting;
+    }
+
+    public String getmId() {
+        return mId;
+    }
+
+    public void setmId(String mId) {
+        this.mId = mId;
+    }
+
+    public String getsId() {
+        return sId;
+    }
+
+    public void setsId(String sId) {
+        this.sId = sId;
+    }
+
+    public String getIsDraw() {
+        return isDraw;
+    }
+
+    public void setIsDraw(String isDraw) {
+        this.isDraw = isDraw;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public String getMatchSummery() {

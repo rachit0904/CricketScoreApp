@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,17 @@ import com.cricketexchange.project.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class MatchDetailFrag extends Fragment {
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    List<MatchesModel> adapterList=new ArrayList<>();
+    List<MatchesModel> modelList=new ArrayList<>();
+    List<MatchesChildModel> childModelList=new ArrayList<>();
+    List<MatchesModel> parentList=new ArrayList<>();
+    List<MatchesChildModel> childList=new ArrayList<>();
+    Set<String> dates=new TreeSet<>();
+    String months[]={"Jan","Feb","March","April","May","June","July","August","Sept","Oct","Nov","Dec"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,35 +37,70 @@ public class MatchDetailFrag extends Fragment {
         recyclerView=view.findViewById(R.id.matchDetailRv);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterList=getData();
-        List<MatchesChildModel> childModelList=getChildData();
-        MatchesAdapter adapter=new MatchesAdapter(getContext(),adapterList,childModelList);
+        modelList.clear();childModelList.clear();
+        setData();
+        setParentData();
+        setChildDate();
+        MatchesAdapter adapter=new MatchesAdapter(getContext(),modelList,childModelList);
         recyclerView.setAdapter(adapter);
         return view;
     }
 
-    private List<MatchesChildModel> getChildData(){
-        List<MatchesChildModel> childModelList=new ArrayList<>();
-        MatchesChildModel matchesChildModel=new MatchesChildModel("CSK","MI","Indian Premiure League","MI","MI won by 4wkts","COMPLETED","1","","","176-5","150-7","19.5","20.0");
-        childModelList.add(matchesChildModel);
-        MatchesChildModel matchesChildModel2=new MatchesChildModel("DC","MI","Indian Premiure League","DC","DC won by 30 runs","INPROGRESS","12","","","126-2","180-9","7.5","20.0");
-        childModelList.add(matchesChildModel2);
-        MatchesChildModel matchesChildModel3=new MatchesChildModel("DC","MI","Indian Premiure League","DC","DC won by 30 runs","UPCOMING","12","","","126-2","180-9","7.5","20.0");
-        childModelList.add(matchesChildModel3);
-        return childModelList;
+    private void setChildDate() {
+        childModelList=childList;
     }
 
-    private List<MatchesModel> getData() {
-        List<MatchesModel> data=new ArrayList<>();
-        List<String> list=new ArrayList<>();
-        list.add("1 April, Saturday");
-        list.add("2 May, Thursday");
-        MatchesModel matchesModel=new MatchesModel();
-        matchesModel.setDate(list.get(0));
-        data.add(matchesModel);
-        MatchesModel matchesModel2=new MatchesModel();
-        matchesModel2.setDate(list.get(1));
-        data.add(matchesModel2);
-        return data;
+    private void setParentData() {
+        MatchesModel model=new MatchesModel();
+        for(String x:dates){
+            model.setDate(x);
+            modelList.add(model);
+        }
     }
+
+    private void setData(){
+         for(int i=0;i<3;i++){
+             MatchesChildModel matchesChildModel = new MatchesChildModel();
+            //fetch all data into childModelList but for date
+             matchesChildModel.setsId("");
+             matchesChildModel.setmId("");
+            matchesChildModel.setPremiure("IPL 2021");//series name
+            matchesChildModel.setStatus("COMPLETED");
+             matchesChildModel.setIsDraw("false");
+             matchesChildModel.setWinTeamName("DC");
+            matchesChildModel.setTeam1("RCB");
+            matchesChildModel.setTeam2("DC");
+            matchesChildModel.setTeam1Url("");
+            matchesChildModel.setTeam2Url("");
+            matchesChildModel.setT1iIsBatting("true");
+            matchesChildModel.setT2IsBatting("false");
+            if (matchesChildModel.getT1iIsBatting().equalsIgnoreCase("true")) {
+                matchesChildModel.setTeam1score("136-4");
+                matchesChildModel.setTeam1over("13.2");
+            }else{
+                matchesChildModel.setTeam1score("");
+                matchesChildModel.setTeam1over("");
+            }
+            if (matchesChildModel.getT2IsBatting().equalsIgnoreCase("true")) {
+                matchesChildModel.setTeam2score("136-4");
+                matchesChildModel.setTeam2over("12.4");
+            }else{
+                matchesChildModel.setTeam2score("");
+                matchesChildModel.setTeam2over("");
+            }
+            matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
+            //set date to match modellist and match childmodallist;
+            String dateTime = "2021-06-03T10:00:00Z";
+            String[] arr = dateTime.split("T");//arr[0] gives start date
+            String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
+            //add data to parent and child list
+             String date[]=arr[0].split("-");
+             String sD=(date[2]+" "+months[Integer.parseInt(date[1]) - 1]+","+date[0]);
+             dates.add(sD);
+             matchesChildModel.setStartDate(sD);
+            matchesChildModel.setStartTime(arr2[0]);
+            childList.add(matchesChildModel);
+        }
+    }
+
 }

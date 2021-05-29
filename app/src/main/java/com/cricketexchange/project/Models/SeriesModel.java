@@ -1,18 +1,35 @@
 package com.cricketexchange.project.Models;
 
 public class SeriesModel {
-
+    String sid;
+    String startDate;
     String seriesName;
     String duration;
+    String status;
     public SeriesModel() {
     }
 
-    public SeriesModel(String seriesName, String duration) {
-        this.seriesName = seriesName;
-        this.duration = duration;
+    public String getSid() {
+        return sid;
     }
 
-    public SeriesModel(String seriesName) {
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getSeriesName() {
+        return seriesName;
+    }
+
+    public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
     }
 
@@ -24,11 +41,11 @@ public class SeriesModel {
         this.duration = duration;
     }
 
-    public String getSeriesName() {
-        return seriesName;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

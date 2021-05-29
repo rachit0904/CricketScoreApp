@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.UpcomingSeriesModel;
 import com.cricketexchange.project.R;
@@ -19,11 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAdapter.ViewHolder> {
-    List<UpcomingSeriesModel> list=new ArrayList<>();
     Context context;
-    public UpcomingSeriesAdapter(Context context,List<UpcomingSeriesModel> list) {
-        this.context=context;
+    List<UpcomingSeriesModel> list;
+    List<SeriesModel> childSeriesModel;
+
+    public UpcomingSeriesAdapter(Context context, List<UpcomingSeriesModel> list, List<SeriesModel> childSeriesModel) {
+        this.context = context;
         this.list = list;
+        this.childSeriesModel = childSeriesModel;
     }
 
     @NonNull
@@ -36,12 +38,13 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
     @Override
     public void onBindViewHolder(@NonNull UpcomingSeriesAdapter.ViewHolder holder, int position) {
         UpcomingSeriesModel matchesModel=list.get(position);
-        holder.month.setText(matchesModel.getMatchDate());
+        holder.month.setText(matchesModel.getDate());
         List<SeriesModel> seriesModelList=new ArrayList<>();
-        SeriesModel model=new SeriesModel("T20 blast 2021","2 may to 3 june");
-        seriesModelList.add(model);
-        SeriesModel model2=new SeriesModel("Australia Test Series","21 jan to 15 feb");
-        seriesModelList.add(model2);
+        for(SeriesModel x:childSeriesModel){
+            if(x.getStartDate().equalsIgnoreCase(matchesModel.getDate()) ){
+                seriesModelList.add(x);
+            }
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
         UpcomingSeriesChildAdapter adapter=new UpcomingSeriesChildAdapter(seriesModelList,context);

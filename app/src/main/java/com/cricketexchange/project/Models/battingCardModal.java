@@ -1,12 +1,30 @@
 package com.cricketexchange.project.Models;
 
 public class battingCardModal {
-    String playerName,runs,overs;
+    String playerName,runs,overs,sid,mid;
 
-    public battingCardModal(String playerName, String runs, String overs) {
+    public battingCardModal(String playerName, String runs, String overs, String sid, String mid) {
         this.playerName = playerName;
         this.runs = runs;
         this.overs = overs;
+        this.sid = sid;
+        this.mid = mid;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
     }
 
     public String getPlayerName() {

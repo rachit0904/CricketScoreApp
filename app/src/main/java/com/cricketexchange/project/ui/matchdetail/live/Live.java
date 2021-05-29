@@ -72,20 +72,18 @@ public class Live extends Fragment implements View.OnClickListener {
 
     private List<battingCardModal> setCurrentBattingInningData(){
         battingCardModalList.clear();
-        battingCardModal modal=new battingCardModal("Dwyane Bravo","74","32");
+        battingCardModal modal=new battingCardModal("Dwyane Bravo","74","32","","");
         battingCardModalList.add(modal);
-        battingCardModal modal2=new battingCardModal("MS Dhoni","74","32");
+        battingCardModal modal2=new battingCardModal("MS Dhoni","74","32","","");
         battingCardModalList.add(modal2);
-        battingCardModal modal3=new battingCardModal("Sam Curran","74","32");
-        battingCardModalList.add(modal3);
         return battingCardModalList;
     }
 
     private List<battingCardModal> setYetToBatData(){
         yetToBatList.clear();
-        battingCardModal modal=new battingCardModal("Ravindra Jadeja","","");
+        battingCardModal modal=new battingCardModal("Ravindra Jadeja","","","","");
         yetToBatList.add(modal);
-        battingCardModal modal2=new battingCardModal("Suresh Raina","","");
+        battingCardModal modal2=new battingCardModal("Suresh Raina","","","","");
         yetToBatList.add(modal2);
         return yetToBatList;
     }

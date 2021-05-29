@@ -40,7 +40,13 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position) {
         MatchesModel data=matchesModels.get(position);
         holder.date.setText(data.getDate());
-        MatchesChildAdapter childAdapter=new MatchesChildAdapter(context,childModelList);
+        List<MatchesChildModel> matchesChildModelList =new ArrayList<>();
+        for (MatchesChildModel c: childModelList) {
+            if(c.getStartDate().equalsIgnoreCase(data.getDate())){
+                matchesChildModelList.add(c);
+            }
+        }
+        MatchesChildAdapter childAdapter=new MatchesChildAdapter(context,matchesChildModelList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
         holder.childRv.setLayoutManager(layoutManager);
         holder.childRv.hasFixedSize();

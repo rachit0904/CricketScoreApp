@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.cricketexchange.project.Activity.MatchDetails;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,33 +43,63 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     public void onBindViewHolder(@NonNull MatchesChildAdapter.ViewHolder holder, int position) {
         MatchesChildModel childModel=childModelList.get(position);
         //TODO - picassoo setup for loading team1,2 symbol
+//        Picasso.get().load(childModel.getTeam1Url()).placeholder(R.drawable.trophyicon).into(holder.team1Icon);
+//        Picasso.get().load(childModel.getTeam2Url()).placeholder(R.drawable.trophyicon).into(holder.team2Icon);
         holder.league.setText(childModel.getPremiure());
         holder.team1.setText(childModel.getTeam1());
         holder.team2.setText(childModel.getTeam2());
         String status=childModel.getStatus();
         switch(status){
             case "INPROGRESS":{
-                String t1=childModel.getTeam1score()+"  ("+childModel.getTeam1over()+")";
-                String t2=childModel.getTeam2score()+"  ("+childModel.getTeam2over()+")";
-                holder.t1score.setText(t1);
-                holder.t2score.setText(t2);
+            }case "LIVE":{
+                if(!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty())
+                {
+                       holder.t1score.setText(childModel.getTeam1score()+" ("+childModel.getTeam1over()+")");
+                }
+                if(!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals(""))
+                {
+                    holder.t2score.setText(childModel.getTeam2score()+" ("+childModel.getTeam2over()+")");
+                }
                 holder.matchSummery.setText(childModel.getMatchSummery());
                 break;
-            } case "COMPLETED":{
-                holder.liveIcon.setVisibility(View.GONE);
-                holder.status.setTextColor(context.getColor(R.color.winDispColor));
-                holder.status.setText(childModel.getWinTeamName()+" Won");
-                holder.t1score.setText(childModel.getTeam1score()+"  ("+childModel.getTeam1over()+")");
-                holder.t2score.setText(childModel.getTeam2score()+"  ("+childModel.getTeam2over()+")");
-                holder.matchSummery.setText(childModel.getMatchSummery());
+            }
+            case "COMPLETED":{
+                if(childModel.getIsDraw().contentEquals("false")){
+                    holder.liveIcon.setVisibility(View.GONE);
+                    holder.status.setTextColor(context.getColor(R.color.winDispColor));
+                    holder.status.setText(childModel.getWinTeamName()+" Won");
+                    if(!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty())
+                    {
+                        holder.t1score.setText(childModel.getTeam1score()+" ("+childModel.getTeam1over()+")");
+                    }
+                    if(!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals(""))
+                    {
+                        holder.t2score.setText(childModel.getTeam2score()+" ("+childModel.getTeam2over()+")");
+                    }
+                    holder.matchSummery.setText(childModel.getMatchSummery());
+                }else{
+                    holder.liveIcon.setVisibility(View.GONE);
+                    holder.status.setTextColor(context.getColor(R.color.winTeamName));
+                    holder.status.setText("Match Drawn");
+                    if(!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty())
+                    {
+                        holder.t1score.setText(childModel.getTeam1score()+" ("+childModel.getTeam1over()+")");
+                    }
+                    if(!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals(""))
+                    {
+                        holder.t2score.setText(childModel.getTeam2score()+" ("+childModel.getTeam2over()+")");
+                    }
+                    holder.matchSummery.setText(childModel.getMatchSummery());
+                }
                 break;
-            } case "UPCOMING":{
+            }
+            case "UPCOMING":{
                 holder.layout.setVisibility(View.GONE);
                 holder.t1score.setVisibility(View.INVISIBLE);
                 holder.t2score.setVisibility(View.INVISIBLE);
                 holder.matchSummery.setVisibility(View.GONE);
                 holder.startTimeLayout.setVisibility(View.VISIBLE);
-                holder.startTime.setText("14:00");
+                holder.startTime.setText(childModel.getStartTime());
                 break;
             }
         }
@@ -107,7 +138,7 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
 
         @Override
         public void onClick(View v) {
-            //TODO pass intent mID sId
+            //TODO pass intent mID,sId
             Intent intent=new Intent(context, MatchDetails.class);
             context.startActivity(intent);
         }

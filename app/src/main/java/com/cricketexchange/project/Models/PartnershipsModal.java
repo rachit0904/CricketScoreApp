@@ -1,7 +1,7 @@
 package com.cricketexchange.project.Models;
 
 public class PartnershipsModal {
-    String player1,player2,player1Runs,player2Runs,player1Overs,player2Overs;
+    String player1,player2,player1Runs,player2Runs,player1Overs,player2Overs,mid,sid;
 
     public PartnershipsModal(String player1, String player2, String player1Runs, String player2Runs, String player1Overs, String player2Overs) {
         this.player1 = player1;
@@ -10,6 +10,22 @@ public class PartnershipsModal {
         this.player2Runs = player2Runs;
         this.player1Overs = player1Overs;
         this.player2Overs = player2Overs;
+    }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 
     public String getPlayer1() {
