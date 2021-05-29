@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/activity_news_details.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/activity_team_players_info.xml" value="0.12318840579710146" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_commentary.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_completed_matches.xml" value="0.1" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_days.xml" value="0.12318840579710146" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_live.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_live_matches.xml" value="0.1" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_match_detail.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_points_table.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_squad.xml" value="0.1068840579710145" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_teams.xml" value="0.1068840579710145" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_upcoming_matches.xml" value="0.10507246376811594" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_upcoming_series.xml" value="0.12318840579710146" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/series_fragment.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/upcomingmatches_rv_card.xml" value="0.10507246376811594" />
+      </map>
+    </option>
+  </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="android.annotation.SuppressLint" />
+    </list>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
