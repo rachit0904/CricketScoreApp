@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.schedule.teams.teams">
 
-   <RelativeLayout
-       android:layout_marginTop="20dp"
-       android:layout_marginStart="10dp"
-       android:layout_marginEnd="10dp"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp">
 
-   <androidx.appcompat.widget.SearchView
-       android:id="@+id/search"
-       app:queryHint="search team"
-       android:gravity="center"
-       android:inputType="textCapSentences"
-       android:background="@drawable/roundedborder"
-       android:backgroundTint="@color/darkCardBackground"
-       android:layout_width="match_parent"
-       android:layout_height="40dp"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/team"
-       android:overScrollMode="never"
-       android:layout_below="@id/search"
-       android:layout_marginTop="30dp"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
-   </RelativeLayout>
+        <androidx.appcompat.widget.SearchView
+            android:visibility="gone"
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/roundedborder"
+            android:backgroundTint="@color/darkCardBackground"
+            android:gravity="center"
+            android:inputType="textCapSentences"
+            app:queryHint="search team" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search"
+            android:layout_marginTop="30dp"
+            android:overScrollMode="never" />
+    </RelativeLayout>
 </FrameLayout>

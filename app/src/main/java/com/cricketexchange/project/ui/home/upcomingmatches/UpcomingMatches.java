@@ -52,17 +52,18 @@ public class UpcomingMatches extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_matches, container, false);
         recyclerView = view.findViewById(R.id.upcomingMatches);
+        if (childList.size() > 0) {
+            //Log.e("IF", "" + childList.size());
+            //Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
+            update(false);
+        } else {
+            Log.e("IF", "" + childList.size());
+            load();
 
+        }
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            load();
-        }
-    }
 
     private void setChildDate() {
         childModelList = childList;
@@ -76,13 +77,21 @@ public class UpcomingMatches extends Fragment {
         }
     }
 
-    private void update() {
-        setParentData();
-        setChildDate();
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-        recyclerView.setAdapter(adapter);
+    private void update(Boolean isAt) {
+        if (isAt) {
+            recyclerView.hasFixedSize();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            setParentData();
+            setChildDate();
+            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.hasFixedSize();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+            recyclerView.setAdapter(adapter);
+        }
+
     }
 
     private void load() {
@@ -141,7 +150,7 @@ public class UpcomingMatches extends Fragment {
                             String date[] = arr[0].split("-");
                             String sD = (date[2] + "-" + date[1] + "-" + date[0]);
                             SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-                            Date d= null;
+                            Date d = null;
                             try {
                                 d = sobj.parse(sD);
                             } catch (ParseException e) {
@@ -150,7 +159,7 @@ public class UpcomingMatches extends Fragment {
                             dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            if(matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING")) {
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING")) {
                                 childList.add(matchesChildModel);
                             }
                         } catch (JSONException e) {
@@ -172,7 +181,7 @@ public class UpcomingMatches extends Fragment {
         }
 
         protected void onPostExecute(Long result) {
-            update();
+            update(true);
         }
     }
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
@@ -48,16 +49,19 @@ public class CompletedMatches extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
+        if (childList.size() > 0) {
+            //Log.e("IF", "" + childList.size());
+
+            //  Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
+            update(false);
+        } else {
+           // Log.e("IF", "" + childList.size());
+
+            load();
+        }
         return view;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            load();
-        }
-    }
 
     private void load() {
         new Load().execute("http://3.108.39.214/getPreviousWeekMatches");
@@ -77,14 +81,21 @@ public class CompletedMatches extends Fragment {
     }
 
 
+    private void update(Boolean isAt) {
+        if (isAt) {
+            recyclerView.hasFixedSize();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            setParentData();
+            setChildDate();
+            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.hasFixedSize();
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+            recyclerView.setAdapter(adapter);
+        }
 
-    private void update() {
-        recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        setParentData();
-        setChildDate();
-        MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-        recyclerView.setAdapter(adapter);
     }
 
 
@@ -116,6 +127,21 @@ public class CompletedMatches extends Fragment {
                             matchesChildModel.setIsDraw(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
                             matchesChildModel.setTeam1(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("shortName"));
                             matchesChildModel.setTeam2(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam").getString("shortName"));
+
+                            String winnigteamid = obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("winningTeamId");
+                            if (winnigteamid != null) {
+                                String team1id = (obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("id"));
+                                String team2id = (obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam").getString("id"));
+                                if (winnigteamid.equals(team1id)) {
+
+                                    matchesChildModel.setWinTeamName(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("shortName"));
+                                } else {
+
+                                    matchesChildModel.setWinTeamName(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam").getString("shortName"));
+                                }
+
+
+                            }
                             try {
                                 String logourl1 = obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("logoUrl");
                                 String logourl2 = obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam").getString("logoUrl");
@@ -126,17 +152,18 @@ public class CompletedMatches extends Fragment {
                                 matchesChildModel.setTeam1Url("");
                                 matchesChildModel.setTeam2Url("");
                             }
+
                             matchesChildModel.setT1iIsBatting(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("isBatting"));
                             matchesChildModel.setT2IsBatting(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam").getString("isBatting"));
                             matchesChildModel.setMatchSummery(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("matchSummaryText"));
 
                             JSONObject scores = obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("scores");
 
-                            matchesChildModel.setTeam1score(scores.getString("homeScore"));
-                            matchesChildModel.setTeam1over(scores.getString("homeOvers"));
+                            matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
+                            matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
 
-                            matchesChildModel.setTeam2score(scores.getString("awayScore"));
-                            matchesChildModel.setTeam2over(scores.getString("awayOvers"));
+                            matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
+                            matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
 
                             //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
                             //set date to match modellist and match childmodallist;
@@ -148,7 +175,7 @@ public class CompletedMatches extends Fragment {
                             String date[] = arr[0].split("-");
                             String sD = (date[2] + "-" + date[1] + "-" + date[0]);
                             SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-                            Date d= null;
+                            Date d = null;
                             try {
                                 d = sobj.parse(sD);
                             } catch (ParseException e) {
@@ -157,7 +184,7 @@ public class CompletedMatches extends Fragment {
                             dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            if(matchesChildModel.getStatus().equalsIgnoreCase("COMPLETED")) {
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("COMPLETED")) {
                                 childList.add(matchesChildModel);
                             }
 
@@ -172,8 +199,8 @@ public class CompletedMatches extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.e("ASYNCTASK Child", String.valueOf(childList.size()));
-            Log.e("ASYNCTASK Dates", String.valueOf(dates.size()));
+            //Log.e("ASYNCTASK Child", String.valueOf(childList.size()));
+            //   Log.e("ASYNCTASK Dates", String.valueOf(dates.size()));
 
             return totalSize;
         }
@@ -183,7 +210,7 @@ public class CompletedMatches extends Fragment {
         }
 
         protected void onPostExecute(Long result) {
-            update();
+            update(true);
         }
     }
 
