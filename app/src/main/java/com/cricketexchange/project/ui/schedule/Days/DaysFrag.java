@@ -16,7 +16,10 @@ import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,8 +30,8 @@ public class DaysFrag extends Fragment {
     List<MatchesChildModel> childModelList=new ArrayList<>();
     List<MatchesModel> parentList=new ArrayList<>();
     List<MatchesChildModel> childList=new ArrayList<>();
-    Set<String> dates=new TreeSet<>();
-    String months[]={"Jan","Feb","March","April","May","June","July","August","Sept","Oct","Nov","Dec"};
+    Set<Date> dates=new TreeSet<>();
+    SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,9 +53,9 @@ public class DaysFrag extends Fragment {
     }
 
     private void setParentData() {
-        MatchesModel model=new MatchesModel();
-        for(String x:dates){
-            model.setDate(x);
+        for (Date x : dates) {
+            MatchesModel model = new MatchesModel();
+            model.setDate(sobj.format(x));
             modelList.add(model);
         }
     }
@@ -94,8 +97,15 @@ public class DaysFrag extends Fragment {
             String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
             //add data to parent and child list
             String date[]=arr[0].split("-");
-            String sD=(date[2]+" "+months[Integer.parseInt(date[1]) - 1]+","+date[0]);
-            dates.add(sD);
+            String sD = (date[2] + "-" + date[1] + "-" + date[0]);
+            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
+            Date d= null;
+            try {
+                d = sobj.parse(sD);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dates.add(d);
             matchesChildModel.setStartDate(sD);
             matchesChildModel.setStartTime(arr2[0]);
             childList.add(matchesChildModel);

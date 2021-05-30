@@ -26,7 +26,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -39,11 +42,10 @@ public class UpcomingMatches extends Fragment {
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
     List<MatchesChildModel> childModelList = new ArrayList<>();
-    List<MatchesModel> parentList = new ArrayList<>();
     List<MatchesChildModel> childList = new ArrayList<>();
-    Set<String> dates = new TreeSet<>();
+    Set<Date> dates = new TreeSet<>();
+    SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     MatchesAdapter adapter;
-    String months[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +69,9 @@ public class UpcomingMatches extends Fragment {
     }
 
     private void setParentData() {
-
-        for (String x : dates) {
+        for (Date x : dates) {
             MatchesModel model = new MatchesModel();
-            model.setDate(x);
+            model.setDate(sobj.format(x));
             modelList.add(model);
         }
     }
@@ -80,42 +81,8 @@ public class UpcomingMatches extends Fragment {
         setChildDate();
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        // modelList.clear();
-        //childModelList.clear();
         adapter = new MatchesAdapter(getContext(), modelList, childModelList);
         recyclerView.setAdapter(adapter);
-        Log.e("Update", "updated");
-    }
-
-    private void setData() {
-        for (int i = 0; i < 2; i++) {
-            MatchesChildModel matchesChildModel = new MatchesChildModel();
-            //fetch all data into childModelList but for date
-            matchesChildModel.setsId("");
-            matchesChildModel.setmId("");
-            matchesChildModel.setPremiure("IPL 2021");//series name
-            matchesChildModel.setStatus("UPCOMING");//status upcomming mandatory
-            matchesChildModel.setTeam1("RCB");
-            matchesChildModel.setTeam2("DC");
-            matchesChildModel.setTeam1Url("");
-            matchesChildModel.setTeam2Url("");
-            matchesChildModel.setT1iIsBatting("true");
-            matchesChildModel.setT2IsBatting("false");
-            matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-            //set date to match modellist and match childmodallist;
-            String dateTime = "2021-06-10T10:00:00Z";
-            String[] arr = dateTime.split("T");//arr[0] gives start date
-            String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
-            //add data to parent and child list
-            String date[] = arr[0].split("-");
-            String sD = (date[2] + " " + months[Integer.parseInt(date[1]) - 1] + "," + date[0]);
-            dates.add(sD);
-
-            matchesChildModel.setStartDate(sD);
-            matchesChildModel.setStartTime(arr2[0]);
-            childList.add(matchesChildModel);
-
-        }
     }
 
     private void load() {
@@ -172,14 +139,20 @@ public class UpcomingMatches extends Fragment {
                             String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
                             //add data to parent and child list
                             String date[] = arr[0].split("-");
-                            String sD = (date[2] + " " + months[Integer.parseInt(date[1]) - 1] + "," + date[0]);
-                            dates.add(sD);
+                            String sD = (date[2] + "-" + date[1] + "-" + date[0]);
+                            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
+                            Date d= null;
+                            try {
+                                d = sobj.parse(sD);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            childList.add(matchesChildModel);
-                          //  Log.e("Dates Forloop", sD);
-                         //   Log.e("Premiere Forloop",matchesChildModel.getPremiure() );
-                          //  Log.e("MID Forloop", sD);
+                            if(matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING")) {
+                                childList.add(matchesChildModel);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -191,9 +164,6 @@ public class UpcomingMatches extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.e("ASYNCTASK Child", String.valueOf(childList.size()));
-            Log.e("ASYNCTASK Dates", String.valueOf(dates.size()));
-
             return totalSize;
         }
 

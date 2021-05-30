@@ -16,6 +16,7 @@ import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,33 +40,26 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MatchesAdapter.ViewHolder holder, int position) {
+        String months[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
         MatchesModel data = matchesModels.get(position);
-        holder.date.setText(data.getDate());
+        String date[] = data.getDate().split("-");
+        String sD = (date[0] + " " + months[Integer.parseInt(date[1]) - 1] + "," + date[2]);
         List<MatchesChildModel> matchesChildModelList = new ArrayList<>();
         for (MatchesChildModel c : childModelList) {
             if (c.getStartDate().equalsIgnoreCase(data.getDate())) {
                 matchesChildModelList.add(c);
-                Log.e("FOR DATA", data.getDate());
-                Log.e("FOR PREMIURE", c.getPremiure());
             }
-
         }
-        //Logg();
-
+        if(matchesChildModelList.size()>0) {
+            holder.date.setText(sD);
+        }else{
+            holder.date.setVisibility(View.GONE);
+        }
         MatchesChildAdapter childAdapter = new MatchesChildAdapter(context, matchesChildModelList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
         holder.childRv.setLayoutManager(layoutManager);
         holder.childRv.hasFixedSize();
         holder.childRv.setAdapter(childAdapter);
-    }
-
-    private void Logg() {
-        for (int i = 0; i < childModelList.size(); i++) {
-            Log.e("LOGG CHILDMOLDEL : " + i, childModelList.get(i).getTeam1());
-        }
-        for (int i = 0; i < matchesModels.size(); i++) {
-            Log.e("LOGG MATCHMOLDEL : " + i, matchesModels.get(i).getDate());
-        }
     }
 
     @Override

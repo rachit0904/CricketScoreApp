@@ -23,7 +23,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -36,17 +39,15 @@ public class CompletedMatches extends Fragment {
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
     List<MatchesChildModel> childModelList = new ArrayList<>();
-    List<MatchesModel> parentList = new ArrayList<>();
     List<MatchesChildModel> childList = new ArrayList<>();
-    Set<String> dates = new TreeSet<>();
-    String months[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
+    Set<Date> dates = new TreeSet<>();
+    SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
-
         return view;
     }
 
@@ -68,56 +69,18 @@ public class CompletedMatches extends Fragment {
 
     private void setParentData() {
 
-        for (String x : dates) {
+        for (Date x : dates) {
             MatchesModel model = new MatchesModel();
-            model.setDate(x);
+            model.setDate(sobj.format(x));
             modelList.add(model);
         }
     }
 
-    private void setData() {
-        for (int i = 0; i < 3; i++) {
-            MatchesChildModel matchesChildModel = new MatchesChildModel();
-            //fetch all data into childModelList but for date
-            matchesChildModel.setsId("");
-            matchesChildModel.setmId("");
-            matchesChildModel.setIsDraw("true");
-            matchesChildModel.setPremiure("IPL 2021");//series name
-            matchesChildModel.setStatus("COMPLETED");
-            matchesChildModel.setTeam1("RCB");
-            matchesChildModel.setTeam2("DC");
-            matchesChildModel.setTeam1Url("");
-            matchesChildModel.setTeam2Url("");
-            matchesChildModel.setT1iIsBatting("true");
-            matchesChildModel.setT2IsBatting("false");
-            {
-                matchesChildModel.setTeam1score("136-4");
-                matchesChildModel.setTeam1over("13.2");
-            }
-            {
-                matchesChildModel.setTeam2score("129-3");
-                matchesChildModel.setTeam2over("19.5");
-            }
-            matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-            //set date to match modellist and match childmodallist;
-            String dateTime = "2021-06-05T10:00:00Z";
-            String[] arr = dateTime.split("T");//arr[0] gives start date
-            String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
-            //add data to parent and child list
-            String date[] = arr[0].split("-");
-            String sD = (date[2] + " " + months[Integer.parseInt(date[1]) - 1] + "," + date[0]);
-            dates.add(sD);
-            matchesChildModel.setStartDate(sD);
-            matchesChildModel.setStartTime(arr2[0]);
-            childList.add(matchesChildModel);
-        }
-    }
+
 
     private void update() {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        modelList.clear();
-        childModelList.clear();
         setParentData();
         setChildDate();
         MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
@@ -144,13 +107,6 @@ public class CompletedMatches extends Fragment {
 
                         try {
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
-                            //fetch all data into childModelList but for date
-
-
-                            //  Log.e("Dates Forloop", sD);
-                            //   Log.e("Premiere Forloop",matchesChildModel.getPremiure() );
-                            //  Log.e("MID Forloop", sD);
-
                             //fetch all data into childModelList but for date
 
                             matchesChildModel.setsId(obj.getString("jsondata").split("S")[0]);
@@ -190,12 +146,20 @@ public class CompletedMatches extends Fragment {
                             String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
                             //add data to parent and child list
                             String date[] = arr[0].split("-");
-                            String sD = (date[2] + " " + months[Integer.parseInt(date[1]) - 1] + "," + date[0]);
-                            dates.add(sD);
+                            String sD = (date[2] + "-" + date[1] + "-" + date[0]);
+                            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
+                            Date d= null;
+                            try {
+                                d = sobj.parse(sD);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            childList.add(matchesChildModel);
-
+                            if(matchesChildModel.getStatus().equalsIgnoreCase("COMPLETED")) {
+                                childList.add(matchesChildModel);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
