@@ -53,7 +53,7 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
             super(itemView);
             textView = itemView.findViewById(R.id.seriesName);
             more = itemView.findViewById(R.id.viewSeriesDetail);
-            textView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override

@@ -44,6 +44,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
     boolean isupdated = false;
     String title, imageposter, description;
     WebView des;
+    String extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
 
-        String extras = getIntent().getStringExtra("id");
+        extras = getIntent().getStringExtra("id");
         if (extras == null) {
             Toast.makeText(this, "Something Wents Wrong", Toast.LENGTH_SHORT).show();
             finish();
@@ -84,6 +85,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
             t_title.setText(title);
             Picasso.get().load(imageposter).into(i_poster);
             String testhtml = "<html><head><style>body{background:#FF000000;color:white}</style></head><body>" + description + "</body></html>";
+            des.setBackgroundColor(000);
             des.loadDataWithBaseURL(null, testhtml, "text/html", null, null);
             Log.e("Testhtml", testhtml);
             progressBar.setVisibility(View.GONE);
@@ -103,7 +105,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
 
     public void load() {
-        String url = "https://temp.booksmotion.com/newsapi.json";
+        String url = "http://3.108.39.214/news";
         new LoadData().execute(url);
         if (isupdated) {
             update();
@@ -142,7 +144,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
                                 String con = object.getString("con");
                                 Log.e("RESPONSE :id :", id);
                                 NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
-                                newslist.add(newsModel);
+
+                                if (!extras.equals(id)) {
+                                    newslist.add(newsModel);
+                                }
                             }
 
                         } catch (JSONException e) {

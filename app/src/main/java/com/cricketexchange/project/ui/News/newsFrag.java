@@ -87,7 +87,7 @@ public class newsFrag extends Fragment {
 
     private void addMenuItemsFromJson() {
         progressBar.setVisibility(View.VISIBLE);
-        new LoadData().execute("https://temp.booksmotion.com/newsapi.json");
+        new LoadData().execute("http://3.108.39.214/news");
     }
 
 

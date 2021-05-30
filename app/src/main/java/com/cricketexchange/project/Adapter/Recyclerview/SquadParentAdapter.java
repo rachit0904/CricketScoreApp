@@ -18,6 +18,7 @@ import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +35,17 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
     @NonNull
     @Override
     public SquadParentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.teamrv_card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teamrv_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SquadParentAdapter.ViewHolder holder, int position) {
-        SquadModel model=squadModelList.get(position);
+        SquadModel model = squadModelList.get(position);
         holder.SquadName.setText(model.getSquadName());
-        //TODO - set squad logo
+        if (model.getSquadLogoUrl().trim().length() != 0) {
+            Picasso.get().load(model.getSquadLogoUrl()).into(holder.squadLogo);
+        }
 
     }
 
@@ -55,18 +58,20 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
         ImageView squadLogo;
         TextView SquadName;
         CoordinatorLayout layout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             squadLogo = itemView.findViewById(R.id.teamlogo);
             SquadName = itemView.findViewById(R.id.teamname);
             layout = itemView.findViewById(R.id.teamlayout);
-            layout.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            //TODO - send matchID seriesID to team details
-            context.startActivity(new Intent(context, TeamPlayersInfo.class));
+            Intent intent = new Intent(context, TeamPlayersInfo.class);
+            intent.putExtra("tid", 8);
+            context.startActivity(intent);
         }
     }
 }
