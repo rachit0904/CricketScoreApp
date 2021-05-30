@@ -14,7 +14,7 @@ public class MatchesChildModel {
         this.status = status;
         this.startTime = startTime;
         this.team1Url = team1Url;
-        Team2Url = team2Url;
+        this.Team2Url = team2Url;
         this.team1score = team1score;
         this.team2score = team2score;
         this.team1over = team1over;
