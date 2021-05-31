@@ -77,7 +77,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
 
 
-    private void update(boolean isAT) {
+    private void update() {
         teamShortName.setText(teamsrt);
         teamFullName.setText(teamlong);
         teamShortName.setTextColor(Integer.parseInt(teamcolor));
