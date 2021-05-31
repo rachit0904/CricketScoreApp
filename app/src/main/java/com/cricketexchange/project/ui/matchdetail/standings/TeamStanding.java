@@ -39,6 +39,7 @@ public class TeamStanding extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team_standing, container, false);
         recyclerView = view.findViewById(R.id.pointsTableRv);
+        scoreCardModelList.clear();
         load();
         return view;
     }

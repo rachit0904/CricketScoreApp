@@ -199,10 +199,8 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
                             playersDataModel.setName(obj.getString("fullName"));
                             playersDataModel.setBattingStyle(obj.getString("battingStyle"));
                             playersDataModel.setBowlingStyle(obj.getString("bowlingStyle"));
-                            if(!obj.getString("playerType").isEmpty())
-                                playersDataModel.setPlayerType(obj.getString("playerType"));
-                            if(!obj.getString("imageURL").isEmpty())
-                            playersDataModel.setLogoUrl(obj.getString("imageURL"));
+                                playersDataModel.setPlayerType("NA");
+                            playersDataModel.setLogoUrl("NA");
                             if (playersDataModel.getBowlingStyle().trim().length() == 0) {
                                 playersDataModel.setBowlingStyle("NA");
                             }
