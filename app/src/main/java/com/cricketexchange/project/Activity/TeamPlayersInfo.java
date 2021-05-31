@@ -50,6 +50,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     RecyclerView recyclerView;
     Toolbar materialToolbar;
     String tid = "8";
+    String teamsrt, teamlong, teamcolor;
     Boolean notifyFlag = false;
     List<PlayersDataModel> list = new ArrayList<>();
 
@@ -59,7 +60,12 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_team_players_info);
         materialToolbar = findViewById(R.id.toolbar4);
         setSupportActionBar(materialToolbar);
-        getSupportActionBar().setTitle("");
+        tid = getIntent().getStringExtra("tid");
+        teamsrt = getIntent().getStringExtra("tsn");
+        teamlong = getIntent().getStringExtra("tln");
+        teamcolor = getIntent().getStringExtra("tcl").split("#")[1];
+        String seriesname = getIntent().getStringExtra("sname");
+        getSupportActionBar().setTitle(seriesname);
         bck = findViewById(R.id.back);
         teamLogo = findViewById(R.id.pt1Logo);
         teamShortName = findViewById(R.id.teamShortName);
@@ -76,6 +82,9 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     }
 
     private void update(boolean isAT) {
+        teamShortName.setText(teamsrt);
+        teamFullName.setText(teamlong);
+        teamShortName.setTextColor(Integer.parseInt(teamcolor));
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PlayerDataAdapter adapter = new PlayerDataAdapter(list);
@@ -85,9 +94,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     private List<PlayersDataModel> getData() {
         //TODO set team image
-        teamShortName.setText("RCB");
-        teamFullName.setText("Royal Challengers Bangalore");
-        teamShortName.setTextColor(getColor(R.color.live));
+
         List<PlayersDataModel> dataModelList = new ArrayList<>();
         {
             PlayersDataModel dataModel = new PlayersDataModel("Virat Kohli", "", "Batsman", "Right hand", "Right arm bowler");
