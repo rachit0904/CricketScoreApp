@@ -15,13 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
+import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamRecycleAdapter  extends RecyclerView.Adapter<TeamRecycleAdapter.ViewHolder> {
+public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.ViewHolder> {
     Context context;
-    List<SquadModel> modelList=new ArrayList<>();
+
+    List<SquadModel> modelList = new ArrayList<>();
 
     public TeamRecycleAdapter(Context context, List<SquadModel> modelList) {
         this.context = context;
@@ -31,14 +34,17 @@ public class TeamRecycleAdapter  extends RecyclerView.Adapter<TeamRecycleAdapter
     @NonNull
     @Override
     public TeamRecycleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.teamrv_card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teamrv_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TeamRecycleAdapter.ViewHolder holder, int position) {
-        SquadModel model=modelList.get(position);
-        //TODO - picasso for setting team logo
+        SquadModel model = modelList.get(position);
+        String url = model.getSquadLogoUrl();
+        if (url != null || url != "") {
+            Picasso.get().load(url).into(holder.teamLogo);
+        }
         holder.teamName.setText(model.getSquadName());
     }
 
@@ -51,12 +57,13 @@ public class TeamRecycleAdapter  extends RecyclerView.Adapter<TeamRecycleAdapter
         ImageView teamLogo;
         TextView teamName;
         CoordinatorLayout layout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout=itemView.findViewById(R.id.teamlayout);
+            layout = itemView.findViewById(R.id.teamlayout);
             layout.setOnClickListener(this);
-            teamLogo=itemView.findViewById(R.id.teamlogo);
-            teamName=itemView.findViewById(R.id.teamname);
+            teamLogo = itemView.findViewById(R.id.teamlogo);
+            teamName = itemView.findViewById(R.id.teamname);
         }
 
         @Override

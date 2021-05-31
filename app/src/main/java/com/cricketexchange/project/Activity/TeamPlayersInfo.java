@@ -13,6 +13,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,38 +23,64 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
+import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
+import com.cricketexchange.project.ui.series.match.MatchDetailFrag;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickListener {
-    ImageView bck,teamLogo;
-    TextView teamShortName,teamFullName;
+    ImageView bck, teamLogo;
+    TextView teamShortName, teamFullName;
     RecyclerView recyclerView;
     Toolbar materialToolbar;
-    Boolean notifyFlag=false;
-    List<PlayersDataModel> list=new ArrayList<>();
+    String tid = "8";
+    Boolean notifyFlag = false;
+    List<PlayersDataModel> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_players_info);
-        materialToolbar=findViewById(R.id.toolbar4);
+        materialToolbar = findViewById(R.id.toolbar4);
         setSupportActionBar(materialToolbar);
         getSupportActionBar().setTitle("");
-        bck=findViewById(R.id.back);
-        teamLogo=findViewById(R.id.pt1Logo);
-        teamShortName=findViewById(R.id.teamShortName);
-        teamFullName=findViewById(R.id.teamFullName);
+        bck = findViewById(R.id.back);
+        teamLogo = findViewById(R.id.pt1Logo);
+        teamShortName = findViewById(R.id.teamShortName);
+        teamFullName = findViewById(R.id.teamFullName);
         bck.setOnClickListener(this);
-        recyclerView=findViewById(R.id.players);
+        recyclerView = findViewById(R.id.players);
+
+        load();
+    }
+
+    private void load() {
+        new Load().execute("http://3.108.39.214/getAllPlayerByTID?id=" + tid);
+
+    }
+
+    private void update(boolean isAT) {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        list=getData();
-        PlayerDataAdapter adapter=new PlayerDataAdapter(list);
+        PlayerDataAdapter adapter = new PlayerDataAdapter(list);
         recyclerView.setAdapter(adapter);
+
     }
 
     private List<PlayersDataModel> getData() {
@@ -85,22 +112,20 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.notification_menu,menu);
+        getMenuInflater().inflate(R.menu.notification_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.notification){
-            if (!notifyFlag)
-            {
+        if (item.getItemId() == R.id.notification) {
+            if (!notifyFlag) {
                 //TOOD add team to db for verification and further process of sending notification
                 item.setIcon(getResources().getDrawable(R.drawable.notifyon));
                 Snackbar.make(findViewById(R.id.notification), "notification turned on for this team's all upcoming matches!", Snackbar.LENGTH_SHORT).show();
                 notifyFlag = true;
                 setPreference();
-            }
-            else {
+            } else {
                 item.setIcon(getResources().getDrawable(R.drawable.notify));
                 Snackbar.make(findViewById(R.id.notification), "notification turned off!", Snackbar.LENGTH_SHORT).show();
                 notifyFlag = false;
@@ -110,33 +135,33 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    private void setDefaults(){
+    private void setDefaults() {
         // TODO set notification on or off on bases of whether teamId set for notification [from db]
     }
 
     public void teamMatchNotification(Context context, String title, String text) {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel=new NotificationChannel("demo2","team match Update", NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager manager=context.getSystemService(NotificationManager.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("demo2", "team match Update", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
         bigText.bigText(text);
-        NotificationCompat.Builder builder=new NotificationCompat.Builder(context,"demo2");
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "demo2");
         builder.setContentTitle(title);
         builder.setSmallIcon(R.drawable.ic_baseline_sports_cricket_24);
         builder.setPriority(Notification.PRIORITY_MAX);
         builder.setStyle(bigText);
         builder.setAutoCancel(true);
-        NotificationManagerCompat managerCompat=NotificationManagerCompat.from(context);
-        managerCompat.notify(1,builder.build());
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+        managerCompat.notify(1, builder.build());
 
     }
 
     private void setPreference() {
-        SharedPreferences preferences=getSharedPreferences("prefs",0);
+        SharedPreferences preferences = getSharedPreferences("prefs", 0);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("team notification", notifyFlag);
         editor.apply();
@@ -144,8 +169,66 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if(v==bck){
+        if (v == bck) {
             finish();
         }
     }
+
+    private class Load extends AsyncTask<String, Integer, Long> {
+        protected Long doInBackground(String... urls) {
+            long totalSize = 0;
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(urls[0])
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                if (response.isSuccessful()) {
+                    JSONObject object = new JSONObject(response.body().string());
+                    JSONArray data = object.getJSONObject("data").getJSONObject("teamPlayers").getJSONArray("players");
+
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject obj = data.getJSONObject(i);
+
+
+                        try {
+                            PlayersDataModel playersDataModel = new PlayersDataModel();
+                            playersDataModel.setName(obj.getString("fullName"));
+                            playersDataModel.setBattingStyle(obj.getString("battingStyle"));
+                            playersDataModel.setBowlingStyle(obj.getString("bowlingStyle"));
+                            playersDataModel.setPlayerType("NA");
+                            playersDataModel.setLogoUrl("NA");
+                            if (playersDataModel.getBowlingStyle().trim().length() == 0) {
+                                playersDataModel.setBowlingStyle("NA");
+                            }
+                            if (playersDataModel.getBattingStyle().trim().length() == 0) {
+                                playersDataModel.setBattingStyle("NA");
+                            }
+                            list.add(playersDataModel);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //Log.e("ASYNCTASK Child", String.valueOf(childList.size()));
+            //   Log.e("ASYNCTASK Dates", String.valueOf(dates.size()));
+
+            return totalSize;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        protected void onPostExecute(Long result) {
+            update(true);
+        }
+    }
+
 }
