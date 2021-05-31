@@ -105,6 +105,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
 
     public void load() {
+        progressBar2.setVisibility(View.VISIBLE);
         String url = "http://3.108.39.214/news";
         new LoadData().execute(url);
         if (isupdated) {
@@ -137,7 +138,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
                             for (int i = 0; i < 6; i++) {
 
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String id = object.getString("id");
+                                String id = object.getString("_id");
                                 String Maintitle = object.getString("tit");
                                 String Secondarytitle = object.getString("des");
                                 String img = object.getString("img");

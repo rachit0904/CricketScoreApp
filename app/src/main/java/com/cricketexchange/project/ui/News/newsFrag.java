@@ -75,7 +75,7 @@ public class newsFrag extends Fragment {
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
-        Picasso.setSingletonInstance(new Picasso.Builder(getActivity()).build());
+//        Picasso.setSingletonInstance(new Picasso.Builder(getActivity()).build());
         addMenuItemsFromJson();
 
 
@@ -119,7 +119,7 @@ public class newsFrag extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                String id = object.getString("id");
+                                String id = object.getString("_id");
                                 String Maintitle = object.getString("tit");
                                 String Secondarytitle = object.getString("des");
                                 String img = object.getString("img");
