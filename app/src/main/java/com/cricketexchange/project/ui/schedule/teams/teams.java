@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import okhttp3.OkHttpClient;
@@ -46,7 +47,7 @@ public class teams extends Fragment {
     RecyclerView recyclerView;
     SearchView searchView;
     TeamRecycleAdapter adapter;
-    List<SquadModel> list = new ArrayList<>();
+    List<SquadModel> list = new ArrayList<>();//list
     List<SquadModel> filterd = new ArrayList<>();
     Set<SquadModel> set = new HashSet<>();
     ProgressBar progressBar;
@@ -62,18 +63,15 @@ public class teams extends Fragment {
         searchView.setIconified(false);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 progressBar.setVisibility(View.VISIBLE);
                 filterd.clear();
                 if (query.equals("")) {
                     filterd.addAll(list);
-                    Log.d("onQueryTextChange if", query);
                 } else {
-                    Log.d("onQueryTextChange else", query);
                     for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getSquadName().toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
+                        if (list.get(i).getSquadFullname().toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))) {
                             filterd.add(list.get(i));
                         }
                     }
@@ -90,11 +88,9 @@ public class teams extends Fragment {
                 filterd.clear();
                 if (newText.equals("")) {
                     filterd.addAll(list);
-                    Log.d("onQueryTextChange if", newText);
                 } else {
-                    Log.d("onQueryTextChange else", newText);
                     for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getSquadName().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
+                        if (list.get(i).getSquadFullname().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
                             filterd.add(list.get(i));
                         }
                     }
@@ -161,9 +157,8 @@ public class teams extends Fragment {
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
 
-                        SquadModel model = new SquadModel(obj.getString("logoUrl"), obj.getString("name"));
-                        set.add(model);
-
+                        SquadModel model=new SquadModel(obj.getString("id"),obj.getString("shortName"),obj.getString("name"),obj.getString("logoUrl"),obj.getString("teamColour"));
+                            set.add(model);
                     }
                 }
             } catch (IOException e) {

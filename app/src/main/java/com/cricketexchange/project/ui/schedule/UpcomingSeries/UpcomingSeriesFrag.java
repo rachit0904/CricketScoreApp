@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -45,7 +46,7 @@ public class UpcomingSeriesFrag extends Fragment {
     List<SeriesModel> childList = new ArrayList<>();
     Set<Date> dates = new TreeSet<>();
     List<SeriesModel> cList = new ArrayList<>();
-    SimpleDateFormat sobj = new SimpleDateFormat("MM/dd/yyyy");
+    SimpleDateFormat sobj = new SimpleDateFormat("MM-yyyy");
     UpcomingSeriesAdapter adapter;
     String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
 
@@ -144,35 +145,30 @@ public class UpcomingSeriesFrag extends Fragment {
                             SeriesModel SsriesModel = new SeriesModel();
                             //fetch all data into childModelList but for date
                             String id = obj.getString("id");
-                            String status = obj.getString("status");
+//                            String status = obj.getString("status");
                             String startDateTime = obj.getString("startDateTime");
-                            String type = obj.getString("type");
+                            String date[] = startDateTime.split("/");
+                            String enddate = obj.getString("endDateTime"); //take start date here format [mm dd yyyy]
+                            String date2[] = enddate.split("/");
+                            //  dates.add(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
+                            //  childModal.setStartDate(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
+                            //[start date to end date]
+                            String sD = (date[1] + " " + arr[Integer.parseInt(date[0]) - 1]), eD = (date2[1] + " " + arr[Integer.parseInt(date2[0]) - 1]);
+                            SsriesModel.setDuration(sD + "  to  " + eD);
+//                            String type = obj.getString("type");
                             String name = obj.getString("name");
-                            SsriesModel.setStatus(status);
+//                            SsriesModel.setStatus(status);
                             SsriesModel.setSid(id);
                             SsriesModel.setSeriesName(name);
-                            SsriesModel.setStartDate(startDateTime);
-                            SsriesModel.setType(type);
-                            ///SeriesModel.set
-
-                            Log.e("FOR UPCOMOING NAME", name);
-                            Log.e("FOR UPCOMOING type", type);
-                            Log.e("FOR UPCOMOING status", status);
-                            Log.e("FOR UPCOMOING id", id);
-                            //set date to match modellist and match childmodallist;
-
-
-                            String sD = startDateTime;
-                            Date d = null;
-                            try {
-                                d = sobj.parse(sD);
-                                Log.e("FOR UPCOMOING DATE", String.valueOf(d.getDate()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+//                            SsriesModel.setType(type);
+                            Date d=null;
+                            d=sobj.parse(date[0] +"-"+date[2]);
+                            SsriesModel.setStartDate(sobj.format(d));
                             dates.add(d);
                             childList.add(SsriesModel);
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
 

@@ -1,7 +1,7 @@
 package com.cricketexchange.project.Models;
 
 public class PlayersDataModel {
-    String name,logoUrl,playerType,battingStyle,bowlingStyle;
+    String id,name,logoUrl,playerType,battingStyle,bowlingStyle;
 
     public PlayersDataModel() {
     }
@@ -12,6 +12,14 @@ public class PlayersDataModel {
         this.playerType = playerType;
         this.battingStyle = battingStyle;
         this.bowlingStyle = bowlingStyle;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

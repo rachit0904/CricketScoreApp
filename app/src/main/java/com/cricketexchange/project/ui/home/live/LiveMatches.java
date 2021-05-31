@@ -64,11 +64,8 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.liveMatches);
 
         if (childList.size() > 0) {
-            Log.e("IF", "" + childList.size());
-            Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
             update();
         } else {
-            Log.e("IF", "" + childList.size());
             load();
 
         }

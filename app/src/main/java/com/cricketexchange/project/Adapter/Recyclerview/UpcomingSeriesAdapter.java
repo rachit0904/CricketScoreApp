@@ -26,7 +26,6 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
     Context context;
     List<UpcomingSeriesModel> list;
     List<SeriesModel> childSeriesModel;
-    SimpleDateFormat sobj = new SimpleDateFormat("MM/dd/yyyy");
 
     public UpcomingSeriesAdapter(Context context, List<UpcomingSeriesModel> list, List<SeriesModel> childSeriesModel) {
         this.context = context;
@@ -44,18 +43,14 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
     @Override
     public void onBindViewHolder(@NonNull UpcomingSeriesAdapter.ViewHolder holder, int position) {
         UpcomingSeriesModel matchesModel = list.get(position);
-        Utility utility = new Utility();
-        holder.month.setText(utility.convertstartdate(matchesModel.getDate()));
+        String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
         List<SeriesModel> seriesModelList = new ArrayList<>();
         for (SeriesModel x : childSeriesModel) {
-            Log.e("\nFFFFOOO x", x.getStartDate() + "\n");
-            Log.e("\nFFFFOOO m", matchesModel.getDate() + "\n");
-            try {
-                if (sobj.parse(x.getStartDate()).equals(sobj.parse(matchesModel.getDate()))) {
-                    seriesModelList.add(x);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if ((x.getStartDate()).equals((matchesModel.getDate()))) {
+                String date=x.getStartDate();
+                String d[]=date.split("-");
+                holder.month.setText(arr[Integer.parseInt(d[0])-1]+" "+d[1]);
+                seriesModelList.add(x);
             }
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);

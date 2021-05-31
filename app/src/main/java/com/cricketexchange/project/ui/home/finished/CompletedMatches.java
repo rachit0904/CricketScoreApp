@@ -50,13 +50,8 @@ public class CompletedMatches extends Fragment {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
         if (childList.size() > 0) {
-            //Log.e("IF", "" + childList.size());
-
-            //  Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
             update(false);
         } else {
-           // Log.e("IF", "" + childList.size());
-
             load();
         }
         return view;
