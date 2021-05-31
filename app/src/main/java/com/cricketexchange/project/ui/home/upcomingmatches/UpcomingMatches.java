@@ -53,11 +53,8 @@ public class UpcomingMatches extends Fragment {
         View view = inflater.inflate(R.layout.fragment_upcoming_matches, container, false);
         recyclerView = view.findViewById(R.id.upcomingMatches);
         if (childList.size() > 0) {
-            //Log.e("IF", "" + childList.size());
-            //Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
             update(false);
         } else {
-            Log.e("IF", "" + childList.size());
             load();
 
         }

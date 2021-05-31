@@ -52,7 +52,7 @@ public class MatchDetailFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_match_detail, container, false);
         recyclerView = view.findViewById(R.id.matchDetailRv);
         recyclerView.hasFixedSize();
-
+        modelList.clear();childModelList.clear();
         load();
         return view;
     }

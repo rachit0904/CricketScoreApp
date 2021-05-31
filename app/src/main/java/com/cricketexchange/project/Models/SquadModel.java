@@ -1,12 +1,11 @@
 package com.cricketexchange.project.Models;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 public class SquadModel {
-    String squadLogoUrl;
+    String id;
     String squadName;
     String squadFullname;
-
+    String squadLogoUrl;
+    String SquadColor;
     public String getSquadFullname() {
         return squadFullname;
     }
@@ -15,22 +14,21 @@ public class SquadModel {
         this.squadFullname = squadFullname;
     }
 
-    public String getSquadColler() {
-        return SquadColler;
+    public String getSquadColor() {
+        return SquadColor;
     }
 
-    public void setSquadColler(String squadColler) {
-        SquadColler = squadColler;
+    public void setSquadColor(String squadColor) {
+        SquadColor = squadColor;
     }
 
-    public SquadModel(String squadLogoUrl, String squadName, String squadFullname, String squadColler) {
-        this.squadLogoUrl = squadLogoUrl;
+    public SquadModel(String id, String squadName, String squadFullname, String squadLogoUrl, String squadColor) {
+        this.id = id;
         this.squadName = squadName;
         this.squadFullname = squadFullname;
-        SquadColler = squadColler;
+        this.squadLogoUrl = squadLogoUrl;
+        SquadColor = squadColor;
     }
-
-    String SquadColler;
 
     public SquadModel() {
     }

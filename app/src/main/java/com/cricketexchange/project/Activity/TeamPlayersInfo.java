@@ -23,10 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
-import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.series.match.MatchDetailFrag;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -34,10 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -66,7 +61,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         teamFullName = findViewById(R.id.teamFullName);
         bck.setOnClickListener(this);
         recyclerView = findViewById(R.id.players);
-
         load();
     }
 
@@ -75,7 +69,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void update(boolean isAT) {
+    private void update() {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PlayerDataAdapter adapter = new PlayerDataAdapter(list);
@@ -84,7 +78,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     }
 
     private List<PlayersDataModel> getData() {
-        //TODO set team image
         teamShortName.setText("RCB");
         teamFullName.setText("Royal Challengers Bangalore");
         teamShortName.setTextColor(getColor(R.color.live));
@@ -193,11 +186,14 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
                         try {
                             PlayersDataModel playersDataModel = new PlayersDataModel();
+                            playersDataModel.setId(obj.getString("playerId"));
                             playersDataModel.setName(obj.getString("fullName"));
                             playersDataModel.setBattingStyle(obj.getString("battingStyle"));
                             playersDataModel.setBowlingStyle(obj.getString("bowlingStyle"));
-                            playersDataModel.setPlayerType("NA");
-                            playersDataModel.setLogoUrl("NA");
+                            if(!obj.getString("playerType").isEmpty())
+                                playersDataModel.setPlayerType(obj.getString("playerType"));
+                            if(!obj.getString("imageURL").isEmpty())
+                            playersDataModel.setLogoUrl(obj.getString("imageURL"));
                             if (playersDataModel.getBowlingStyle().trim().length() == 0) {
                                 playersDataModel.setBowlingStyle("NA");
                             }
@@ -227,7 +223,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         }
 
         protected void onPostExecute(Long result) {
-            update(true);
+            update();
         }
     }
 

@@ -39,7 +39,7 @@ public class PointsTableFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_points_table, container, false);
         recyclerView = view.findViewById(R.id.scoresRowRv);
-
+        scoreCardModelList.clear();
         load();
         return view;
     }
