@@ -47,7 +47,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     TextView teamShortName, teamFullName;
     RecyclerView recyclerView;
     Toolbar materialToolbar;
-    String tid = "8";
+    String tid = null;
     String teamsrt, teamlong, teamcolor;
     String seriesname,teamname;
     Boolean notifyFlag = false;
@@ -58,7 +58,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_players_info);
         materialToolbar = findViewById(R.id.toolbar4);
-        setSupportActionBar(materialToolbar);
         tid = getIntent().getStringExtra("tid");
         teamsrt = getIntent().getStringExtra("tsn");
         teamlong = getIntent().getStringExtra("tln");
@@ -77,7 +76,11 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
             Picasso.get().load(teamlong).into(teamLogo);
         }
         teamFullName.setText(teamname);
-        teamFullName.setTextColor(Color.parseColor(teamcolor));
+        if (teamcolor.isEmpty()){
+            teamShortName.setTextColor(Color.WHITE);
+        }else {
+            teamShortName.setTextColor(Color.parseColor(teamcolor));
+        }
         load();
     }
 
@@ -95,30 +98,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         PlayerDataAdapter adapter = new PlayerDataAdapter(list);
         recyclerView.setAdapter(adapter);
 
-    }
-
-    private List<PlayersDataModel> getData() {
-
-        List<PlayersDataModel> dataModelList = new ArrayList<>();
-        {
-            PlayersDataModel dataModel = new PlayersDataModel("Virat Kohli", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel);
-            PlayersDataModel dataModel2 = new PlayersDataModel("Chris Gayle", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel2);
-            PlayersDataModel dataModel3 = new PlayersDataModel("Yuzendra Chahal", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel3);
-            PlayersDataModel dataModel4 = new PlayersDataModel("AB de Villers", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel4);
-            PlayersDataModel dataModel5 = new PlayersDataModel("Devdutt Padikal", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel5);
-            PlayersDataModel dataModel6 = new PlayersDataModel("Glenn Maxwel", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel6);
-            PlayersDataModel dataModel7 = new PlayersDataModel("Washington Sunder", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel7);
-            PlayersDataModel dataModel8 = new PlayersDataModel("Mohammad Siraj", "", "Batsman", "Right hand", "Right arm bowler");
-            dataModelList.add(dataModel8);
-        }
-        return dataModelList;
     }
 
     @Override
