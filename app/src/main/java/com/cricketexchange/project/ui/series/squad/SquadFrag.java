@@ -98,8 +98,7 @@ public class SquadFrag extends Fragment {
 
 
                         try {
-                         SquadModel model = new SquadModel(obj.getString("id"), obj.getString("logoUrl"), obj.getString("shortName"), obj.getString("name"), obj.getString("teamColour"));
-
+                         SquadModel model = new SquadModel(obj.getString("id"),  obj.getString("shortName"), obj.getString("name"), obj.getString("logoUrl"),obj.getString("teamColour"));
                             list.add(model);
                         } catch (JSONException e) {
                             e.printStackTrace();

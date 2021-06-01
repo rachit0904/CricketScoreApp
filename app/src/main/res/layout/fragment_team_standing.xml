@@ -27,9 +27,10 @@
         <androidx.cardview.widget.CardView
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#232323"
             app:cardCornerRadius="@dimen/cardview_default_elevation"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -90,6 +91,7 @@
                 android:id="@+id/pointsTableRv"
                 tools:itemCount="1"
                 android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/scorerow_rv_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

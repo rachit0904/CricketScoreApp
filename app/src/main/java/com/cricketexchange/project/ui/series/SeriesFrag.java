@@ -60,15 +60,6 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         return root;
     }
 
-    private ArrayList<SeriesModel> getData() {
-        ArrayList<SeriesModel> list = new ArrayList<>();
-        SeriesModel model = new SeriesModel();
-        for (int i = 0; i < 4; i++) {
-            model.setSeriesName("Indian Premiere League 2021");
-            list.add(model);
-        }
-        return list;
-    }
 
     @Override
     public void onClick(View v) {

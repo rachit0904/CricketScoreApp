@@ -48,7 +48,7 @@ public class CompletedMatches extends Fragment {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
         progressBar = view.findViewById(R.id.progressBar);
-        childList.clear();
+        modelList.clear();
         childModelList.clear();
         load();
         return view;
