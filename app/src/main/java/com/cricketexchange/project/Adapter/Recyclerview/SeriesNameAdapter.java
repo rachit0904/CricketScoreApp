@@ -60,6 +60,7 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
         public void onClick(View v) {
             Intent intent = new Intent(context, SeriesDetail.class);
             intent.putExtra("sid", seriesData.get(getAdapterPosition()).getSid());
+            intent.putExtra("name", seriesData.get(getAdapterPosition()).getSeriesName());
             context.startActivity(intent);
         }
     }

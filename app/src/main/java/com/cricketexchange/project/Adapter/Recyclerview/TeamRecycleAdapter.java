@@ -2,6 +2,7 @@ package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.teamlayout);
-            layout.setOnClickListener(this);
+            itemView.setOnClickListener(this);
             teamLogo = itemView.findViewById(R.id.teamlogo);
             teamName = itemView.findViewById(R.id.teamname);
         }
@@ -70,7 +71,18 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
         @Override
         public void onClick(View v) {
             //TODO - send matchID seriesID to team details
-            context.startActivity(new Intent(context, TeamPlayersInfo.class));
+            Intent intent = new Intent(context, TeamPlayersInfo.class);
+            intent.putExtra("tid", modelList.get(getAdapterPosition()).getSquadID());
+            intent.putExtra("tsn", modelList.get(getAdapterPosition()).getSquadName());
+            intent.putExtra("tln", modelList.get(getAdapterPosition()).getSquadLogoUrl());
+            intent.putExtra("tcl", modelList.get(getAdapterPosition()).getSquadColor());
+            intent.putExtra("sname", modelList.get(getAdapterPosition()).getSquadFullname());
+
+
+            Log.e("ONCLICK", "\nTID " + modelList.get(getAdapterPosition()).getSquadID()+ "\nTSN " + modelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + modelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + modelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + modelList.get(getAdapterPosition()).getSquadFullname())
+            ;
+
+            context.startActivity(intent);
         }
     }
 }

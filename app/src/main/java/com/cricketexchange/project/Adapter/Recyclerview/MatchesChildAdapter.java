@@ -2,8 +2,6 @@ package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -144,6 +140,8 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
         public void onClick(View v) {
             //TODO pass intent mID,sId
             Intent intent = new Intent(context, MatchDetails.class);
+            String match = childModelList.get(getAdapterPosition()).getTeam1() + " vs " + childModelList.get(getAdapterPosition()).getTeam2();
+            intent.putExtra("match", match);
             context.startActivity(intent);
         }
     }

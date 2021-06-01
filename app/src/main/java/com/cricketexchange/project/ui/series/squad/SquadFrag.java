@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,19 +31,23 @@ public class SquadFrag extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<SquadModel> list = new ArrayList<>();
-    String sid = "2739";
+    String sid = "";
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_squad, container, false);
         recyclerView = view.findViewById(R.id.squadRv);
-
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        list.clear();
+        progressBar = view.findViewById(R.id.progressBar);
         load();
         return view;
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/AllTeamsBySID?id=" + sid);
     }
 
@@ -67,6 +72,7 @@ public class SquadFrag extends Fragment {
     }
 
     private void update() {
+        progressBar.setVisibility(View.GONE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SquadParentAdapter(getContext(), list);
@@ -91,7 +97,8 @@ public class SquadFrag extends Fragment {
 
 
                         try {
-                            SquadModel model=new SquadModel(obj.getString("id"),obj.getString("shortName"),obj.getString("name"),obj.getString("logoUrl"),obj.getString("teamColour"));
+                         SquadModel model = new SquadModel(obj.getString("id"), obj.getString("logoUrl"), obj.getString("shortName"), obj.getString("name"), obj.getString("teamColour"));
+
                             list.add(model);
                         } catch (JSONException e) {
                             e.printStackTrace();

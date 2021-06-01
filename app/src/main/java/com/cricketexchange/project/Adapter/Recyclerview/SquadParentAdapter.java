@@ -2,6 +2,7 @@ package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,18 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
 
         @Override
         public void onClick(View v) {
+            //TODO - send matchID seriesID to team details
             Intent intent = new Intent(context, TeamPlayersInfo.class);
-            intent.putExtra("tid", 8);
+            intent.putExtra("tid", squadModelList.get(getAdapterPosition()).getSquadID());
+            intent.putExtra("tsn", squadModelList.get(getAdapterPosition()).getSquadName());
+            intent.putExtra("tln", squadModelList.get(getAdapterPosition()).getSquadLogoUrl());
+            intent.putExtra("tcl", squadModelList.get(getAdapterPosition()).getSquadColor());
+            intent.putExtra("sname", squadModelList.get(getAdapterPosition()).getSquadFullname());
             context.startActivity(intent);
+
+            Log.e("ONCLICK", "\nTID " + squadModelList.get(getAdapterPosition()).getSquadID() + "\nTSN " + squadModelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + squadModelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + squadModelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + squadModelList.get(getAdapterPosition()).getSquadFullname())
+            ;
+
         }
     }
 }

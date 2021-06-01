@@ -2,18 +2,17 @@ package com.cricketexchange.project.ui.series.pointstable;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.cricketexchange.project.Adapter.Recyclerview.ScoreCardAdapter;
 import com.cricketexchange.project.Models.ScoreCardModel;
-import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.R;
 
 import org.json.JSONArray;
@@ -32,13 +31,17 @@ public class PointsTableFrag extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
-    String sid = String.valueOf(2739);
+    String sid = "";
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_points_table, container, false);
         recyclerView = view.findViewById(R.id.scoresRowRv);
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        progressBar = view.findViewById(R.id.progressBar);
+
         scoreCardModelList.clear();
         load();
         return view;
@@ -82,10 +85,12 @@ public class PointsTableFrag extends Fragment {
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/getStanding?id=" + sid);
     }
 
     private void update() {
+        progressBar.setVisibility(View.GONE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ScoreCardAdapter(getContext(), scoreCardModelList);

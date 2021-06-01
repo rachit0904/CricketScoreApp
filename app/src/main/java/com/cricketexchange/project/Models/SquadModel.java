@@ -4,38 +4,20 @@ public class SquadModel {
     String id;
     String squadName;
     String squadFullname;
-    String squadLogoUrl;
-    String SquadColor;
-    public String getSquadFullname() {
-        return squadFullname;
-    }
 
-    public void setSquadFullname(String squadFullname) {
-        this.squadFullname = squadFullname;
-    }
 
-    public String getSquadColor() {
-        return SquadColor;
-    }
-
-    public void setSquadColor(String squadColor) {
-        SquadColor = squadColor;
-    }
-
-    public SquadModel(String id, String squadName, String squadFullname, String squadLogoUrl, String squadColor) {
-        this.id = id;
+    public SquadModel(String SquadID, String squadLogoUrl, String squadName, String squadFullname, String squadColler) {
+        this.squadLogoUrl = squadLogoUrl;
         this.squadName = squadName;
         this.squadFullname = squadFullname;
-        this.squadLogoUrl = squadLogoUrl;
-        SquadColor = squadColor;
+        this.SquadColor = squadColler;
+        this.SquadID = SquadID;
+
     }
+
+    String SquadColor, SquadID;
 
     public SquadModel() {
-    }
-
-    public SquadModel(String squadLogoUrl, String squadName) {
-        this.squadLogoUrl = squadLogoUrl;
-        this.squadName = squadName;
     }
 
     public String getSquadLogoUrl() {
@@ -54,4 +36,27 @@ public class SquadModel {
         this.squadName = squadName;
     }
 
+    public String getSquadFullname() {
+        return squadFullname;
+    }
+
+    public void setSquadFullname(String squadFullname) {
+        this.squadFullname = squadFullname;
+    }
+
+    public String getSquadColor() {
+        return SquadColor;
+    }
+
+    public void setSquadColor(String squadColor) {
+        SquadColor = squadColor;
+    }
+
+    public String getSquadID() {
+        return SquadID;
+    }
+
+    public void setSquadID(String squadID) {
+        SquadID = squadID;
+    }
 }
