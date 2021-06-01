@@ -121,15 +121,6 @@ public class teams extends Fragment {
         new Load().execute("http://3.108.39.214/getAllTeams");
     }
 
-    private List<SquadModel> getData() {
-        List<SquadModel> modelList = new ArrayList<>();
-        SquadModel model = new SquadModel("", "MI");
-
-        modelList.add(model);
-        SquadModel model2 = new SquadModel("", "CSK");
-        modelList.add(model2);
-        return modelList;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void update() {
@@ -161,7 +152,7 @@ public class teams extends Fragment {
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
 
-                        SquadModel model = new SquadModel(obj.getString("logoUrl"), obj.getString("name"));
+                        SquadModel model = new SquadModel(obj.getString("id"), obj.getString("logoUrl"), obj.getString("shortName"), obj.getString("name"), obj.getString("teamColour"));
                         set.add(model);
 
                     }

@@ -2,22 +2,19 @@ package com.cricketexchange.project.ui.series.match;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.series.pointstable.PointsTableFrag;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,20 +41,27 @@ public class MatchDetailFrag extends Fragment {
     List<MatchesChildModel> childList = new ArrayList<>();
     Set<Date> dates = new TreeSet<>();
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-    String sid = "2739";
+    String sid = "";
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_match_detail, container, false);
         recyclerView = view.findViewById(R.id.matchDetailRv);
+        progressBar = view.findViewById(R.id.progressBar);
         recyclerView.hasFixedSize();
-
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        dates.clear();
+        childList.clear();
+        childModelList.clear();
+        modelList.clear();
         load();
         return view;
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/AllMatchesBySID?id=" + sid);
     }
 
@@ -126,6 +130,7 @@ public class MatchDetailFrag extends Fragment {
     }
 
     private void update(boolean b) {
+        progressBar.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //        modelList.clear();
 //        childModelList.clear();

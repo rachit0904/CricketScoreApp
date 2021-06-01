@@ -1,12 +1,12 @@
 package com.cricketexchange.project.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cricketexchange.project.Pager.MatchDetailPager;
 import com.cricketexchange.project.R;
@@ -21,10 +21,12 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_details);
+        TextView textView = findViewById(R.id.matchTitle);
+        textView.setText(getIntent().getStringExtra("match"));
         initializeIds();
         setData();
         back.setOnClickListener(this);
-        MatchDetailPager matchDetailPager=new MatchDetailPager(getSupportFragmentManager(),tabLayout.getTabCount());
+        MatchDetailPager matchDetailPager = new MatchDetailPager(getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(matchDetailPager);
         tabLayout.setupWithViewPager(pager);
         tabLayout.selectTab(tabLayout.getTabAt(2));

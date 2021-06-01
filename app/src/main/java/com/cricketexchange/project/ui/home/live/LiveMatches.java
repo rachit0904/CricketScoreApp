@@ -1,32 +1,22 @@
 package com.cricketexchange.project.ui.home.live;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainer;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesChildAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
-import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.home.finished.CompletedMatches;
 import com.cricketexchange.project.ui.schedule.schdeule;
 import com.google.android.material.tabs.TabLayout;
 
@@ -36,10 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -50,6 +37,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
     CardView card;
     ArrayList<MatchesChildModel> childList = new ArrayList<>();
+    ProgressBar progressBar;
 
     public LiveMatches() {
         super(R.layout.fragment_live_matches);
@@ -62,21 +50,15 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         card = view.findViewById(R.id.upcoming);
         card.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.liveMatches);
+        progressBar = view.findViewById(R.id.progressBar);
 
-        if (childList.size() > 0) {
-            Log.e("IF", "" + childList.size());
-            Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
-            update();
-        } else {
-            Log.e("IF", "" + childList.size());
-            load();
-
-        }
-
-
+        childList.clear();
+        load();
     }
 
     private void load() {
+
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/getTodayMatches");
     }
 
@@ -110,7 +92,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     }
 
     private void update() {
-
+        progressBar.setVisibility(View.GONE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MatchesChildAdapter adapter = new MatchesChildAdapter(getContext(), childList);

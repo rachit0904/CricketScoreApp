@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.series.pointstable.PointsTableFrag">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:elevation="2dp"
+        android:visibility="visible" />
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="@dimen/cardview_default_elevation"
@@ -15,6 +26,7 @@
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -68,13 +80,14 @@
                    android:layout_height="wrap_content"/>
            </TableRow>
         </TableLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/scoresRowRv"
-            tools:itemCount="1"
-            android:overScrollMode="never"
-            tools:listitem="@layout/scorerow_rv_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/scoresRowRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                tools:itemCount="1"
+                tools:listitem="@layout/scorerow_rv_card" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</FrameLayout>
+</RelativeLayout>

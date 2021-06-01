@@ -13,6 +13,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.series.match.MatchDetailFrag;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +53,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     Toolbar materialToolbar;
     String tid = "8";
     String teamsrt, teamlong, teamcolor;
+    String seriesname,teamname;
     Boolean notifyFlag = false;
     List<PlayersDataModel> list = new ArrayList<>();
 
@@ -63,9 +66,9 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         tid = getIntent().getStringExtra("tid");
         teamsrt = getIntent().getStringExtra("tsn");
         teamlong = getIntent().getStringExtra("tln");
-        teamcolor = getIntent().getStringExtra("tcl").split("#")[1];
-        String seriesname = getIntent().getStringExtra("sname");
-        getSupportActionBar().setTitle(seriesname);
+        teamcolor = getIntent().getStringExtra("tcl");
+        teamname = getIntent().getStringExtra("sname");
+        getSupportActionBar().setTitle(teamname);
         bck = findViewById(R.id.back);
         teamLogo = findViewById(R.id.pt1Logo);
         teamShortName = findViewById(R.id.teamShortName);
@@ -83,8 +86,11 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     private void update(boolean isAT) {
         teamShortName.setText(teamsrt);
-        teamFullName.setText(teamlong);
-        teamShortName.setTextColor(Integer.parseInt(teamcolor));
+        if (teamlong.trim().length() != 0) {
+            Picasso.get().load(teamlong).into(teamLogo);
+        }
+        teamFullName.setText(teamname);
+        teamFullName.setTextColor(Color.parseColor(teamcolor));
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PlayerDataAdapter adapter = new PlayerDataAdapter(list);

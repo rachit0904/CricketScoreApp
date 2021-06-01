@@ -35,7 +35,6 @@
                 <ImageView
                     android:id="@+id/team1Icon"
                     android:layout_gravity="center"
-                    android:background=""
                     android:src="@drawable/trophyicon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"/>
@@ -65,7 +64,7 @@
                     android:layout_height="24dp"
                     android:src="@drawable/trophyicon"
                     android:layout_gravity="center"
-                    android:background="" />
+                    />
 
                 <TextView
                     android:id="@+id/team2Name"

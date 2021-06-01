@@ -2,30 +2,25 @@ package com.cricketexchange.project.ui.home.upcomingmatches;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
-import com.squareup.picasso.Downloader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,21 +41,18 @@ public class UpcomingMatches extends Fragment {
     Set<Date> dates = new TreeSet<>();
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     MatchesAdapter adapter;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_matches, container, false);
         recyclerView = view.findViewById(R.id.upcomingMatches);
-        if (childList.size() > 0) {
-            //Log.e("IF", "" + childList.size());
-            //Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
-            update(false);
-        } else {
-            Log.e("IF", "" + childList.size());
-            load();
 
-        }
+        progressBar = view.findViewById(R.id.progressBar);
+        childList.clear();
+        childModelList.clear();
+        load();
         return view;
     }
 
@@ -78,23 +70,19 @@ public class UpcomingMatches extends Fragment {
     }
 
     private void update(Boolean isAt) {
-        if (isAt) {
-            recyclerView.hasFixedSize();
+        progressBar.setVisibility(View.GONE);
+        recyclerView.hasFixedSize();
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             setParentData();
-            setChildDate();
-            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-            recyclerView.setAdapter(adapter);
-        } else {
-            recyclerView.hasFixedSize();
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-            recyclerView.setAdapter(adapter);
-        }
+        setChildDate();
+        adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        recyclerView.setAdapter(adapter);
+
 
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/getNextWeekMatches");
     }
 

@@ -2,22 +2,19 @@ package com.cricketexchange.project.ui.home.finished;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.home.upcomingmatches.UpcomingMatches;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,27 +40,22 @@ public class CompletedMatches extends Fragment {
     List<MatchesChildModel> childList = new ArrayList<>();
     Set<Date> dates = new TreeSet<>();
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
-        if (childList.size() > 0) {
-            //Log.e("IF", "" + childList.size());
-
-            //  Toast.makeText(getContext(), "IF", Toast.LENGTH_SHORT).show();
-            update(false);
-        } else {
-           // Log.e("IF", "" + childList.size());
-
-            load();
-        }
+        progressBar = view.findViewById(R.id.progressBar);
+        childList.clear();
+        childModelList.clear();
+        load();
         return view;
     }
 
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/getPreviousWeekMatches");
     }
 
@@ -82,20 +74,13 @@ public class CompletedMatches extends Fragment {
 
 
     private void update(Boolean isAt) {
-        if (isAt) {
-            recyclerView.hasFixedSize();
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            setParentData();
-            setChildDate();
-            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-            recyclerView.setAdapter(adapter);
-        } else {
-            recyclerView.hasFixedSize();
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
-            recyclerView.setAdapter(adapter);
-        }
-
+        progressBar.setVisibility(View.GONE);
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        setParentData();
+        setChildDate();
+        MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        recyclerView.setAdapter(adapter);
     }
 
 

@@ -3,24 +3,22 @@ package com.cricketexchange.project.ui.matchdetail.info;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+
 import com.cricketexchange.project.Activity.SeriesDetail;
 import com.cricketexchange.project.Activity.TeamPlayersInfo;
-import com.cricketexchange.project.Models.ScoreCardModel;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +33,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     CardView seriesCard;
     ImageView t1Logo, t2Logo;
     RelativeLayout t1Layout, t2Layout;
+    ProgressBar progressBar;
     View view;
     String ATseriesName, ATmatchType, ATvenueName, ATumpires, ATtumpire, ATrefree, ATtossMessage, ATstartdate,
             t1name, t1Sname, t1logourl, t1bg, t1color, t2name, t2Sname, t2logourl, t2bg, t2color, t1id, t2id;
@@ -47,6 +46,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_match_info, container, false);
         initialize();
         //setData();
+        progressBar = view.findViewById(R.id.progressBar);
         load();
 
         seriesCard.setOnClickListener(this);
@@ -59,6 +59,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
     }
 
@@ -83,7 +84,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     }
 
     private void update() {
-
+        progressBar.setVisibility(View.GONE);
         if (t1logourl.trim().length() != 0) {
             Picasso.get().load(t1logourl).into(t1Logo);
         }

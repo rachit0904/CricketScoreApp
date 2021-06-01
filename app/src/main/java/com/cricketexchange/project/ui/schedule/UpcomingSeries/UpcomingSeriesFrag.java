@@ -1,21 +1,16 @@
 package com.cricketexchange.project.ui.schedule.UpcomingSeries;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.UpcomingSeriesAdapter;
 import com.cricketexchange.project.Models.SeriesModel;
@@ -47,6 +42,7 @@ public class UpcomingSeriesFrag extends Fragment {
     List<SeriesModel> cList = new ArrayList<>();
     SimpleDateFormat sobj = new SimpleDateFormat("MM/dd/yyyy");
     UpcomingSeriesAdapter adapter;
+    ProgressBar progressBar;
     String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
 
     @Override
@@ -55,14 +51,11 @@ public class UpcomingSeriesFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_upcoming_series, container, false);
         recyclerView = view.findViewById(R.id.upcomingSeriesRv);
         recyclerView.hasFixedSize();
+        progressBar = view.findViewById(R.id.progressBar);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        list.clear();
-//        childList.clear();
-        if (list.size() > 0) {
-            update(false);
-        } else {
-            load();
-        }
+        list.clear();
+        childList.clear();
+        load();
 
         return view;
     }
@@ -100,25 +93,17 @@ public class UpcomingSeriesFrag extends Fragment {
     }
 
     private void update(@NonNull Boolean isAt) {
+        progressBar.setVisibility(View.GONE);
 
       //  Log.e("childList", String.valueOf(childList.size()));
-        if (isAt) {
-            setParentData();
 
-            // setChildData();
-            adapter = new UpcomingSeriesAdapter(getContext(), list, childList);
-            recyclerView.setAdapter(adapter);
+        setParentData();
 
-        } else {
-
-            adapter = new UpcomingSeriesAdapter(getContext(), list, childList);
-            recyclerView.setAdapter(adapter);
-
-        }
 
     }
 
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
         new Load().execute("http://3.108.39.214/AllSeriesUpComing");
     }
 
@@ -155,10 +140,7 @@ public class UpcomingSeriesFrag extends Fragment {
                             SsriesModel.setType(type);
                             ///SeriesModel.set
 
-                            Log.e("FOR UPCOMOING NAME", name);
-                            Log.e("FOR UPCOMOING type", type);
-                            Log.e("FOR UPCOMOING status", status);
-                            Log.e("FOR UPCOMOING id", id);
+
                             //set date to match modellist and match childmodallist;
 
 
@@ -166,7 +148,7 @@ public class UpcomingSeriesFrag extends Fragment {
                             Date d = null;
                             try {
                                 d = sobj.parse(sD);
-                                Log.e("FOR UPCOMOING DATE", String.valueOf(d.getDate()));
+
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
