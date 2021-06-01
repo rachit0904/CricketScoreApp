@@ -49,7 +49,13 @@ public class Live extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_live, container, false);
+
+        battingCardModalList.clear();
+        yetToBatList.clear();
+        partnershipsModalList.clear();
         initialize();
+
+
         setData();
         showScoreCard.setOnClickListener(this);
         load();
@@ -207,9 +213,7 @@ public class Live extends Fragment implements View.OnClickListener {
 
 
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return totalSize;
@@ -249,7 +253,7 @@ public class Live extends Fragment implements View.OnClickListener {
                         String playerruns = batsman.getString("runs");
                         String playerballs = batsman.getString("balls");
                         battingCardModal battingCardModal = new battingCardModal(playername, playerruns, playerballs, "", "");
-                        if (playerruns.trim().equalsIgnoreCase("") || playerruns.trim().equalsIgnoreCase("0")) {
+                        if (playerballs.trim().equalsIgnoreCase("") || playerballs.trim().equalsIgnoreCase("0")) {
                             yetToBatList.add(battingCardModal);
                         } else {
                             battingCardModalList.add(battingCardModal);

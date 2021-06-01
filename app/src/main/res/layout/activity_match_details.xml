@@ -92,6 +92,7 @@
             android:padding="10dp"
             android:background="@color/darkCardBackground"
             android:gravity="center"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
@@ -109,7 +110,7 @@
             android:id="@+id/t1icon"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:background="@drawable/trophyicon"
+            android:src="@drawable/trophyicon"
             android:layout_width="36dp"
             android:layout_height="36dp"/>
             <TextView
@@ -228,7 +229,7 @@
                         android:id="@+id/t2icon"
                         android:layout_marginTop="10dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/trophyicon"
+                        android:src="@drawable/trophyicon"
                         android:layout_width="36dp"
                         android:layout_height="36dp"/>
                     <TextView

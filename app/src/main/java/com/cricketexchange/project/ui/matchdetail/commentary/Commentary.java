@@ -64,6 +64,7 @@ public class Commentary extends Fragment {
         b5 = view.findViewById(R.id.ball5);
         b6 = view.findViewById(R.id.ball6);
         //SetOverBallScore();
+        commentaries.clear();
         //SetOverOverview();
         commentryRv.hasFixedSize();
         commentryRv.setLayoutManager(new LinearLayoutManager(getContext()));
