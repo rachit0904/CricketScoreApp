@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.schedule.UpcomingSeries;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.UpcomingSeriesAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.UpcomingSeriesModel;
 import com.cricketexchange.project.R;
@@ -26,7 +28,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,9 +52,9 @@ public class UpcomingSeriesFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_series, container, false);
         recyclerView = view.findViewById(R.id.upcomingSeriesRv);
-        recyclerView.hasFixedSize();
+
         progressBar = view.findViewById(R.id.progressBar);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         list.clear();
         childList.clear();
         load();
@@ -61,9 +62,6 @@ public class UpcomingSeriesFrag extends Fragment {
         return view;
     }
 
-    private void setChildData() {
-        childList = cList;
-    }
 
     private void setParentData() {
 
@@ -95,8 +93,11 @@ public class UpcomingSeriesFrag extends Fragment {
 
     private void update(@NonNull Boolean isAt) {
         progressBar.setVisibility(View.GONE);
-
-      //  Log.e("childList", String.valueOf(childList.size()));
+        recyclerView.hasFixedSize();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new UpcomingSeriesAdapter(getActivity(), list, childList);
+        recyclerView.setAdapter(adapter);
+        //  Log.e("childList", String.valueOf(childList.size()));
 
         setParentData();
 
@@ -105,7 +106,7 @@ public class UpcomingSeriesFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/AllSeriesUpComing");
+        new Load().execute(Constants.HOST + "AllSeriesUpComing");
     }
 
 
@@ -145,12 +146,15 @@ public class UpcomingSeriesFrag extends Fragment {
 //                            SsriesModel.setStatus(status);
                             SsriesModel.setSid(id);
                             SsriesModel.setSeriesName(name);
+
 //                            SsriesModel.setType(type);
-                            Date d=null;
-                            d=sobj.parse(date[0] +"-"+date[2]);
+                            Date d = null;
+                            d = sobj.parse(date[0] + "-" + date[2]);
                             SsriesModel.setStartDate(sobj.format(d));
                             dates.add(d);
                             childList.add(SsriesModel);
+                            Log.e("UPNAME", name);
+                            Log.e("UPDuration", sobj.format(d));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {

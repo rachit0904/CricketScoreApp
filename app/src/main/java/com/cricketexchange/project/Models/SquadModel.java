@@ -6,7 +6,7 @@ public class SquadModel {
     String squadFullname;
 
 
-    public SquadModel(String SquadID, String squadLogoUrl, String squadName, String squadFullname, String squadColler) {
+    public SquadModel(String SquadID,  String squadName, String squadFullname,String squadLogoUrl, String squadColler) {
         this.squadLogoUrl = squadLogoUrl;
         this.squadName = squadName;
         this.squadFullname = squadFullname;
@@ -15,7 +15,7 @@ public class SquadModel {
 
     }
 
-    String SquadColor, SquadID;
+    String SquadColor, SquadID,squadLogoUrl;
 
     public SquadModel() {
     }
