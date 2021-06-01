@@ -43,7 +43,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
     @Override
     public void onBindViewHolder(@NonNull SquadParentAdapter.ViewHolder holder, int position) {
         SquadModel model = squadModelList.get(position);
-        holder.SquadName.setText(model.getSquadName());
+        holder.SquadName.setText(model.getSquadFullname());
         if (model.getSquadLogoUrl().trim().length() != 0) {
             Picasso.get().load(model.getSquadLogoUrl()).into(holder.squadLogo);
         }

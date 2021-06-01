@@ -52,25 +52,6 @@ public class SquadFrag extends Fragment {
         new Load().execute(Constants.HOST + "AllTeamsBySID?id=" + sid);
     }
 
-    private List<SquadModel> getData() {
-        List<SquadModel> data = new ArrayList<>();
-        SquadModel model = new SquadModel();
-        SquadModel mode2 = new SquadModel();
-        SquadModel mode3 = new SquadModel();
-        SquadModel mode4 = new SquadModel();
-        SquadModel mode5 = new SquadModel();
-        model.setSquadName("Chennai Super Kings");
-        data.add(model);
-        mode2.setSquadName("Mumbai Indians");
-        data.add(mode2);
-        mode3.setSquadName("Delhi Capitals");
-        data.add(mode3);
-        mode4.setSquadName("Rajasthan Royals");
-        data.add(mode4);
-        mode5.setSquadName("Kolkata Knight Riders");
-        data.add(mode5);
-        return data;
-    }
 
     private void update() {
         progressBar.setVisibility(View.GONE);
