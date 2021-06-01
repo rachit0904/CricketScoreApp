@@ -23,6 +23,7 @@
             android:layout_marginTop="20dp"
             android:translationZ="5dp"
             android:elevation="5dp"
+
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/darkCardBackground"
@@ -101,53 +102,59 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/rateCard"
-            android:elevation="5dp"
-            android:translationZ="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/stumpsCard"
-            android:backgroundTint="@color/darkCardBackground"
             android:layout_marginStart="20dp"
             android:layout_marginTop="-2dp"
             android:layout_marginEnd="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:backgroundTint="@color/darkCardBackground"
+            android:elevation="5dp"
+            android:translationZ="5dp">
+
             <LinearLayout
-                android:layout_gravity="start"
-                android:padding="9dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="9dp">
+
                 <TextView
-                    android:layout_marginStart="8dp"
-                    android:text="Req RR : "
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Req RR : " />
+
                 <TextView
                     android:id="@+id/rrr"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="0.0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginEnd="15dp"
-                android:layout_gravity="end"
-                android:padding="9dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:padding="9dp">
+
                 <TextView
-                    android:layout_marginStart="6dp"
-                    android:text="CRR : "
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="CRR : " />
+
                 <TextView
                     android:id="@+id/crr"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:text="8.54"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -184,7 +191,8 @@
                     android:id="@+id/currentTeamLogo"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/trophyicon" />
+                    android:src="@drawable/trophyicon"
+                    />
 
                 <TextView
                     android:id="@+id/currentTeamName"
