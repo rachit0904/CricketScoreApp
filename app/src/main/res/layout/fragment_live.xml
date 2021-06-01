@@ -162,45 +162,50 @@
             android:text="Current Inning "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/overViewCard"
-            android:layout_below="@id/txt2"
-            app:cardCornerRadius="3dp"
-            android:backgroundTint="@color/darkCardBackground"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt2"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/darkCardBackground"
+            app:cardCornerRadius="3dp">
+
             <LinearLayout
-                android:gravity="center_vertical"
-                android:padding="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="15dp">
+
                 <ImageView
                     android:id="@+id/currentTeamLogo"
-                    android:background="@drawable/trophyicon"
                     android:layout_width="24dp"
-                    android:layout_height="24dp"/>
+                    android:layout_height="24dp"
+                    android:background="@drawable/trophyicon" />
+
                 <TextView
                     android:id="@+id/currentTeamName"
-                    android:layout_marginStart="15dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
-                    android:text="Chennai Super Kings"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="Chennai Super Kings"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/currentTeamScore"
-                android:layout_marginEnd="20dp"
-                android:layout_gravity="end|center_vertical"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:text="207-5  (19.4)"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="20dp"
+                android:text="207-5  (19.4)"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/currentInningRv"
