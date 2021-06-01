@@ -1,13 +1,12 @@
 package com.cricketexchange.project.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cricketexchange.project.Pager.SeriesViewPager;
 import com.cricketexchange.project.R;
@@ -27,8 +26,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         textView.setText(getIntent().getStringExtra("name"));
         SeriesViewPager adapter = new SeriesViewPager(getSupportFragmentManager(), tabLayout.getTabCount(), this);
         viewPager.setAdapter(adapter);
-
-        ;
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

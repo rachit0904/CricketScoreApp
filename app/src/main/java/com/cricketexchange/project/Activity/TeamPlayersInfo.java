@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -63,30 +64,32 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         teamlong = getIntent().getStringExtra("tln");
         teamcolor = getIntent().getStringExtra("tcl");
         teamname = getIntent().getStringExtra("sname");
-        getSupportActionBar().setTitle(teamname);
+        TextView title = findViewById(R.id.title);
+        title.setText(teamname);
         bck = findViewById(R.id.back);
         teamLogo = findViewById(R.id.pt1Logo);
         teamShortName = findViewById(R.id.teamShortName);
         teamFullName = findViewById(R.id.teamFullName);
         bck.setOnClickListener(this);
         recyclerView = findViewById(R.id.players);
-        load();
-    }
-
-    private void load() {
-        new Load().execute("http://3.108.39.214/getAllPlayerByTID?id=" + tid);
-
-    }
-
-
-
-    private void update() {
         teamShortName.setText(teamsrt);
         if (teamlong.trim().length() != 0) {
             Picasso.get().load(teamlong).into(teamLogo);
         }
         teamFullName.setText(teamname);
         teamFullName.setTextColor(Color.parseColor(teamcolor));
+        load();
+    }
+
+    private void load() {
+        new Load().execute(Constants.HOST+"getAllPlayerByTID?id=" + tid);
+
+    }
+
+
+
+    private void update() {
+
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PlayerDataAdapter adapter = new PlayerDataAdapter(list);

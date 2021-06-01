@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
@@ -83,7 +84,7 @@ public class UpcomingMatches extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/getNextWeekMatches");
+        new Load().execute(Constants.HOST +"getNextWeekMatches");
     }
 
 

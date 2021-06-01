@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.cricketexchange.project.Adapter.Recyclerview.TeamRecycleAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
@@ -114,7 +115,7 @@ public class teams extends Fragment {
     }
 
     private void load() {
-        new Load().execute("http://3.108.39.214/getAllTeams");
+        new Load().execute(Constants.HOST + "getAllTeams");
     }
 
 

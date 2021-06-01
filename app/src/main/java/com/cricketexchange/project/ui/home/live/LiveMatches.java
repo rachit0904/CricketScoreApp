@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesChildAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.schedule.schdeule;
@@ -59,7 +60,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     private void load() {
 
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/getTodayMatches");
+        new Load().execute(Constants.HOST +"getTodayMatches");
     }
 
 

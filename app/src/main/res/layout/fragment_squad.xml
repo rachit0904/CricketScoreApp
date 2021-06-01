@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
     tools:context=".ui.series.squad.SquadFrag">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:elevation="5dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/squadRv"
@@ -13,6 +21,6 @@
         android:paddingBottom="130dp"
         tools:listitem="@layout/teamrv_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+</RelativeLayout>

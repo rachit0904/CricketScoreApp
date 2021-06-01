@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.ScoreCardAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.ScoreCardModel;
 import com.cricketexchange.project.R;
 
@@ -86,7 +87,7 @@ public class PointsTableFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/getStanding?id=" + sid);
+        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
     }
 
     private void update() {

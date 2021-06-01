@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.CommantaryAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.CommentaryModal;
 import com.cricketexchange.project.Models.OverBallScoreModel;
 import com.cricketexchange.project.R;
@@ -92,7 +93,7 @@ public class Commentary extends Fragment {
         if ((iswikt).equalsIgnoreCase("true")) {
             runs.set("w");
         }
-        Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
+   //     Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
         switch (ball) {
             case 1: {
                 b1.setText(runs.get());
@@ -150,38 +151,8 @@ public class Commentary extends Fragment {
     private void load() {
         // new LoadHighlight().execute("http://3.108.39.214/getCommentary?sid=" + sid + "&mid=" + mid);
 
-        new LoadCommentary().execute("http://3.108.39.214/getCommentary?sid=" + sid + "&mid=" + mid);
+        new LoadCommentary().execute(Constants.HOST +"getCommentary?sid=" + sid + "&mid=" + mid);
 
-    }
-
-    private class LoadHighlight extends AsyncTask<String, Integer, Long> {
-
-        @Override
-        protected Long doInBackground(String... strings) {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(strings[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    inning = String.valueOf(object.getJSONObject("data").getJSONObject("meta").getInt("currentInningsId"));
-                }
-            } catch (JSONException | IOException jsonException) {
-                jsonException.printStackTrace();
-            }
-
-
-            return (long) 513;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-        }
     }
 
     private void update() {
@@ -215,9 +186,9 @@ public class Commentary extends Fragment {
                     JSONObject overSummary = lastover.getJSONObject("overSummary");
                     oover = lastover.getString("number");
 //                    if(Integer.parseInt(oover) < Integer.parseInt(lastover.getString("number")))
-                    {
-                        Toast.makeText(getContext(), oover+" over changed ", Toast.LENGTH_SHORT).show();
-                    }
+//                    {
+//                        Toast.makeText(getContext(), oover+" over changed ", Toast.LENGTH_SHORT).show();
+//                    }
                     oruns = overSummary.getString("runsConcededinOver");
                     owikts = overSummary.getString("wicketsTakeninOver");
 
