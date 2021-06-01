@@ -25,7 +25,7 @@ import java.util.List;
 public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.ViewHolder> {
     Context context;
 
-    List<SquadModel> modelList = new ArrayList<>();
+    List<SquadModel> modelList ;
 
     public TeamRecycleAdapter(Context context, List<SquadModel> modelList) {
         this.context = context;
@@ -42,12 +42,12 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
     @Override
     public void onBindViewHolder(@NonNull TeamRecycleAdapter.ViewHolder holder, int position) {
         SquadModel model = modelList.get(position);
+
         String url = model.getSquadLogoUrl();
         if (url != null || url != "") {
             Picasso.get().load(url).into(holder.teamLogo);
         }
-        holder.teamName.setText(model.getSquadName());
-
+        holder.teamName.setText(model.getSquadFullname());
     }
 
     @Override

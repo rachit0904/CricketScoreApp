@@ -199,15 +199,15 @@ public class DaysFrag extends Fragment {
                             matchesChildModel.setT1iIsBatting(obj.getJSONObject("homeTeam").getString("isBatting"));
                             matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
                             matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
+                            if(!obj.getJSONObject("scores").toString().isEmpty()) {
+                                JSONObject scores = obj.getJSONObject("scores");
 
-                            JSONObject scores = obj.getJSONObject("scores");
+                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
+                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
 
-                            matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                            matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
-
-                            matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                            matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
-
+                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
+                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+                            }
                             //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
                             //set date to match modellist and match childmodallist;
                             //set date to match modellist and match childmodallist;

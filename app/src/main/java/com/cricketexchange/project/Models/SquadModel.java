@@ -1,9 +1,7 @@
 package com.cricketexchange.project.Models;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 public class SquadModel {
-    String squadLogoUrl;
+    String id;
     String squadName;
     String squadFullname;
 

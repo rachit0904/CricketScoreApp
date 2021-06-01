@@ -56,6 +56,7 @@ public class MatchDetailFrag extends Fragment {
         childList.clear();
         childModelList.clear();
         modelList.clear();
+
         load();
         return view;
     }

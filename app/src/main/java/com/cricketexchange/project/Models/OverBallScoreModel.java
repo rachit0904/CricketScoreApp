@@ -2,9 +2,9 @@ package com.cricketexchange.project.Models;
 
 public class OverBallScoreModel {
     String ballnumber, ballrun;
-    boolean iswicket;
+    String iswicket;
 
-    public OverBallScoreModel(String ballnumber, String ballrun, boolean iswicket) {
+    public OverBallScoreModel(String ballnumber, String ballrun, String iswicket) {
         this.ballnumber = ballnumber;
         this.ballrun = ballrun;
         this.iswicket = iswicket;
@@ -26,11 +26,11 @@ public class OverBallScoreModel {
         this.ballrun = ballrun;
     }
 
-    public boolean isIswicket() {
+    public String getIswicket() {
         return iswicket;
     }
 
-    public void setIswicket(boolean iswicket) {
+    public void setIswicket(String iswicket) {
         this.iswicket = iswicket;
     }
 

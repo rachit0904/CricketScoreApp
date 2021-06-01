@@ -24,10 +24,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
-import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.series.match.MatchDetailFrag;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -36,10 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -75,7 +70,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         teamFullName = findViewById(R.id.teamFullName);
         bck.setOnClickListener(this);
         recyclerView = findViewById(R.id.players);
-
         load();
     }
 
@@ -84,7 +78,9 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void update(boolean isAT) {
+
+
+    private void update() {
         teamShortName.setText(teamsrt);
         if (teamlong.trim().length() != 0) {
             Picasso.get().load(teamlong).into(teamLogo);
@@ -99,7 +95,6 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     }
 
     private List<PlayersDataModel> getData() {
-        //TODO set team image
 
         List<PlayersDataModel> dataModelList = new ArrayList<>();
         {
@@ -206,10 +201,11 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
 
                         try {
                             PlayersDataModel playersDataModel = new PlayersDataModel();
+                            playersDataModel.setId(obj.getString("playerId"));
                             playersDataModel.setName(obj.getString("fullName"));
                             playersDataModel.setBattingStyle(obj.getString("battingStyle"));
                             playersDataModel.setBowlingStyle(obj.getString("bowlingStyle"));
-                            playersDataModel.setPlayerType("NA");
+                                playersDataModel.setPlayerType("NA");
                             playersDataModel.setLogoUrl("NA");
                             if (playersDataModel.getBowlingStyle().trim().length() == 0) {
                                 playersDataModel.setBowlingStyle("NA");
@@ -240,7 +236,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         }
 
         protected void onPostExecute(Long result) {
-            update(true);
+            update();
         }
     }
 

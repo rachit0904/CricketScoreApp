@@ -14,7 +14,7 @@ import com.cricketexchange.project.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class SeriesDetail extends AppCompatActivity implements View.OnClickListener {
-
+    TextView seriesTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

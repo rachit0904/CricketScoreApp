@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,7 +58,7 @@ public class Commentary extends Fragment {
         commentryRv = view.findViewById(R.id.commentary);
         b1 = view.findViewById(R.id.ball1);
         b2 = view.findViewById(R.id.ball2);
-        b3 = view.findViewById(R.id.ball4);
+        b3 = view.findViewById(R.id.ball3);
         b4 = view.findViewById(R.id.ball4);
         b5 = view.findViewById(R.id.ball5);
         b6 = view.findViewById(R.id.ball6);
@@ -77,30 +78,30 @@ public class Commentary extends Fragment {
         wkts.setText(owikts);
     }
 
-    private int getBallColor(Boolean isWkt) {
-        return (isWkt) ? R.color.live : android.R.color.holo_green_dark;
+    private int getBallColor(String isWkt) {
+        return (isWkt.equalsIgnoreCase("true")) ? android.R.color.holo_red_dark : android.R.color.holo_green_dark;
     }
 
-    private void SetOverBallScore(String ballss, boolean iswikt, String runss) {
-        Boolean isWkt = iswikt;
+    private void SetOverBallScore(String ballss, String iswikt, String runss) {
         int ball = Integer.parseInt(ballss); //get current ball
-        int color = getBallColor(isWkt); //check isWkt to get ball color
+        int color = getBallColor(iswikt); //check isWkt to get ball color
         AtomicReference<String> runs = new AtomicReference<>(runss); //get runs
         if (runs.get().equals("6") || runs.get().equals("4")) {
             color = android.R.color.holo_blue_dark;
         }
-        if ((isWkt)) {
-            runs.set("W");
+        if ((iswikt).equalsIgnoreCase("true")) {
+            runs.set("w");
         }
+        Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
         switch (ball) {
             case 1: {
                 b1.setText(runs.get());
                 b1.setChipBackgroundColorResource(color);
-                b2.setChipBackgroundColorResource(R.color.background);
-                b3.setChipBackgroundColorResource(R.color.background);
-                b4.setChipBackgroundColorResource(R.color.background);
-                b5.setChipBackgroundColorResource(R.color.background);
-                b6.setChipBackgroundColorResource(R.color.background);
+//                b2.setChipBackgroundColorResource(R.color.background);
+//                b3.setChipBackgroundColorResource(R.color.background);
+//                b4.setChipBackgroundColorResource(R.color.background);
+//                b5.setChipBackgroundColorResource(R.color.background);
+//                b6.setChipBackgroundColorResource(R.color.background);
                 break;
             }
             case 2: {
@@ -133,18 +134,18 @@ public class Commentary extends Fragment {
     }
 
 
-    private List<CommentaryModal> getData() {
-        List<CommentaryModal> list = new ArrayList<>();
-        CommentaryModal modal = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-        list.add(modal);
-        CommentaryModal modal2 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-        list.add(modal2);
-        CommentaryModal modal3 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-        list.add(modal3);
-        CommentaryModal modal4 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-        list.add(modal4);
-        return list;
-    }
+//    private List<CommentaryModal> getData() {
+//        List<CommentaryModal> list = new ArrayList<>();
+//        CommentaryModal modal = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
+//        list.add(modal);
+//        CommentaryModal modal2 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
+//        list.add(modal2);
+//        CommentaryModal modal3 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
+//        list.add(modal3);
+//        CommentaryModal modal4 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
+//        list.add(modal4);
+//        return list;
+//    }
 
     private void load() {
         // new LoadHighlight().execute("http://3.108.39.214/getCommentary?sid=" + sid + "&mid=" + mid);
@@ -186,8 +187,7 @@ public class Commentary extends Fragment {
     private void update() {
         SetOverOverview();
         for (int i = 0; i < overBallScoreModels.size(); i++) {
-
-            SetOverBallScore(overBallScoreModels.get(i).getBallnumber(), overBallScoreModels.get(i).isIswicket(), overBallScoreModels.get(i).getBallrun());
+            SetOverBallScore(overBallScoreModels.get(i).getBallnumber(), overBallScoreModels.get(i).getIswicket(), overBallScoreModels.get(i).getBallrun());
         }
 
         progressBar.setVisibility(View.GONE);
@@ -214,6 +214,10 @@ public class Commentary extends Fragment {
                     JSONObject lastover = obj.getJSONArray("overs").getJSONObject(0);
                     JSONObject overSummary = lastover.getJSONObject("overSummary");
                     oover = lastover.getString("number");
+//                    if(Integer.parseInt(oover) < Integer.parseInt(lastover.getString("number")))
+                    {
+                        Toast.makeText(getContext(), oover+" over changed ", Toast.LENGTH_SHORT).show();
+                    }
                     oruns = overSummary.getString("runsConcededinOver");
                     owikts = overSummary.getString("wicketsTakeninOver");
 
@@ -229,7 +233,7 @@ public class Commentary extends Fragment {
                                 s_runs = "0";
                             }
                             Log.e("s_runs", s_runs);
-                            overBallScoreModels.add(new OverBallScoreModel(j_ball.getString("ballNumber"), s_runs, j_ball.getJSONArray("comments").getJSONObject(i).getBoolean("isFallOfWicket")));
+                            overBallScoreModels.add(new OverBallScoreModel(j_ball.getString("ballNumber"), s_runs, j_ball.getJSONArray("comments").getJSONObject(i).getString("isFallOfWicket")));
 
 
                         }

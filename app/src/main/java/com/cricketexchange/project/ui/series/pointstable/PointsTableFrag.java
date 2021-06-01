@@ -41,6 +41,7 @@ public class PointsTableFrag extends Fragment {
         recyclerView = view.findViewById(R.id.scoresRowRv);
         sid = requireActivity().getIntent().getStringExtra("sid");
         progressBar = view.findViewById(R.id.progressBar);
+
         scoreCardModelList.clear();
         load();
         return view;
