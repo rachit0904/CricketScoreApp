@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cricketexchange.project.Activity.SeriesDetail;
 import com.cricketexchange.project.Activity.TeamPlayersInfo;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +61,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
     }
 
     private void initialize() {

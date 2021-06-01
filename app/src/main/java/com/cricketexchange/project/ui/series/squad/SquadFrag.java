@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.SquadParentAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
 
@@ -48,7 +49,7 @@ public class SquadFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute("http://3.108.39.214/AllTeamsBySID?id=" + sid);
+        new Load().execute(Constants.HOST + "AllTeamsBySID?id=" + sid);
     }
 
     private List<SquadModel> getData() {

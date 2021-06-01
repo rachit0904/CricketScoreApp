@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.NewsRecyclerAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,7 +87,7 @@ public class newsFrag extends Fragment {
 
     private void addMenuItemsFromJson() {
         progressBar.setVisibility(View.VISIBLE);
-        new LoadData().execute("http://3.108.39.214/news");
+        new LoadData().execute(Constants.HOST + "news");
     }
 
 
