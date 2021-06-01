@@ -27,7 +27,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         textView.setText(getIntent().getStringExtra("name"));
         SeriesViewPager adapter = new SeriesViewPager(getSupportFragmentManager(), tabLayout.getTabCount(), this);
         viewPager.setAdapter(adapter);
-
+        tabLayout.setupWithViewPager(viewPager);
         ;
     }
 
