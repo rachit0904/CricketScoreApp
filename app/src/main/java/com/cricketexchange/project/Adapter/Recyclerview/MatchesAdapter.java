@@ -1,8 +1,6 @@
 package com.cricketexchange.project.Adapter.Recyclerview;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,16 +47,17 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                 matchesChildModelList.add(c);
             }
         }
-        if(matchesChildModelList.size()>0) {
+        if (matchesChildModelList.size() > 0) {
             holder.date.setText(sD);
-        }else{
+            MatchesChildAdapter childAdapter = new MatchesChildAdapter(context, matchesChildModelList);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
+            holder.childRv.setLayoutManager(layoutManager);
+            holder.childRv.hasFixedSize();
+            holder.childRv.setAdapter(childAdapter);
+        } else {
+            holder.childRv.setVisibility(View.GONE);
             holder.date.setVisibility(View.GONE);
         }
-        MatchesChildAdapter childAdapter = new MatchesChildAdapter(context, matchesChildModelList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
-        holder.childRv.setLayoutManager(layoutManager);
-        holder.childRv.hasFixedSize();
-        holder.childRv.setAdapter(childAdapter);
     }
 
     @Override

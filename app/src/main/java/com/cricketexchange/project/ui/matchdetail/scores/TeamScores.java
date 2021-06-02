@@ -3,7 +3,6 @@ package com.cricketexchange.project.ui.matchdetail.scores;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +44,11 @@ public class TeamScores extends Fragment {
     List<BattingInningModal> battingInningModalList1 = new ArrayList<>();
     List<BattingInningModal> bowlingInningModalList1 = new ArrayList<>();
     List<WicketsFallModel> wicketsFallModelList1 = new ArrayList<>();
+    String score1 = "", score2 = "", score3 = "";
+    int runs = 0, runs2 = 0, runs3 = 0;
+    int wickets = 0, wickets2 = 0, wickets3 = 0;
+    float over = 0, over2 = 0, over3 = 0;
+
 
     List<BattingInningModal> battingInningModalList2 = new ArrayList<>();
     List<BattingInningModal> bowlingInningModalList2 = new ArrayList<>();
@@ -62,6 +66,16 @@ public class TeamScores extends Fragment {
 //        wicketsFallModelList.clear();
 //        bowlingInningModalList.clear();
 //        battingInningModalList.clear();
+
+        battingInningModalList1.clear();
+        bowlingInningModalList1.clear();
+        wicketsFallModelList1.clear();
+        battingInningModalList2.clear();
+        bowlingInningModalList2.clear();
+        wicketsFallModelList2.clear();
+        battingInningModalList3.clear();
+        bowlingInningModalList3.clear();
+        wicketsFallModelList3.clear();
         initialize();
         //get current inning id
         //if inning id=3 -> super over
@@ -70,15 +84,20 @@ public class TeamScores extends Fragment {
 //        t2Item.set
         inningData(0);
 
-        if (inningcount > 2) {
-            inningsTab.addTab(inningsTab.newTab().setText("Super Over"));
-        }
+
         //set values default for current inn
 
         inningsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 inningData(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    setscore(score1);
+                } else if (tab.getPosition() == 1) {
+                    setscore(score2);
+                } else {
+                    setscore(score3);
+                }
 
             }
 
@@ -95,6 +114,11 @@ public class TeamScores extends Fragment {
 
         load();
         return view;
+    }
+
+    public void setscore(String core) {
+        totalScore.setText(core);
+
     }
 
     InningBattingBowlingAdapter adapter, adapter2;
@@ -221,6 +245,14 @@ public class TeamScores extends Fragment {
         for (int i = 0; i < inningcount; i++) {
             inningData(i);
         }
+        if (inningcount > 2) {
+            inningsTab.addTab(inningsTab.newTab().setText("Super Over"));
+        }
+        score1 = runs + "-" + wickets + "(" + (over / 6) + ")";
+        score2 = runs2 + "-" + wickets2 + "(" + (over2 / 6) + ")";
+        score3 = runs3 + "-" + wickets3 + "(" + (over3 / 6) + ")";
+
+        setscore(score2);
 
 //        adapter.notifyDataSetChanged();
 //        adapter2.notifyDataSetChanged();
@@ -228,7 +260,7 @@ public class TeamScores extends Fragment {
     }
 
     private void update() {
-        totalScore.setText(sscore);
+
 
     }
 
@@ -290,7 +322,6 @@ public class TeamScores extends Fragment {
                     JSONObject fullScorecard = data.getJSONObject("fullScorecard");
                     JSONArray inningss = fullScorecard.getJSONArray("innings");
                     for (int j = inningss.length() - 1; j > -1; j--) {
-                        Log.e("FOR", "J : " + j);
                         JSONObject innings = inningss.getJSONObject(j);
                         inningcount = innings.length();
                         JSONArray batsmen = innings.getJSONArray("batsmen");
@@ -305,7 +336,7 @@ public class TeamScores extends Fragment {
                             String playerfours = batsman.getString("fours");
                             String playersixes = batsman.getString("sixes");
                             String playerfallOfWicketOver;
-                            //String playersfallOfWicket = batsman.getString("fallOfWicket");
+                            String playersfallOfWicket = batsman.getString("fallOfWicket");
                             try {
                                 playerfallOfWicketOver = batsman.getString("fallOfWicketOver");
 
@@ -315,15 +346,18 @@ public class TeamScores extends Fragment {
                             String playerfowOrder = batsman.getString("fowOrder");
                             BattingInningModal battingInningModal = new BattingInningModal(playername, playerhowOut, playerruns, playerballs, playerfours, playersixes, playerstrikeRate);
                             if (j == 0) {
-                                Log.e("IF BAT ", "0");
+                                runs = runs + Integer.parseInt(playerruns);
+                                over = over + Float.parseFloat(playerballs);
                                 battingInningModalList1.add(battingInningModal);
+
                                 if (!playerfowOrder.trim().equalsIgnoreCase("0")) {
                                     WicketsFallModel model = new WicketsFallModel(playername, playerruns, playerfallOfWicketOver);
                                     wicketsFallModelList1.add(model);
                                 }
 
                             } else if (j == 1) {
-                                Log.e("IF BAT ", "1");
+                                runs2 = runs2 + Integer.parseInt(playerruns);
+                                over2 = over2 + Float.parseFloat(playerballs);
                                 battingInningModalList2.add(battingInningModal);
                                 if (!playerfowOrder.trim().equalsIgnoreCase("0")) {
                                     WicketsFallModel model = new WicketsFallModel(playername, playerruns, playerfallOfWicketOver);
@@ -331,7 +365,8 @@ public class TeamScores extends Fragment {
                                 }
 
                             } else {
-                                Log.e("IF BAT ", "3");
+                                runs3 = runs3 + Integer.parseInt(playerruns);
+                                over3 = over3 + Float.parseFloat(playerballs);
                                 battingInningModalList3.add(battingInningModal);
                                 if (!playerfowOrder.trim().equalsIgnoreCase("0")) {
                                     WicketsFallModel model = new WicketsFallModel(playername, playerruns, playerfallOfWicketOver);
@@ -354,15 +389,15 @@ public class TeamScores extends Fragment {
 
 
                             if (j == 0) {
-                                Log.e("IF BALL ", "0");
+                                wickets = Integer.parseInt(wickets + playerwickets);
                                 bowlingInningModalList1.add(battingCardModal);
 
                             } else if (j == 1) {
-                                Log.e("IF BALL ", "1");
+                                wickets2 = Integer.parseInt(wickets3 + playerwickets);
                                 bowlingInningModalList2.add(battingCardModal);
 
                             } else {
-                                Log.e("IF BALL ", "2");
+                                wickets3 = Integer.parseInt(wickets3 + playerwickets);
                                 bowlingInningModalList3.add(battingCardModal);
 
                             }

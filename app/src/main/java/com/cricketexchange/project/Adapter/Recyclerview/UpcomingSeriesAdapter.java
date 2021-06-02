@@ -17,8 +17,6 @@ import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.UpcomingSeriesModel;
 import com.cricketexchange.project.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,20 +42,24 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
     public void onBindViewHolder(@NonNull UpcomingSeriesAdapter.ViewHolder holder, int position) {
         UpcomingSeriesModel matchesModel = list.get(position);
         String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
+
         List<SeriesModel> seriesModelList = new ArrayList<>();
         for (SeriesModel x : childSeriesModel) {
             if ((x.getStartDate()).equals((matchesModel.getDate()))) {
-                String date=x.getStartDate();
-                String d[]=date.split("-");
-                holder.month.setText(arr[Integer.parseInt(d[0])-1]+" "+d[1]);
+                String date = x.getStartDate();
+                String d[] = date.split("-");
+                holder.month.setText(arr[Integer.parseInt(d[0]) - 1] + " " + d[1]);
                 seriesModelList.add(x);
             }
         }
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
-        UpcomingSeriesChildAdapter adapter = new UpcomingSeriesChildAdapter(seriesModelList, context);
-        holder.series.hasFixedSize();
-        holder.series.setAdapter(adapter);
+        if (list.size() > 0) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
+            UpcomingSeriesChildAdapter adapter = new UpcomingSeriesChildAdapter(seriesModelList, context);
+            holder.series.hasFixedSize();
+            holder.series.setAdapter(adapter);
+        }
+
     }
 
     @Override
