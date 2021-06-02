@@ -1,5 +1,5 @@
 package com.cricketexchange.project.Constants;
 
 public class Constants {
-    public final static String HOST = "http://3.108.123.118:443/";
+    public final static String HOST = "http://ec2-13-233-195-148.ap-south-1.compute.amazonaws.com/";
 }
