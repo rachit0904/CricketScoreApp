@@ -3,8 +3,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black_overlay"
     tools:context=".ui.schedule.UpcomingSeries.UpcomingSeriesFrag">
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            app:singleLine="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="All"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Test"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/t20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:overScrollMode="never"
+                android:text="T20"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/odi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="ODI"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/international"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="International"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/league"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="League"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/women"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:checkable="true"
+                android:text="Women"
+                app:checkedIconEnabled="false"
+                app:chipBackgroundColor="@color/scoreRowBackground" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -18,6 +103,7 @@
         android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/scroll"
         android:id="@+id/upcomingSeriesRv"
         android:overScrollMode="never"
         tools:itemCount="2"

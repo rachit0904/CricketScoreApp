@@ -1,7 +1,94 @@
 package com.cricketexchange.project.Models;
 
 public class MatchesChildModel {
-    String team1,team2,premiure,winTeamName,matchSummery,status,startTime,startDate,team1Url,Team2Url,team1score,team2score,team1over,team2over,isDraw,t1iIsBatting,t2IsBatting,mId,sId;
+    String team1, team2, premiure, winTeamName, matchSummery, status, startTime, startDate, team1Url, Team2Url, team1score, team2score, team1over, team2over, isDraw, t1iIsBatting, t2IsBatting, mId, sId;
+    String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public MatchesChildModel(String team1, String team2, String premiure, String winTeamName, String matchSummery, String status, String startTime, String startDate, String team1Url, String team2Url, String team1score, String team2score, String team1over, String team2over, String isDraw, String t1iIsBatting, String t2IsBatting, String mId, String sId, String name, String type, String iswomen, String ismultiday) {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.premiure = premiure;
+        this.winTeamName = winTeamName;
+        this.matchSummery = matchSummery;
+        this.status = status;
+        this.startTime = startTime;
+        this.startDate = startDate;
+        this.team1Url = team1Url;
+        Team2Url = team2Url;
+        this.team1score = team1score;
+        this.team2score = team2score;
+        this.team1over = team1over;
+        this.team2over = team2over;
+        this.isDraw = isDraw;
+        this.t1iIsBatting = t1iIsBatting;
+        this.t2IsBatting = t2IsBatting;
+        this.mId = mId;
+        this.sId = sId;
+        this.name = name;
+        this.type = type;
+        this.iswomen = iswomen;
+        this.ismultiday = ismultiday;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getIswomen() {
+        return iswomen;
+    }
+
+    public void setIswomen(String iswomen) {
+        this.iswomen = iswomen;
+    }
+
+    public String getIsmultiday() {
+        return ismultiday;
+    }
+
+    public void setIsmultiday(String ismultiday) {
+        this.ismultiday = ismultiday;
+    }
+
+    public MatchesChildModel(String team1, String team2, String premiure, String winTeamName, String matchSummery, String status, String startTime, String startDate, String team1Url, String team2Url, String team1score, String team2score, String team1over, String team2over, String isDraw, String t1iIsBatting, String t2IsBatting, String mId, String sId, String type, String iswomen, String ismultiday) {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.premiure = premiure;
+        this.winTeamName = winTeamName;
+        this.matchSummery = matchSummery;
+        this.status = status;
+        this.startTime = startTime;
+        this.startDate = startDate;
+        this.team1Url = team1Url;
+        Team2Url = team2Url;
+        this.team1score = team1score;
+        this.team2score = team2score;
+        this.team1over = team1over;
+        this.team2over = team2over;
+        this.isDraw = isDraw;
+        this.t1iIsBatting = t1iIsBatting;
+        this.t2IsBatting = t2IsBatting;
+        this.mId = mId;
+        this.sId = sId;
+        this.type = type;
+        this.iswomen = iswomen;
+        this.ismultiday = ismultiday;
+    }
+
+    String type, iswomen, ismultiday;
+
     public MatchesChildModel() {
     }
 

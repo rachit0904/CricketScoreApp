@@ -145,9 +145,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
                     st1url = hometeam.getString("logoUrl");
                     st2url = awayTeam.getString("logoUrl");
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return totalSize;

@@ -1,10 +1,13 @@
 package com.cricketexchange.project.ui.schedule.Days;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +19,8 @@ import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,26 +40,51 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DaysFrag extends Fragment {
+public class DaysFrag extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
+    SharedPreferences preferences;
     List<MatchesChildModel> childModelList = new ArrayList<>();
+    List<MatchesChildModel> filterdchildModelList = new ArrayList<>();
     List<MatchesModel> parentList = new ArrayList<>();
-    List<MatchesChildModel> childList = new ArrayList<>();
+    HorizontalScrollView scrollView;
+    ChipGroup tours;
+    Chip all, test, t20, odi, international, league, women;
     Set<Date> dates = new TreeSet<>();
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_days, container, false);
+        preferences = requireActivity().getSharedPreferences(Constants.Filter, 0);
         recyclerView = view.findViewById(R.id.days);
         progressBar = view.findViewById(R.id.progressBar);
 //        recyclerView.hasFixedSize();
         dates.clear();
+        filterdchildModelList.clear();
         childModelList.clear();
-        childList.clear();
         modelList.clear();
+        tours = view.findViewById(R.id.tours);
+        tours.setVisibility(View.GONE);
+        all = view.findViewById(R.id.all);
+        t20 = view.findViewById(R.id.t20);
+        odi = view.findViewById(R.id.odi);
+        test = view.findViewById(R.id.test);
+        league = view.findViewById(R.id.league);
+        women = view.findViewById(R.id.women);
+        international = view.findViewById(R.id.international);
+        all.setChecked(true);
+        all.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+        all.setCloseIconEnabled(true);
+        all.setOnClickListener(this);
+        test.setOnClickListener(this);
+        odi.setOnClickListener(this);
+        t20.setOnClickListener(this);
+        league.setOnClickListener(this);
+        international.setOnClickListener(this);
+        women.setOnClickListener(this);
 
 
         load();
@@ -66,10 +97,69 @@ public class DaysFrag extends Fragment {
         new Load().execute(Constants.HOST + "allMatches");
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private void filter(String type) {
+        progressBar.setVisibility(View.VISIBLE);
+        filterdchildModelList.clear();
+        switch (type) {
+            case "odi":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getType().toLowerCase(Locale.ROOT).contains("odi")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    } else if (childModelList.get(i).getName().toLowerCase(Locale.ROOT).contains("odi")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            case "t20":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getType().toLowerCase(Locale.ROOT).contains("t20")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    } else if (childModelList.get(i).getName().toLowerCase(Locale.ROOT).contains("t20")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            case "test":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getType().toLowerCase(Locale.ROOT).contains("test")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    } else if (childModelList.get(i).getName().toLowerCase(Locale.ROOT).contains("test")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            case "international":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getType().toLowerCase(Locale.ROOT).contains("intern")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    } else if (childModelList.get(i).getName().toLowerCase(Locale.ROOT).contains("intern")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            case "league":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getIsmultiday().toLowerCase(Locale.ROOT).contains("true")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            case "women":
+                for (int i = 0; i < childModelList.size(); i++) {
+                    if (childModelList.get(i).getIswomen().toLowerCase(Locale.ROOT).contains("true")) {
+                        filterdchildModelList.add(childModelList.get(i));
+                    }
+                }
+                break;
+            default:
+                filterdchildModelList.addAll(childModelList);
 
-    private void setChildDate() {
-        childModelList = childList;
+        }
+        progressBar.setVisibility(View.GONE);
+        adapter.notifyDataSetChanged();
     }
+
 
     private void setParentData() {
         for (Date x : dates) {
@@ -127,20 +217,210 @@ public class DaysFrag extends Fragment {
             dates.add(d);
             matchesChildModel.setStartDate(sD);
             matchesChildModel.setStartTime(arr2[0]);
-            childList.add(matchesChildModel);
+            //   childList.add(matchesChildModel);
         }
     }
 
+    MatchesAdapter adapter;
     private void update(Boolean isAt) {
+
+        filterdchildModelList.addAll(childModelList);
         progressBar.setVisibility(View.GONE);
+        tours.setVisibility(View.VISIBLE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         setParentData();
-        setChildDate();
-        MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        adapter = new MatchesAdapter(getContext(), modelList, filterdchildModelList);
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == all) {
+            if (all.isChecked()) {
+                filter("all");
+                all.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                all.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChecked(true);
+                test.setChecked(false);
+                t20.setChecked(false);
+                odi.setChecked(false);
+                league.setChecked(false);
+                international.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == odi) {
+            if (odi.isChecked()) {
+                filter("odi");
+                odi.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                all.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                odi.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChecked(true);
+                test.setChecked(false);
+                t20.setChecked(false);
+                all.setChecked(false);
+                league.setChecked(false);
+                international.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == t20) {
+
+            if (t20.isChecked()) {
+                filter("t20");
+                t20.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                all.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                t20.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                t20.setChecked(true);
+                test.setChecked(false);
+                all.setChecked(false);
+                odi.setChecked(false);
+                league.setChecked(false);
+                international.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == test) {
+            if (test.isChecked()) {
+                filter("test");
+                test.setCloseIconEnabled(true);
+                all.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                test.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChecked(true);
+                all.setChecked(false);
+                t20.setChecked(false);
+                odi.setChecked(false);
+                league.setChecked(false);
+                international.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == international) {
+            if (international.isChecked()) {
+                filter("international");
+                international.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                all.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                international.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChecked(true);
+                test.setChecked(false);
+                t20.setChecked(false);
+                odi.setChecked(false);
+                league.setChecked(false);
+                all.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == league) {
+            if (league.isChecked()) {
+                filter("league");
+                league.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                all.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                women.setCloseIconEnabled(false);
+                league.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChecked(true);
+                test.setChecked(false);
+                t20.setChecked(false);
+                odi.setChecked(false);
+                all.setChecked(false);
+                international.setChecked(false);
+                women.setChecked(false);
+            }
+        }
+        if (v == women) {
+            if (women.isChecked()) {
+                filter("women");
+                women.setCloseIconEnabled(true);
+                test.setCloseIconEnabled(false);
+                t20.setCloseIconEnabled(false);
+                odi.setCloseIconEnabled(false);
+                league.setCloseIconEnabled(false);
+                international.setCloseIconEnabled(false);
+                all.setCloseIconEnabled(false);
+                women.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                international.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+                women.setChecked(true);
+                test.setChecked(false);
+                t20.setChecked(false);
+                odi.setChecked(false);
+                league.setChecked(false);
+                international.setChecked(false);
+                all.setChecked(false);
+            }
+        }
     }
 
     private class Load extends AsyncTask<String, Integer, Long> {
@@ -161,11 +441,15 @@ public class DaysFrag extends Fragment {
 
 
                         try {
+
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-
+                            matchesChildModel.setType(obj.getString("cmsMatchAssociatedType"));
+                            matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
+                            matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
                             matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
                             matchesChildModel.setmId(obj.getString("id"));
+                            matchesChildModel.setName(obj.getString("name"));
                             matchesChildModel.setPremiure(obj.getJSONObject("series").getString("name"));//series name
                             matchesChildModel.setStatus(obj.getString("status"));//currentMatchState
                             matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
@@ -229,7 +513,7 @@ public class DaysFrag extends Fragment {
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
 
-                            childList.add(matchesChildModel);
+                            childModelList.add(matchesChildModel);
 
 
                         } catch (JSONException e) {
