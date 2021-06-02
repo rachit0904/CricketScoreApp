@@ -49,13 +49,10 @@ public class Live extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_live, container, false);
-
         battingCardModalList.clear();
         yetToBatList.clear();
         partnershipsModalList.clear();
         initialize();
-
-
         setData();
         showScoreCard.setOnClickListener(this);
         load();

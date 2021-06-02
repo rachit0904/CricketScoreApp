@@ -52,7 +52,6 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         card.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.liveMatches);
         progressBar = view.findViewById(R.id.progressBar);
-
         childList.clear();
         load();
     }

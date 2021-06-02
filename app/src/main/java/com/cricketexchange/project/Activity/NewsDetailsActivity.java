@@ -11,11 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.NewsNormalAdapter;
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
@@ -106,7 +106,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public void load() {
         progressBar2.setVisibility(View.VISIBLE);
-        String url = "http://3.108.39.214/news";
+        String url = Constants.HOST + "news";
         new LoadData().execute(url);
         if (isupdated) {
             update();
