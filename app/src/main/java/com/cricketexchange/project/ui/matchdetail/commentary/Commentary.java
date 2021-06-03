@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,6 +61,8 @@ public class Commentary extends Fragment {
         b3 = view.findViewById(R.id.ball3);
         b4 = view.findViewById(R.id.ball4);
         b5 = view.findViewById(R.id.ball5);
+        sid=getActivity().getIntent().getStringExtra("sid");
+        mid=getActivity().getIntent().getStringExtra("mid");
         b6 = view.findViewById(R.id.ball6);
         //SetOverBallScore();
         commentaries.clear();
@@ -150,9 +151,8 @@ public class Commentary extends Fragment {
 //    }
 
     private void load() {
-        // new LoadHighlight().execute("http://3.108.39.214/getCommentary?sid=" + sid + "&mid=" + mid);
 
-//        new LoadCommentary().execute(Constants.HOST +"getCommentary?sid=" + sid + "&mid=" + mid);
+        new LoadCommentary().execute(Constants.HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
 
     }
 

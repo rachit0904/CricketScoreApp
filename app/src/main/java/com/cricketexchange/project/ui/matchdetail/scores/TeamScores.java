@@ -1,13 +1,11 @@
 package com.cricketexchange.project.ui.matchdetail.scores;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import com.cricketexchange.project.Models.BattingInningModal;
 import com.cricketexchange.project.Models.InningModal;
 import com.cricketexchange.project.Models.WicketsFallModel;
 import com.cricketexchange.project.R;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -42,9 +39,8 @@ public class TeamScores extends Fragment {
     RecyclerView bowlingRv;
     RecyclerView wicketsRv;
     View view;
-//    String sid=getActivity().getIntent().getStringExtra("sid");
-//    String mid=getActivity().getIntent().getStringExtra("mid");
-    List<InningModal> InningDataList=new ArrayList<>();
+    String sid, mid;
+    List<InningModal> InningDataList = new ArrayList<>();
     List<BattingInningModal> battingInningModalList1 = new ArrayList<>();
     List<BattingInningModal> bowlingInningModalList1 = new ArrayList<>();
     List<WicketsFallModel> wicketsFallModelList1 = new ArrayList<>();
@@ -56,6 +52,8 @@ public class TeamScores extends Fragment {
         battingInningModalList1.clear();
         bowlingInningModalList1.clear();
         wicketsFallModelList1.clear();
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        mid = requireActivity().getIntent().getStringExtra("mid");
         initialize();
         load();
         inningsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -129,7 +127,7 @@ public class TeamScores extends Fragment {
     }
 
     private void load() {
-//        new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid="+sid+"&mid="+mid);
+        new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid="+sid+"&mid="+mid);
     }
 
 

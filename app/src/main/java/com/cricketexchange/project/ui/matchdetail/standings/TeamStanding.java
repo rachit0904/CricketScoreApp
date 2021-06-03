@@ -32,8 +32,9 @@ public class TeamStanding extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     ProgressBar progressBar;
-//    String sid=getActivity().getIntent().getStringExtra("sid");
+    //    String sid=getActivity().getIntent().getStringExtra("sid");
     List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
+    String sid, mid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +43,8 @@ public class TeamStanding extends Fragment {
         recyclerView = view.findViewById(R.id.pointsTableRv);
         progressBar = view.findViewById(R.id.progressBar);
         scoreCardModelList.clear();
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        mid = requireActivity().getIntent().getStringExtra("mid");
         load();
         return view;
     }
@@ -93,8 +96,8 @@ public class TeamStanding extends Fragment {
     }
 
     private void load() {
-//        progressBar.setVisibility(View.VISIBLE);
-//        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
+        progressBar.setVisibility(View.VISIBLE);
+        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
     }
 
     private class Load extends AsyncTask<String, Integer, Long> {
