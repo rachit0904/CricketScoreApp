@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,9 +47,8 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     List<MatchesChildModel> childModelList = new ArrayList<>();
     List<MatchesChildModel> filterdchildModelList = new ArrayList<>();
-    List<MatchesModel> parentList = new ArrayList<>();
-    HorizontalScrollView scrollView;
     ChipGroup tours;
+    View view;
     Chip all, test, t20, odi, international, league, women;
     Set<Date> dates = new TreeSet<>();
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
@@ -57,7 +57,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_days, container, false);
+        view = inflater.inflate(R.layout.fragment_days, container, false);
         preferences = requireActivity().getSharedPreferences(Constants.Filter, 0);
         recyclerView = view.findViewById(R.id.days);
         progressBar = view.findViewById(R.id.progressBar);
@@ -88,7 +88,6 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
 
         load();
-
         return view;
     }
 
@@ -131,7 +130,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                 break;
             case "international":
                 for (int i = 0; i < childModelList.size(); i++) {
-                    if (childModelList.get(i).getType().toLowerCase(Locale.ROOT).contains("intern")) {
+                    if (childModelList.get(i).getType().toLowerCase().contains("intl")) {
                         filterdchildModelList.add(childModelList.get(i));
                     } else if (childModelList.get(i).getName().toLowerCase(Locale.ROOT).contains("intern")) {
                         filterdchildModelList.add(childModelList.get(i));
@@ -169,57 +168,6 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setData() {
-        for (int i = 0; i < 3; i++) {
-            MatchesChildModel matchesChildModel = new MatchesChildModel();
-            //fetch all data into childModelList but for date
-            matchesChildModel.setsId("");
-            matchesChildModel.setmId("");
-            matchesChildModel.setPremiure("IPL 2021");//series name
-            matchesChildModel.setStatus("LIVE");
-            matchesChildModel.setIsDraw("false");
-            matchesChildModel.setWinTeamName("");
-            matchesChildModel.setTeam1("RCB");
-            matchesChildModel.setTeam2("DC");
-            matchesChildModel.setTeam1Url("");
-            matchesChildModel.setTeam2Url("");
-            matchesChildModel.setT1iIsBatting("true");
-            matchesChildModel.setT2IsBatting("false");
-            if (matchesChildModel.getT1iIsBatting().equalsIgnoreCase("true")) {
-                matchesChildModel.setTeam1score("136-4");
-                matchesChildModel.setTeam1over("13.2");
-            } else {
-                matchesChildModel.setTeam1score("");
-                matchesChildModel.setTeam1over("");
-            }
-            if (matchesChildModel.getT2IsBatting().equalsIgnoreCase("true")) {
-                matchesChildModel.setTeam2score("136-4");
-                matchesChildModel.setTeam2over("12.4");
-            } else {
-                matchesChildModel.setTeam2score("");
-                matchesChildModel.setTeam2over("");
-            }
-            matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-            //set date to match modellist and match childmodallist;
-            String dateTime = "2021-06-03T10:00:00Z";
-            String[] arr = dateTime.split("T");//arr[0] gives start date
-            String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
-            //add data to parent and child list
-            String date[] = arr[0].split("-");
-            String sD = (date[2] + "-" + date[1] + "-" + date[0]);
-            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-            Date d = null;
-            try {
-                d = sobj.parse(sD);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            dates.add(d);
-            matchesChildModel.setStartDate(sD);
-            matchesChildModel.setStartTime(arr2[0]);
-            //   childList.add(matchesChildModel);
-        }
-    }
 
     MatchesAdapter adapter;
     private void update(Boolean isAt) {
@@ -266,7 +214,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         }
         if (v == odi) {
             if (odi.isChecked()) {
-                filter("odi");
+                filter("test");
                 odi.setCloseIconEnabled(true);
                 test.setCloseIconEnabled(false);
                 t20.setCloseIconEnabled(false);
@@ -293,7 +241,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         if (v == t20) {
 
             if (t20.isChecked()) {
-                filter("t20");
+                filter("test");
                 t20.setCloseIconEnabled(true);
                 test.setCloseIconEnabled(false);
                 all.setCloseIconEnabled(false);
@@ -344,8 +292,8 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
             }
         }
         if (v == international) {
-            if (international.isChecked()) {
-                filter("international");
+            if (international.isChecked())
+                filter("league");
                 international.setCloseIconEnabled(true);
                 test.setCloseIconEnabled(false);
                 t20.setCloseIconEnabled(false);
@@ -368,7 +316,6 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                 all.setChecked(false);
                 women.setChecked(false);
             }
-        }
         if (v == league) {
             if (league.isChecked()) {
                 filter("league");
@@ -444,7 +391,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-                            matchesChildModel.setType(obj.getString("cmsMatchAssociatedType"));
+                            matchesChildModel.setType(obj.getString("cmsMatchType"));
                             matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
                             matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
                             matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));

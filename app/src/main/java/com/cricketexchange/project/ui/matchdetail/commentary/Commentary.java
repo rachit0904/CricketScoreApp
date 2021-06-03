@@ -49,8 +49,8 @@ public class Commentary extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_commentary, container, false);
-        sid = "2796";
-        mid = "51038";
+//        sid = getActivity().getIntent().getStringExtra("sid");
+//        mid = getActivity().getIntent().getStringExtra("mid");
         progressBar = view.findViewById(R.id.progressBar);
         //2796S51038
         ovrs = view.findViewById(R.id.over);
@@ -152,7 +152,7 @@ public class Commentary extends Fragment {
     private void load() {
         // new LoadHighlight().execute("http://3.108.39.214/getCommentary?sid=" + sid + "&mid=" + mid);
 
-        new LoadCommentary().execute(Constants.HOST +"getCommentary?sid=" + sid + "&mid=" + mid);
+//        new LoadCommentary().execute(Constants.HOST +"getCommentary?sid=" + sid + "&mid=" + mid);
 
     }
 

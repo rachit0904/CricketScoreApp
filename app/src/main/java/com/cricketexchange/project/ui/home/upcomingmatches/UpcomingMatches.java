@@ -104,12 +104,11 @@ public class UpcomingMatches extends Fragment {
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
 
-
                         try {
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-                            matchesChildModel.setsId(obj.getString("jsondata").split("S")[0]);
-                            matchesChildModel.setmId(obj.getString("jsondata").split("S")[1]);
+                            matchesChildModel.setsId(obj.getString("_id").split("S")[0]);
+                            matchesChildModel.setmId(obj.getString("_id").split("S")[1]);
                             matchesChildModel.setPremiure(obj.getJSONObject("jsondata").getJSONObject("meta").getJSONObject("series").getString("name"));//series name
                             matchesChildModel.setStatus(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("currentMatchState"));//status upcomming mandatory//currentMatchState
                             matchesChildModel.setTeam1(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam").getString("shortName"));

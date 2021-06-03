@@ -38,7 +38,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     View view;
     String ATseriesName, ATmatchType, ATvenueName, ATumpires, ATtumpire, ATrefree, ATtossMessage, ATstartdate,
             t1name, t1Sname, t1logourl, t1bg, t1color, t2name, t2Sname, t2logourl, t2bg, t2color, t1id, t2id;
-    String sid = "2802", mid = "51058";
+//    String sid = getActivity().getIntent().getStringExtra("sid"), mid =getActivity().getIntent().getStringExtra("mid");
 
 
     @Override
@@ -61,7 +61,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+//        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
     }
 
     private void initialize() {
@@ -144,22 +144,22 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == seriesCard) {
             //pass intent to series Detail page
-            Intent intent = new Intent(getContext(), SeriesDetail.class);
-            intent.putExtra("sid", sid);
-            intent.putExtra("sname", ATseriesName);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), SeriesDetail.class);
+//            intent.putExtra("sid", sid);
+//            intent.putExtra("sname", ATseriesName);
+//            startActivity(intent);
         }
         if (v == t1Layout) {
             //pass intent to team info page
-            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-            intent.putExtra("tid", t1id);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+//            intent.putExtra("tid", t1id);
+//            startActivity(intent);
         }
         if (v == t2Layout) {
             //pass intent to team info page
-            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-            intent.putExtra("tid", t2id);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+//            intent.putExtra("tid", t2id);
+//            startActivity(intent);
         }
     }
 

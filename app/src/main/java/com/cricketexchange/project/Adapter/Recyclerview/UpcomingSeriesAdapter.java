@@ -52,13 +52,16 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
                 seriesModelList.add(x);
             }
         }
-        if (list.size() > 0) {
+        if(seriesModelList.size()==0){
+            holder.month.setVisibility(View.GONE);
+            holder.series.setVisibility(View.GONE);
+        }
+
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
             UpcomingSeriesChildAdapter adapter = new UpcomingSeriesChildAdapter(seriesModelList, context);
             holder.series.hasFixedSize();
             holder.series.setAdapter(adapter);
-        }
 
     }
 

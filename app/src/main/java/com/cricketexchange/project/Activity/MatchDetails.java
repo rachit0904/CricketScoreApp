@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -31,7 +33,8 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     String st1Name, st2Name, st1Score, st2Score, st1Overs, st2Overs, sstartdate, status, st1url, st2url, matchsumm;
     public TabLayout tabLayout;
     public ViewPager pager;
-
+    String sid;
+    String mid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,19 +42,34 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         TextView textView = findViewById(R.id.matchTitle);
         textView.setText(getIntent().getStringExtra("match"));
         initializeIds();
-        setData();
         back.setOnClickListener(this);
         MatchDetailPager matchDetailPager = new MatchDetailPager(getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(matchDetailPager);
         tabLayout.setupWithViewPager(pager);
         tabLayout.selectTab(tabLayout.getTabAt(2));
         pager.setCurrentItem(2);
+        sid=getIntent().getStringExtra("sid");
+        mid=getIntent().getStringExtra("mid");
+        LinearLayout t1ScoreLayout = findViewById(R.id.t1ScoreLayout);
+        LinearLayout t2ScoreLayout = findViewById(R.id.t2ScoreLayout);
+        RelativeLayout notifyLayout=findViewById(R.id.upcomingNotifyLayout);
+        LinearLayout startD = findViewById(R.id.startTimerLayout);
         load();
+        if (getIntent().getStringExtra("status").equalsIgnoreCase("UPCOMING")) {
+            t1ScoreLayout.setVisibility(View.GONE);
+            t2ScoreLayout.setVisibility(View.GONE);
+            startD.setVisibility(View.VISIBLE);
+            notifyLayout.setVisibility(View.VISIBLE);
+            pager.setVisibility(View.GONE);
+        } else {
+            startD.setVisibility(View.GONE);
+            t1ScoreLayout.setVisibility(View.VISIBLE);
+            t2ScoreLayout.setVisibility(View.VISIBLE);
+            notifyLayout.setVisibility(View.GONE);
+            pager.setVisibility(View.VISIBLE);
+        }
     }
 
-    private void setData() {
-
-    }
 
     private void initializeIds() {
         back = findViewById(R.id.bckBtn);
@@ -86,29 +104,21 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         }
         t1Name.setText(st1Name);
         t2Name.setText(st2Name);
-        t1Score.setText(st1Score);
-        t2Score.setText(st2Score);
-        t1Overs.setText(st1Overs);
-        t2Overs.setText(st2Overs);
+        if(!status.equalsIgnoreCase("UPCOMING")) {
+            t1Score.setText(st1Score);
+            t2Score.setText(st2Score);
+            t1Overs.setText(st1Overs);
+            t2Overs.setText(st2Overs);
+        }
         cms.setText(matchsumm);
         startdate.setText(sstartdate);
-        LinearLayout startdate = findViewById(R.id.startTimerLayout);
-        LinearLayout t1ScoreLayout = findViewById(R.id.t1ScoreLayout);
-        LinearLayout t2ScoreLayout = findViewById(R.id.t2ScoreLayout);
-        if (status.equalsIgnoreCase("UPCOMING")) {
-            t1ScoreLayout.setVisibility(View.GONE);
-            t2ScoreLayout.setVisibility(View.GONE);
-            startdate.setVisibility(View.VISIBLE);
-        } else {
-            startdate.setVisibility(View.GONE);
-            t1ScoreLayout.setVisibility(View.VISIBLE);
-            t2ScoreLayout.setVisibility(View.VISIBLE);
-        }
     }
 
 
     private void load() {
-        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=2796&mid=51038");
+        if(!sid.isEmpty() || !mid.isEmpty()) {
+            new Load().execute(Constants.HOST + "getMatchesHighlight?sid="+Integer.parseInt(sid)+"&mid=" +Integer.parseInt(mid));
+        }
     }
 
 
@@ -131,15 +141,17 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
                     JSONObject matchSummary = matchDetail.getJSONObject("matchSummary");
                     JSONObject hometeam = matchSummary.getJSONObject("homeTeam");
                     JSONObject awayTeam = matchSummary.getJSONObject("awayTeam");
-                    JSONObject scores = matchSummary.getJSONObject("scores");
                     status = matchSummary.getString("status");
 
                     st1Name = hometeam.getString("shortName");
                     st2Name = awayTeam.getString("shortName");
-                    st1Score = scores.getString("homeScore");
-                    st1Overs = scores.getString("homeOvers");
-                    st2Score = scores.getString("awayScore");
-                    st2Overs = scores.getString("awayOvers");
+                    if(!status.equalsIgnoreCase("UPCOMING")) {
+                        JSONObject scores = matchSummary.getJSONObject("scores");
+                        st1Score = scores.getString("homeScore");
+                        st1Overs = scores.getString("homeOvers");
+                        st2Score = scores.getString("awayScore");
+                        st2Overs = scores.getString("awayOvers");
+                    }
                     matchsumm = matchSummary.getString("matchSummaryText");
                     sstartdate = matchSummary.getString("localStartTime");
                     st1url = hometeam.getString("logoUrl");
