@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,7 +58,7 @@ public class CompletedMatches extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "getPreviousWeekMatches");
+        new Load().execute(Constants.HOST + "allMatches");
     }
 
     private void setChildDate() {
@@ -65,16 +66,29 @@ public class CompletedMatches extends Fragment {
     }
 
     private void setParentData() {
-
-        for (Date x : dates) {
-            MatchesModel model = new MatchesModel();
-            model.setDate(sobj.format(x));
+        final  long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+        String dateInString = sobj.format(new Date());
+        long nextDayMilliSeconds ;
+        Date date=new Date();
+        for(int i=0;i<7;i++) {
+            MatchesModel model=new MatchesModel();
+            // Getting the next day and formatting into 'YYYY-MM-DD'
+            nextDayMilliSeconds= date.getTime() - ONE_DAY_MILLI_SECONDS;
+            Date nextDate= new Date(nextDayMilliSeconds);
+            String nextDateStr = sobj.format(nextDate);
+            model.setDate(nextDateStr);
             modelList.add(model);
+            dateInString=nextDateStr;
+            try {
+                date = sobj.parse(dateInString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
-    private void update(Boolean isAt) {
+    private void update() {
         progressBar.setVisibility(View.GONE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -160,14 +174,6 @@ public class CompletedMatches extends Fragment {
                             //add data to parent and child list
                             String date[] = arr[0].split("-");
                             String sD = (date[2] + "-" + date[1] + "-" + date[0]);
-                            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-                            Date d = null;
-                            try {
-                                d = sobj.parse(sD);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
                             if (matchesChildModel.getStatus().equalsIgnoreCase("COMPLETED")) {
@@ -196,7 +202,7 @@ public class CompletedMatches extends Fragment {
         }
 
         protected void onPostExecute(Long result) {
-            update(true);
+            update();
         }
     }
 
