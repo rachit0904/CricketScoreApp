@@ -82,7 +82,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         seriesRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new SeriesNameAdapter(getActivity(), datalist);
         seriesRv.setAdapter(adapter);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
 
     }
 

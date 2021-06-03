@@ -35,18 +35,18 @@
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold" />
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/seriesRv"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/seriesBanner"
-            android:layout_marginTop="20dp"
-            android:overScrollMode="never"
-            tools:itemCount="4"
-            tools:listitem="@layout/series_rv_card" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/seriesRv"
+        android:overScrollMode="never"
+        android:layout_below="@id/seriesBanner"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/series_rv_card"
+        tools:itemCount="4"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"/>
 
 
         <ProgressBar
@@ -54,30 +54,27 @@
             style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/seriesBanner"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:elevation="10dp">
 
         </ProgressBar>
-
-        <Button
-            android:id="@+id/allSeries"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/progressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="35dp"
-            android:layout_marginBottom="120dp"
-            android:backgroundTint="@android:color/holo_green_dark"
-            android:paddingTop="13dp"
-            android:paddingBottom="13dp"
-            android:text="View upcoming series"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+    <Button
+        android:id="@+id/allSeries"
+        android:text="View upcoming series"
+        android:textSize="16sp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="120dp"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:textAllCaps="false"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/seriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 
