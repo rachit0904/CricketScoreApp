@@ -1,8 +1,8 @@
 package com.cricketexchange.project.ui.matchdetail.info;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +14,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.cricketexchange.project.Activity.SeriesDetail;
-import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
@@ -36,10 +34,11 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     RelativeLayout t1Layout, t2Layout;
     ProgressBar progressBar;
     View view;
-    String ATseriesName, ATmatchType, ATvenueName, ATumpires, ATtumpire, ATrefree, ATtossMessage, ATstartdate,
-            t1name, t1Sname, t1logourl, t1bg, t1color, t2name, t2Sname, t2logourl, t2bg, t2color, t1id, t2id;
+    String ATseriesName="NA", ATmatchType="NA", ATvenueName="NA", ATumpires="NA", ATtumpire="NA", ATrefree="NA", ATtossMessage="NA", ATstartdate="NA",
+            t1name="NA", t1Sname="NA", t1logourl="NA", t1bg="NA", t1color="NA", t2name="NA", t2Sname="NA", t2logourl="NA", t2bg="NA", t2color="NA", t1id="NA", t2id="NA";
 //    String sid = getActivity().getIntent().getStringExtra("sid"), mid =getActivity().getIntent().getStringExtra("mid");
 
+    String sid, mid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +47,8 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
         initialize();
         //setData();
         progressBar = view.findViewById(R.id.progressBar);
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        mid = requireActivity().getIntent().getStringExtra("mid");
         load();
 
         seriesCard.setOnClickListener(this);
@@ -61,7 +62,9 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-//        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        Log.e("UTL",Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+
     }
 
     private void initialize() {
@@ -86,13 +89,16 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
     private void update() {
         progressBar.setVisibility(View.GONE);
-        if (t1logourl.trim().length() != 0) {
-            Picasso.get().load(t1logourl).into(t1Logo);
+
+        if (t1logourl != null) {
+            if (t1logourl.trim().length() != 0) {
+                Picasso.get().load(t1logourl).into(t1Logo);
+            }
         }
-
-
-        if (t2logourl.trim().length() != 0) {
-            Picasso.get().load(t2logourl).into(t2Logo);
+        if (t1logourl != null) {
+            if (t2logourl.trim().length() != 0) {
+                Picasso.get().load(t2logourl).into(t2Logo);
+            }
         }
 
 

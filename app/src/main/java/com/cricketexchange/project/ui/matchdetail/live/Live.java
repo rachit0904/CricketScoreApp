@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -57,8 +58,8 @@ public class Live extends Fragment implements View.OnClickListener {
         initialize();
         setData();
         showScoreCard.setOnClickListener(this);
-        sid=getActivity().getIntent().getStringExtra("sid");
-        mid=getActivity().getIntent().getStringExtra("mid");
+        sid= requireActivity().getIntent().getStringExtra("sid");
+        mid=requireActivity().getIntent().getStringExtra("mid");
         load();
         return view;
     }
@@ -102,9 +103,12 @@ public class Live extends Fragment implements View.OnClickListener {
     private void update() {
         currentInningTeamScore.setText(sscore);
         //  currentInningTeamLogo.
-        if (homelogoUrl.trim().length() != 0) {
-            Picasso.get().load(homelogoUrl).into(currentInningTeamLogo);
+        if (homelogoUrl!=null){
+            if (homelogoUrl.trim().length() != 0) {
+                Picasso.get().load(homelogoUrl).into(currentInningTeamLogo);
+            }
         }
+
         currentBatsman1.setText(firstbattername);
         currentBatsman2.setText(secondbattername);
         currentBowler.setText(bollernam);
