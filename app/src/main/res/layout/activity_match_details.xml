@@ -96,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:layout_alignParentStart="true"
                 android:id="@+id/r1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -159,12 +160,12 @@
             <LinearLayout
                 android:id="@+id/startTimerLayout"
                 android:gravity="center"
+                android:layout_centerInParent="true"
                 android:visibility="visible"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="35pt"
                 android:layout_marginEnd="20pt"
                 android:orientation="vertical"
-                android:layout_toRightOf="@id/r1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
@@ -184,7 +185,7 @@
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/r2"
-                android:layout_toRightOf="@id/startTimerLayout"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -248,6 +249,7 @@
             <TextView
                 android:id="@+id/cms"
                 android:textSize="12sp"
+                android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="MI need more 30 runs to win"
                 android:layout_marginTop="5dp"
@@ -267,5 +269,21 @@
         android:layout_below="@id/highlightCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:id="@+id/upcomingNotifyLayout"
+        android:background="@color/black_overlay"
+        android:elevation="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/highlightCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="16dp"
+            android:text="Match not Started yet!"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
 </RelativeLayout>

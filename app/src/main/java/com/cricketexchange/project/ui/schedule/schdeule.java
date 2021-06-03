@@ -28,7 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 public class schdeule extends Fragment implements View.OnClickListener {
-    ImageView notifyBtn,filterBtn;
+    ImageView notifyBtn;
     boolean notifyFlag = false,filterFlag=false;
     View view;
     String notify;
@@ -44,10 +44,8 @@ public class schdeule extends Fragment implements View.OnClickListener {
         view= inflater.inflate(R.layout.fragment_schdeule, container, false);
         preferences = getActivity().getSharedPreferences("prefs", 0);
         notifyBtn = view.findViewById(R.id.notifyBtn);
-        filterBtn = view.findViewById(R.id.filterBtn);
         scrollView=view.findViewById(R.id.scroll);
         notifyBtn.setOnClickListener(this);
-        filterBtn.setOnClickListener(this);
         tabLayout = view.findViewById(R.id.tabLayout2);
         pager = view.findViewById(R.id.pager2);
         ScheduleViewPager adapter = new ScheduleViewPager(getChildFragmentManager(), tabLayout.getTabCount());
@@ -59,15 +57,6 @@ public class schdeule extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v == filterBtn){
-            if(filterFlag){
-                scrollView.setVisibility(View.VISIBLE);
-                filterFlag=false;
-            }else{
-                scrollView.setVisibility(View.GONE);
-                filterFlag=true;
-            }
-        }
         if (v == notifyBtn) {
             if (!notifyFlag) {
                 notifyBtn.setBackground(notifyBtn.getContext().getResources().getDrawable(R.drawable.notifyon));

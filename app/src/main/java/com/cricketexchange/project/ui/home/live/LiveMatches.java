@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     CardView card;
     ArrayList<MatchesChildModel> childList = new ArrayList<>();
     ProgressBar progressBar;
-
+    RelativeLayout noMatchLayout;
     public LiveMatches() {
         super(R.layout.fragment_live_matches);
     }
@@ -50,6 +51,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         card = view.findViewById(R.id.upcoming);
         card.setOnClickListener(this);
+        noMatchLayout=view.findViewById(R.id.noMatchLayout);
         recyclerView = view.findViewById(R.id.liveMatches);
         progressBar = view.findViewById(R.id.progressBar);
         childList.clear();
@@ -57,7 +59,6 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     }
 
     private void load() {
-
         progressBar.setVisibility(View.VISIBLE);
         new Load().execute(Constants.HOST +"getTodayMatches");
     }
@@ -93,6 +94,13 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
 
     private void update() {
         progressBar.setVisibility(View.GONE);
+        if(childList.size()>0){
+            recyclerView.setVisibility(View.VISIBLE);
+            noMatchLayout.setVisibility(View.GONE);
+        }else{
+            recyclerView.setVisibility(View.GONE);
+            noMatchLayout.setVisibility(View.VISIBLE);
+        }
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MatchesChildAdapter adapter = new MatchesChildAdapter(getContext(), childList);
@@ -121,8 +129,8 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
 
-                            matchesChildModel.setsId(obj.getString("jsondata").split("S")[0]);
-                            matchesChildModel.setmId(obj.getString("jsondata").split("S")[1]);
+                            matchesChildModel.setsId(obj.getString("_id").split("S")[0]);
+                            matchesChildModel.setmId(obj.getString("_id").split("S")[1]);
                             matchesChildModel.setPremiure(obj.getJSONObject("jsondata").getJSONObject("meta").getJSONObject("series").getString("name"));//series name
                             matchesChildModel.setStatus(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("status"));//status upcomming mandatory//currentMatchState
                             //matchesChildModel.setIsDraw(obj.getJSONObject("jsondata").getJSONObject("matchDetail").getJSONObject("matchSummary").getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState

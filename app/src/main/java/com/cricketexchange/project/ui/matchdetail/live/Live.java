@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,7 @@ public class Live extends Fragment implements View.OnClickListener {
     ImageView currentInningTeamLogo;
     RecyclerView inningBattingRv, inningYetToBat, inningPartnerShips;
     CardView showScoreCard;
+    String sid,mid;
     View view;
     List<battingCardModal> battingCardModalList = new ArrayList<>();
     List<battingCardModal> yetToBatList = new ArrayList<>();
@@ -55,12 +57,14 @@ public class Live extends Fragment implements View.OnClickListener {
         initialize();
         setData();
         showScoreCard.setOnClickListener(this);
+        sid=getActivity().getIntent().getStringExtra("sid");
+        mid=getActivity().getIntent().getStringExtra("mid");
         load();
         return view;
     }
 
     private void load() {
-        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=2796&mid=51038");
+        new Load().execute(Constants.HOST + "getMatchesHighlight?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid));
     }
 
     PartnershipsAdapter adapter3;
@@ -87,32 +91,6 @@ public class Live extends Fragment implements View.OnClickListener {
         adapter3 = new PartnershipsAdapter(getContext(), partnershipsModalList);
         inningPartnerShips.setAdapter(adapter3);
 
-    }
-
-
-    private List<battingCardModal> setCurrentBattingInningData() {
-        battingCardModalList.clear();
-        battingCardModal modal = new battingCardModal("Dwyane Bravo", "74", "32", "", "");
-        battingCardModalList.add(modal);
-        battingCardModal modal2 = new battingCardModal("MS Dhoni", "74", "32", "", "");
-        battingCardModalList.add(modal2);
-        return battingCardModalList;
-    }
-
-    private List<battingCardModal> setYetToBatData(){
-        yetToBatList.clear();
-        battingCardModal modal=new battingCardModal("Ravindra Jadeja","","","","");
-        yetToBatList.add(modal);
-        battingCardModal modal2=new battingCardModal("Suresh Raina","","","","");
-        yetToBatList.add(modal2);
-        return yetToBatList;
-    }
-
-    private List<PartnershipsModal> setPartnershipsData() {
-        partnershipsModalList.clear();
-        PartnershipsModal modal = new PartnershipsModal("MS Dhoni", "Suresh Raina", "74", "11", "32", "8");
-        partnershipsModalList.add(modal);
-        return partnershipsModalList;
     }
 
     String currentInningsId, firstbattername, firstbatterruns, firstbatterpalyedballes, secondbattername,
@@ -221,7 +199,7 @@ public class Live extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(Long result) {
-            new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid=2796&mid=51038");
+            new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid));
             update();
         }
     }
@@ -274,7 +252,7 @@ public class Live extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(Long result) {
-            new LoadPatnerShip().execute(Constants.HOST + "getPartnerships?sid=2739&mid=49995&ining=1");
+            new LoadPatnerShip().execute(Constants.HOST + "getPartnerships?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid)+"&ining="+currentInningsId);
             update1();
         }
     }

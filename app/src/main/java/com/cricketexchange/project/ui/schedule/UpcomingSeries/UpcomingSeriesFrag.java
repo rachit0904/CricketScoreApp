@@ -136,27 +136,25 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
                 break;
             case "international":
                 for (int i = 0; i < cList.size(); i++) {
-                    if (cList.get(i).getType().toLowerCase(Locale.ROOT).contains("intern")) {
+                    if (cList.get(i).getType().toLowerCase(Locale.ROOT).contains("intl")) {
                         filterdcList.add(cList.get(i));
-                    } else if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("intern")) {
+                    } else if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("world")) {
                         filterdcList.add(cList.get(i));
                     }
                 }
                 break;
             case "league":
                 for (int i = 0; i < cList.size(); i++) {
-                    if (cList.get(i).getType().toLowerCase(Locale.ROOT).contains("league")) {
-                        filterdcList.add(cList.get(i));
-                    } else if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("league")) {
+                     if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("test")) {
                         filterdcList.add(cList.get(i));
                     }
                 }
                 break;
             case "women":
                 for (int i = 0; i < cList.size(); i++) {
-                    if (cList.get(i).getType().toLowerCase(Locale.ROOT).contains("wom")) {
+                    if (cList.get(i).getType().toLowerCase(Locale.ROOT).contains("women")) {
                         filterdcList.add(cList.get(i));
-                    } else if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("wom")) {
+                    } else if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("women")) {
                         filterdcList.add(cList.get(i));
                     }
                 }
@@ -167,25 +165,6 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         }
         progressBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
-    }
-
-    private void getData() {
-        for (int i = 0; i < 3; i++) {
-            SeriesModel childModal = new SeriesModel();
-            childModal.setSid("");
-            childModal.setSeriesName("IPL 2021");
-            childModal.setStatus("UPCOMING");
-            String startdate = "7/9/2021"; //take start date here format [mm dd yyyy]
-            String date[] = startdate.split("/");
-            String enddate = "7/12/2021"; //take start date here format [mm dd yyyy]
-            String date2[] = enddate.split("/");
-            //  dates.add(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
-            //  childModal.setStartDate(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
-            //[start date to end date]
-            String sD = (date[1] + " " + arr[Integer.parseInt(date[0]) - 1]), eD = (date2[1] + " " + arr[Integer.parseInt(date2[0]) - 1]);
-            childModal.setDuration(sD + "  to  " + eD);
-            cList.add(childModal);
-        }
     }
 
     private void update(@NonNull Boolean isAt) {

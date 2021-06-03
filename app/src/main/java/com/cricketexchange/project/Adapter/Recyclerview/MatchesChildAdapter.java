@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -142,7 +143,11 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             Intent intent = new Intent(context, MatchDetails.class);
             String match = childModelList.get(getAdapterPosition()).getTeam1() + " vs " + childModelList.get(getAdapterPosition()).getTeam2();
             intent.putExtra("match", match);
+            intent.putExtra("status", childModelList.get(getAdapterPosition()).getStatus());
+            intent.putExtra("sid", childModelList.get(getAdapterPosition()).getsId());
+            intent.putExtra("mid", childModelList.get(getAdapterPosition()).getmId());
             context.startActivity(intent);
+
         }
     }
 }

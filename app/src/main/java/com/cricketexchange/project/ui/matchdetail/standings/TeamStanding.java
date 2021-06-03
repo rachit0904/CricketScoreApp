@@ -32,7 +32,7 @@ public class TeamStanding extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     ProgressBar progressBar;
-    String sid = String.valueOf(2739);
+//    String sid=getActivity().getIntent().getStringExtra("sid");
     List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
 
     @Override
@@ -93,8 +93,8 @@ public class TeamStanding extends Fragment {
     }
 
     private void load() {
-        progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
+//        progressBar.setVisibility(View.VISIBLE);
+//        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
     }
 
     private class Load extends AsyncTask<String, Integer, Long> {

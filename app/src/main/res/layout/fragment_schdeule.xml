@@ -30,13 +30,6 @@
            android:background="@drawable/notify"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>
-       <ImageView
-           android:id="@+id/filterBtn"
-           android:layout_marginStart="30dp"
-           android:background="@drawable/filter"
-           android:layout_toRightOf="@id/notifyBtn"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"/>
    </RelativeLayout>
    <com.google.android.material.tabs.TabLayout
        android:id="@+id/tabLayout2"
