@@ -181,36 +181,40 @@
         android:id="@+id/teamcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/pt1Logo"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:src="@drawable/trophyicon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"/>
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
-            android:layout_toRightOf="@id/pt1Logo"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/t1shortName"
-                android:text="CSK"
-                android:textStyle="bold"
-                android:textSize="14sp"
+
+            <ImageView
+                android:id="@+id/pt1Logo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/trophyicon" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/t1fullName"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:text="Chennai Super Kings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-                </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_toRightOf="@id/pt1Logo"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/t1shortName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CSK"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/t1fullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chennai Super Kings"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
                 </RelativeLayout>
                     <ImageView
                         android:layout_marginEnd="20dp"

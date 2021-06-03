@@ -4,12 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -172,15 +171,15 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
     MatchesAdapter adapter;
     private void update(Boolean isAt) {
 
-        filterdchildModelList.addAll(childModelList);
-        progressBar.setVisibility(View.GONE);
+
         tours.setVisibility(View.VISIBLE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         setParentData();
         adapter = new MatchesAdapter(getContext(), modelList, filterdchildModelList);
         recyclerView.setAdapter(adapter);
-
+        filterdchildModelList.addAll(childModelList);
+        progressBar.setVisibility(View.GONE);
 
     }
 
@@ -383,15 +382,21 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                     JSONObject object = new JSONObject(response.body().string());
                     JSONArray data = object.getJSONArray("data");
 
-                    for (int i = 0; i < data.length(); i++) {
+                    for (int i = data.length() - 1; i > 0; i--) {
                         JSONObject obj = data.getJSONObject(i);
+                        Log.i("DAYSFRAGMENT", "FFFOOOORRR\n\n\n\n\n\n");
 
 
                         try {
 
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-                            matchesChildModel.setType(obj.getString("cmsMatchType"));
+
+                            try {
+                                matchesChildModel.setType(obj.getString("cmsMatchType"));
+                            }catch (JSONException a){
+                                matchesChildModel.setType(("null"));
+                            }
                             matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
                             matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
                             matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
@@ -402,8 +407,13 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                             matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
                             matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
                             matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
+                            String winnigteamid;
 
-                            String winnigteamid = obj.getString("winningTeamId");
+                            try {
+                                winnigteamid = obj.getString("winningTeamId");
+                            } catch (JSONException e) {
+                                winnigteamid = "";
+                            }
                             if (winnigteamid != null) {
                                 String team1id = (obj.getJSONObject("homeTeam").getString("shortName"));
                                 // String team2id = (obj.getJSONObject("awayTeam").getString("shortName"));
@@ -431,7 +441,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                             matchesChildModel.setT1iIsBatting(obj.getJSONObject("homeTeam").getString("isBatting"));
                             matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
                             matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
-                            if(!obj.getJSONObject("scores").toString().isEmpty()) {
+                            try {
                                 JSONObject scores = obj.getJSONObject("scores");
 
                                 matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
@@ -439,7 +449,17 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
                                 matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
                                 matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+
+                            } catch (JSONException a) {
+
+                                matchesChildModel.setTeam1score("0");
+                                matchesChildModel.setTeam1over("0");
+
+                                matchesChildModel.setTeam2score("0");
+                                matchesChildModel.setTeam2over("0");
+
                             }
+
                             //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
                             //set date to match modellist and match childmodallist;
                             //set date to match modellist and match childmodallist;
@@ -457,6 +477,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
                                 e.printStackTrace();
                             }
                             dates.add(d);
+
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
 

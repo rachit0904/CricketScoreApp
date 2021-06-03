@@ -420,7 +420,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
                             String name = obj.getString("name");
 //                            SsriesModel.setStatus(status);
                             SsriesModel.setSid(id);
-                            Log.e("SERIES TYPE",SsriesModel.getType());
+                     //       Log.e("SERIES TYPE",SsriesModel.getType());
                             SsriesModel.setSeriesName(name);
 
 //                            SsriesModel.setType(type);

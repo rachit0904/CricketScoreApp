@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
@@ -11,15 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
 import com.cricketexchange.project.Adapter.Recyclerview.TeamRecycleAdapter;
 import com.cricketexchange.project.Constants.Constants;
-import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
 
@@ -28,17 +25,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,7 +39,6 @@ public class teams extends Fragment {
     TeamRecycleAdapter adapter;
     List<SquadModel> list = new ArrayList<>();//list
     List<SquadModel> filterd = new ArrayList<>();
-    Set<SquadModel> set = new HashSet<>();
     ProgressBar progressBar;
 
     @Override
@@ -107,12 +95,6 @@ public class teams extends Fragment {
         return view;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void setToList() {
-
-        list.addAll(new ArrayList<>(set));
-
-    }
 
     private void load() {
         new Load().execute(Constants.HOST + "getAllTeams");
@@ -121,16 +103,14 @@ public class teams extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void update() {
-        setToList();
-        searchView.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
+
         filterd.addAll(list);
-
-
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TeamRecycleAdapter(getContext(), filterd);
         recyclerView.setAdapter(adapter);
+        searchView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     private class Load extends AsyncTask<String, Integer, Long> {
@@ -140,6 +120,7 @@ public class teams extends Fragment {
             Request request = new Request.Builder()
                     .url(urls[0])
                     .build();
+
             try {
                 Response response = client.newCall(request).execute();
                 if (response.isSuccessful()) {
@@ -149,8 +130,12 @@ public class teams extends Fragment {
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
 
-                        SquadModel model=new SquadModel(obj.getString("id"),obj.getString("shortName"),obj.getString("name"),obj.getString("logoUrl"),obj.getString("teamColour"));
-                            set.add(model);
+                        SquadModel model = new SquadModel(obj.getString("id"), obj.getString("shortName"), obj.getString("name"), obj.getString("logoUrl"), obj.getString("teamColour"));
+
+
+                        list.add(model);
+
+
                     }
                 }
             } catch (IOException e) {

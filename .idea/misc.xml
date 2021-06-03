@@ -19,7 +19,7 @@
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_live.xml" value="0.22" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_live_matches.xml" value="0.1" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_match_detail.xml" value="0.12364130434782608" />
-        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_match_info.xml" value="0.10235507246376811" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_match_info.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_points_table.xml" value="0.12364130434782608" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_schdeule.xml" value="0.1" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/fragment_squad.xml" value="0.1068840579710145" />
@@ -31,6 +31,7 @@
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/match_rv_childcard.xml" value="0.1" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/playercard.xml" value="0.1082427536231884" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/series_fragment.xml" value="0.12364130434782608" />
+        <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/series_rv_card.xml" value="0.1" />
         <entry key="..\:/Users/hjh/Desktop/projects/android/CricketScoreApp/app/src/main/res/layout/upcomingmatches_rv_card.xml" value="0.10507246376811594" />
       </map>
     </option>

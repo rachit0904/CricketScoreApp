@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,10 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.SeriesNameAdapter;
 import com.cricketexchange.project.Constants.Constants;
-import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.R;
-import com.cricketexchange.project.ui.home.upcomingmatches.UpcomingMatches;
 import com.cricketexchange.project.ui.schedule.schdeule;
 import com.google.android.material.tabs.TabLayout;
 
@@ -28,10 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -42,6 +38,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
     Button seeAllBtn;
     RecyclerView.Adapter adapter;
     ArrayList<SeriesModel> datalist = new ArrayList<>();
+    ProgressBar progressBar;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,6 +47,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         seriesRv = root.findViewById(R.id.seriesRv);
         seeAllBtn = root.findViewById(R.id.allSeries);
         seeAllBtn.setOnClickListener(this);
+        progressBar = root.findViewById(R.id.progressBar);
 
         if (datalist.size() > 0) {
         } else {
@@ -84,6 +82,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         seriesRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new SeriesNameAdapter(getActivity(), datalist);
         seriesRv.setAdapter(adapter);
+        progressBar.setVisibility(View.VISIBLE);
 
     }
 
