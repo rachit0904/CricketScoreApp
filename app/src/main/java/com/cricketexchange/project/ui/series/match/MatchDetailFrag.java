@@ -168,12 +168,18 @@ public class MatchDetailFrag extends Fragment {
                             matchesChildModel.setmId(obj.getString("id"));
                             matchesChildModel.setPremiure(obj.getJSONObject("series").getString("name"));//series name
                             matchesChildModel.setStatus(obj.getString("status"));//currentMatchState
-                            matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
+                            try {
+                                matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
+                            } catch (JSONException e) {
+                                matchesChildModel.setIsDraw("null");//status upcomming mandatory//currentMatchState
+                            }
+
                             matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
                             matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
 
-                            String winnigteamid = obj.getString("winningTeamId");
-                            if (winnigteamid != null) {
+                            String winnigteamid;
+                            try {
+                                winnigteamid = obj.getString("winningTeamId");
                                 String team1id = (obj.getJSONObject("homeTeam").getString("shortName"));
                                 // String team2id = (obj.getJSONObject("awayTeam").getString("shortName"));
                                 if (winnigteamid.equals(team1id)) {
@@ -183,9 +189,11 @@ public class MatchDetailFrag extends Fragment {
 
                                     matchesChildModel.setWinTeamName(obj.getJSONObject("awayTeam").getString("shortName"));
                                 }
-
-
+                            } catch (JSONException e) {
+                                winnigteamid = "";
                             }
+
+
                             try {
                                 String logourl1 = obj.getJSONObject("homeTeam").getString("logoUrl");
                                 String logourl2 = obj.getJSONObject("awayTeam").getString("logoUrl");
@@ -201,13 +209,25 @@ public class MatchDetailFrag extends Fragment {
                             matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
                             matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
 
-                            JSONObject scores = obj.getJSONObject("scores");
 
-                            matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                            matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
+                            try {
+                                JSONObject scores = obj.getJSONObject("scores");
+                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
+                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
 
-                            matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                            matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
+                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+
+                            } catch (JSONException e) {
+                                matchesChildModel.setTeam1score("0");
+                                matchesChildModel.setTeam1over("0");
+
+                                matchesChildModel.setTeam2score("0");
+                                matchesChildModel.setTeam2over("0");
+
+
+                            }
+
 
                             //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
                             //set date to match modellist and match childmodallist;

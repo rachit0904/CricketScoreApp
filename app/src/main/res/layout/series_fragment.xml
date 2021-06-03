@@ -14,26 +14,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/seriesBanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <ImageView
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/seriesBanner"
             android:layout_width="match_parent"
-            android:layout_height="100pt"
-            android:alpha="0.4"
-            android:background="@drawable/icon4" />
-        <TextView
-            android:layout_marginStart="18pt"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="28sp"
-            android:text="All Series"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100pt"
+                android:alpha="0.4"
+                android:background="@drawable/icon4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="18pt"
+                android:text="All Series"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seriesRv"
@@ -45,6 +48,16 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"/>
 
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:elevation="10dp">
+
+        </ProgressBar>
     <Button
         android:id="@+id/allSeries"
         android:text="View upcoming series"

@@ -1,5 +1,6 @@
 package com.cricketexchange.project.ui.matchdetail.info;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.cricketexchange.project.Activity.SeriesDetail;
+import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.R;
 import com.squareup.picasso.Picasso;
@@ -150,22 +153,22 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == seriesCard) {
             //pass intent to series Detail page
-//            Intent intent = new Intent(getContext(), SeriesDetail.class);
-//            intent.putExtra("sid", sid);
-//            intent.putExtra("sname", ATseriesName);
-//            startActivity(intent);
+            Intent intent = new Intent(getContext(), SeriesDetail.class);
+            intent.putExtra("sid", sid);
+            intent.putExtra("sname", ATseriesName);
+            startActivity(intent);
         }
         if (v == t1Layout) {
-            //pass intent to team info page
-//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-//            intent.putExtra("tid", t1id);
-//            startActivity(intent);
+//            pass intent to team info page
+            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+            intent.putExtra("tid", t1id);
+            startActivity(intent);
         }
         if (v == t2Layout) {
-            //pass intent to team info page
-//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-//            intent.putExtra("tid", t2id);
-//            startActivity(intent);
+//            pass intent to team info page
+            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+            intent.putExtra("tid", t2id);
+            startActivity(intent);
         }
     }
 
@@ -188,7 +191,11 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
                     ATvenueName = data.getJSONObject("meta").getString("venueName");
                     JSONObject umpires = data.getJSONObject("matchDetail").getJSONObject("umpires");
                     ATumpires = umpires.getJSONObject("firstUmpire").getString("name") + " , " + umpires.getJSONObject("secondUmpire").getString("name");
-                    ATtumpire = umpires.getJSONObject("thirdUmpire").getString("name");
+                    try {
+                        ATtumpire = umpires.getJSONObject("thirdUmpire").getString("name");
+                    } catch (JSONException e) {
+                        ATtumpire = "NA";
+                    }
                     ATrefree = umpires.getJSONObject("referee").getString("name");
                     ATtossMessage = data.getJSONObject("matchDetail").getString("tossMessage");
                     JSONObject hometeam = data.getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam");

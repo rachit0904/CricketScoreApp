@@ -95,8 +95,8 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             }
             case "UPCOMING": {
                 holder.layout.setVisibility(View.GONE);
-                holder.t1score.setVisibility(View.INVISIBLE);
-                holder.t2score.setVisibility(View.INVISIBLE);
+                holder.t1score.setVisibility(View.GONE);
+                holder.t2score.setVisibility(View.GONE);
                 holder.matchSummery.setVisibility(View.GONE);
                 holder.startTimeLayout.setVisibility(View.VISIBLE);
                 holder.startTime.setText(childModel.getStartTime());

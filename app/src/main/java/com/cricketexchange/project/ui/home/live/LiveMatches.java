@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.home.live;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -103,6 +104,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
     }
 
 
+
     private class Load extends AsyncTask<String, Integer, Long> {
         protected Long doInBackground(String... urls) {
             long totalSize = 0;
@@ -118,13 +120,19 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
 
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject obj = data.getJSONObject(i);
+                        Log.i("DAYSFRAGMENT", "FFFOOOORRR\n\n\n\n\n\n");
 
 
                         try {
 
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-                            matchesChildModel.setType(obj.getString("cmsMatchType"));
+
+                            try {
+                                matchesChildModel.setType(obj.getString("cmsMatchType"));
+                            } catch (JSONException a) {
+                                matchesChildModel.setType(("NA"));
+                            }
                             matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
                             matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
                             matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
@@ -135,21 +143,14 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
                             matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
                             matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
+                            String winnigteamid;
 
-                            String winnigteamid = obj.getString("winningTeamId");
-                            if (winnigteamid != null) {
-                                String team1id = (obj.getJSONObject("homeTeam").getString("shortName"));
-                                // String team2id = (obj.getJSONObject("awayTeam").getString("shortName"));
-                                if (winnigteamid.equals(team1id)) {
-
-                                    matchesChildModel.setWinTeamName(obj.getJSONObject("homeTeam").getString("shortName"));
-                                } else {
-
-                                    matchesChildModel.setWinTeamName(obj.getJSONObject("awayTeam").getString("shortName"));
-                                }
-
-
+                            try {
+                                winnigteamid = obj.getString("winningTeamId");
+                            } catch (JSONException e) {
+                                winnigteamid = "";
                             }
+
                             try {
                                 String logourl1 = obj.getJSONObject("homeTeam").getString("logoUrl");
                                 String logourl2 = obj.getJSONObject("awayTeam").getString("logoUrl");
@@ -164,7 +165,8 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             matchesChildModel.setT1iIsBatting(obj.getJSONObject("homeTeam").getString("isBatting"));
                             matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
                             matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
-                            if(!obj.getJSONObject("scores").toString().isEmpty()) {
+
+                            try {
                                 JSONObject scores = obj.getJSONObject("scores");
 
                                 matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
@@ -172,11 +174,17 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
 
                                 matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
                                 matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+
+                            } catch (JSONException a) {
+
+                                matchesChildModel.setTeam1score("0");
+                                matchesChildModel.setTeam1over("0");
+
+                                matchesChildModel.setTeam2score("0");
+                                matchesChildModel.setTeam2over("0");
+
                             }
-                            //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-                            //set date to match modellist and match childmodallist;
-                            //set date to match modellist and match childmodallist;
-                            String dateTime = obj.getString("startDateTime");
+                          String dateTime = obj.getString("startDateTime");
                             String[] arr = dateTime.split("T");//arr[0] gives start date
                             String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
                             //add data to parent and child list
@@ -186,11 +194,9 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             Date d = new Date();
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            //||matchesChildModel.getStatus().equalsIgnoreCase("LIVE") || matchesChildModel.getStartDate().equals(sobj.format(d))
-                            //if(obj.getString("status").equals("INPROGRESS") )
-                            if(matchesChildModel.getStatus().equals("COMPLETED")){
-                                childList.add(matchesChildModel);
-                            }
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("LIVE") || matchesChildModel.getStatus().equalsIgnoreCase("INPROGRESS") && matchesChildModel.getStartDate().equals(sobj.format(d))) {
+
+                         
 
                         } catch (JSONException e) {
                             e.printStackTrace();
