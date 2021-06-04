@@ -86,7 +86,6 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
             Intent intent = new Intent(context, SeriesDetail.class);
             intent.putExtra("sid", childSeriesModel.get(getAdapterPosition()).getSid());
             intent.putExtra("name", childSeriesModel.get(getAdapterPosition()).getSeriesName());
-            Log.e("name", childSeriesModel.get(getAdapterPosition()).getSeriesName());
             context.startActivity(intent);
         }
     }

@@ -195,10 +195,8 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
                             if (matchesChildModel.getStatus().equalsIgnoreCase("LIVE") || matchesChildModel.getStatus().equalsIgnoreCase("INPROGRESS") && matchesChildModel.getStartDate().equals(sobj.format(d))) {
-
-                         
-
-                        } catch (JSONException e) {
+                                childList.add(matchesChildModel);
+                            }} catch (JSONException e) {
                             e.printStackTrace();
                         }
 
@@ -214,8 +212,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
 
             return totalSize;
         }
-
-        protected void onProgressUpdate(Integer... progress) {
+            protected void onProgressUpdate(Integer... progress) {
 
         }
 

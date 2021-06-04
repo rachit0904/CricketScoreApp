@@ -31,13 +31,13 @@
                 android:id="@+id/t1InningsTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CSK Innings" />
+                android:text="T1 Innings" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/t2InningsTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MI Innings" />
+                android:text="T2 Innings" />
         </com.google.android.material.tabs.TabLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/totScore"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/totalScore"
-            android:text="207-5 (19.4)"
+            android:text="N.A"
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
             android:textSize="16sp"

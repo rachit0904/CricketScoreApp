@@ -155,20 +155,20 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
             //pass intent to series Detail page
             Intent intent = new Intent(getContext(), SeriesDetail.class);
             intent.putExtra("sid", sid);
-            intent.putExtra("sname", ATseriesName);
+            intent.putExtra("sname", seriesName.getText());
             startActivity(intent);
         }
         if (v == t1Layout) {
 //            pass intent to team info page
-            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-            intent.putExtra("tid", t1id);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+//            intent.putExtra("tid", t1id);
+//            startActivity(intent);
         }
         if (v == t2Layout) {
 //            pass intent to team info page
-            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-            intent.putExtra("tid", t2id);
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
+//            intent.putExtra("tid", t2id);
+//            startActivity(intent);
         }
     }
 

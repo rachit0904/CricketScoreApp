@@ -43,6 +43,7 @@ public class CurrentInningBattingAdapter extends RecyclerView.Adapter<CurrentInn
         }else{
             holder.score.setVisibility(View.INVISIBLE);
         }
+
     }
 
     @Override

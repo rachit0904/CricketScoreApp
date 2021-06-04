@@ -47,7 +47,7 @@
                 android:layout_marginStart="10dp"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="14sp"
-                android:text="MI won the toss and choose to bat"
+                android:text="-"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -94,7 +94,7 @@
                 android:id="@+id/tounamentName"
                 android:padding="10dp"
                 android:layout_marginStart="20dp"
-                android:text="IPL 2021"
+                android:text="N.A"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -113,7 +113,7 @@
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="T20"
+                android:text="-"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
@@ -126,7 +126,7 @@
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="25 April 2018,08:00 PM"
+                android:text="-"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
@@ -139,7 +139,7 @@
                 android:layout_marginTop="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="M. Chinnaswamy Stadium, Bengaluru"
+                android:text="-"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -203,7 +203,7 @@
                     android:id="@+id/t1shortName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CSK"
+                    android:text="-"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -211,7 +211,7 @@
                     android:id="@+id/t1fullName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chennai Super Kings"
+                    android:text="N.A"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -249,7 +249,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/t2shortName"
-                        android:text="MI"
+                        android:text="-"
                         android:textStyle="bold"
                         android:textSize="14sp"
                         android:layout_width="wrap_content"
@@ -258,7 +258,7 @@
                         android:id="@+id/t2fullName"
                         android:textSize="12sp"
                         android:textColor="@color/white"
-                        android:text="Mumbai Indians"
+                        android:text="N.A"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -314,7 +314,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:layout_marginTop="5dp"
-                        android:text="Wharf, A G,Taylor, B V"
+                        android:text="N.A"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -327,7 +327,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:layout_marginTop="5dp"
-                        android:text="NA"
+                        android:text="N.A"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -340,7 +340,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:layout_marginTop="5dp"
-                        android:text="Noon, W M"
+                        android:text="N.A"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
