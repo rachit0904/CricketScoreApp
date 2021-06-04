@@ -7,21 +7,21 @@
     <LinearLayout android:orientation="vertical"  android:layout_width="120dp" android:layout_height="wrap_content">
         <TextView
             android:id="@+id/batsmanName"
-            android:text="Jaydev Unadkat"
+            android:text="-"
             android:textColor="@color/white"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:layout_width="110dp"/>
         <TextView
             android:id="@+id/outBy"
-            android:text="c: Pandya b: McClenaghan"
+            android:text="N.A"
             android:textSize="10sp"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"/>
     </LinearLayout>
-    <TextView android:id="@+id/v1"  android:text="2" android:gravity="center" android:layout_width="24dp" android:layout_height="wrap_content" android:layout_marginStart="4pt"/>
-    <TextView android:id="@+id/v2"  android:text="4" android:layout_width="24dp" android:layout_height="wrap_content" android:layout_marginStart="8pt"/>
-    <TextView  android:id="@+id/v3" android:text="4" android:layout_marginStart="5pt" android:layout_width="24dp" android:layout_height="wrap_content"/>
-    <TextView  android:id="@+id/v4" android:text="3" android:layout_marginStart="5pt" android:layout_width="24dp" android:layout_height="wrap_content"/>
-    <TextView  android:id="@+id/v5"  android:text="205.88" android:layout_marginStart="4pt" android:layout_width="45dp" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/v1"  android:text="-" android:gravity="center" android:layout_width="24dp" android:layout_height="wrap_content" android:layout_marginStart="4pt"/>
+    <TextView android:id="@+id/v2"  android:text="-" android:layout_width="24dp" android:layout_height="wrap_content" android:layout_marginStart="8pt"/>
+    <TextView  android:id="@+id/v3" android:text="-" android:layout_marginStart="5pt" android:layout_width="24dp" android:layout_height="wrap_content"/>
+    <TextView  android:id="@+id/v4" android:text="-" android:layout_marginStart="5pt" android:layout_width="24dp" android:layout_height="wrap_content"/>
+    <TextView  android:id="@+id/v5"  android:text="-" android:layout_marginStart="4pt" android:layout_width="45dp" android:layout_height="wrap_content"/>
 </TableRow>

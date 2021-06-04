@@ -35,7 +35,7 @@
                 android:layout_marginLeft="35dp"
                 android:gravity="center"
                 android:maxLength="27"
-                android:text="MI vs CSK"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -120,16 +120,15 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                android:text="-"
                 android:gravity="center"
-                android:text="CSK"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/t1ScoreLayout"
                 android:visibility="gone"
-                android:gravity="center"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/lay1"
                 android:orientation="vertical"
@@ -142,18 +141,20 @@
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:gravity="center"
-                    android:text="157 - 6"
-                    android:layout_width="wrap_content"
+                    android:text="-"
+                    android:maxLines="1"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/t1Overs"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
+                    android:text="N.A"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:gravity="center"
-                    android:text="14.5 overs"
-                    android:layout_width="wrap_content"
+                    android:maxLines="1"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             </RelativeLayout>
@@ -179,8 +180,10 @@
                     android:textColor="@color/winDispColor"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:text="11:00 AM"
-                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="-"
+                    android:maxLines="1"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <RelativeLayout
@@ -204,7 +207,7 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:text="157 - 6"
+                        android:text="-"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -214,14 +217,14 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:text="14.5 overs"
+                        android:text="N.A"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_toRightOf="@id/t2ScoreLayout"
                     android:gravity="center"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="10pt"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
@@ -240,9 +243,9 @@
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:gravity="center"
+                        android:text="-"
                         android:layout_gravity="center"
-                        android:text="MI"
-                        android:layout_width="match_parent"
+                        android:layout_width="40dp"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </RelativeLayout>
@@ -251,7 +254,7 @@
                 android:textSize="12sp"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="MI need more 30 runs to win"
+                android:text="NA"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"

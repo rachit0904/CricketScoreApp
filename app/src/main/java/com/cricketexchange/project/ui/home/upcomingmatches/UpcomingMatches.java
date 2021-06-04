@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -54,17 +55,13 @@ public class UpcomingMatches extends Fragment {
         recyclerView = view.findViewById(R.id.upcomingMatches);
 
         progressBar = view.findViewById(R.id.progressBar);
-        childList.clear();
+
+        modelList.clear();
         childModelList.clear();
-        setParentData();
         load();
         return view;
     }
 
-    private void load() {
-        progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "allMatches");
-    }
 
 
     private void setChildDate() {
@@ -72,26 +69,44 @@ public class UpcomingMatches extends Fragment {
     }
 
      private void setParentData() {
-        for (Date x : dates) {
-            MatchesModel model = new MatchesModel();
-            model.setDate(sobj.format(x));
-            modelList.add(model);
-        }
+//        for (Date x : dates) {
+//            MatchesModel model = new MatchesModel();
+//            model.setDate(sobj.format(x));
+//            modelList.add(model);
+//        }
+         final  long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+         String dateInString = sobj.format(new Date());
+         long nextDayMilliSeconds ;
+         Date date=new Date();
+         for(int i=0;i<7;i++) {
+             MatchesModel model=new MatchesModel();
+             // Getting the next day and formatting into 'YYYY-MM-DD'
+             nextDayMilliSeconds= date.getTime() + ONE_DAY_MILLI_SECONDS;
+             Date nextDate= new Date(nextDayMilliSeconds);
+             String nextDateStr = sobj.format(nextDate);
+             model.setDate(nextDateStr);
+             modelList.add(model);
+             dateInString=nextDateStr;
+             try {
+                 date = sobj.parse(dateInString);
+             } catch (ParseException e) {
+                 e.printStackTrace();
+             }
+         }
     }
 
 
 
-private void update(Boolean isAt) {
+    private void update() {
         progressBar.setVisibility(View.GONE);
-        recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Objects.requireNonNull(recyclerView.getLayoutManager()).setMeasurementCacheEnabled(false);
+//        modelList.clear();
+//        childModelList.clear();
         setParentData();
-        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
-
-        adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        setChildDate();
+        MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
         recyclerView.setAdapter(adapter);
-        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
-
 
     }
 
@@ -99,9 +114,6 @@ private void update(Boolean isAt) {
         progressBar.setVisibility(View.VISIBLE);
         new Load().execute(Constants.HOST + "allMatches");
     }
-
-
-
 
     private class Load extends AsyncTask<String, Integer, Long> {
         protected Long doInBackground(String... urls) {
@@ -120,105 +132,34 @@ private void update(Boolean isAt) {
                         JSONObject obj = data.getJSONObject(i);
                         Log.i("DAYSFRAGMENT", "FFFOOOORRR\n\n\n\n\n\n");
 
-
-
                         try {
 
                             MatchesChildModel matchesChildModel = new MatchesChildModel();
                             //fetch all data into childModelList but for date
-
-                            try {
-                                matchesChildModel.setType(obj.getString("cmsMatchType"));
-                            } catch (JSONException a) {
-                                matchesChildModel.setType(("null"));
-                            }
-                            matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
-                            matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
                             matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
                             matchesChildModel.setmId(obj.getString("id"));
-                            matchesChildModel.setName(obj.getString("name"));
                             matchesChildModel.setPremiure(obj.getJSONObject("series").getString("name"));//series name
                             matchesChildModel.setStatus(obj.getString("status"));//currentMatchState
-                            matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
                             matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
+                            matchesChildModel.setTeam1Url(obj.getJSONObject("homeTeam").getString("logoUrl"));
                             matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
-                            String winnigteamid;
-
-                            try {
-                                winnigteamid = obj.getString("winningTeamId");
-                            } catch (JSONException e) {
-                                winnigteamid = "";
-                            }
-                            
-                            try {
-                            matchesChildModel.setType(obj.getString("cmsMatchType"));
-                            matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
-                            matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
-                            matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
-                            matchesChildModel.setmId(obj.getString("id"));
-                            matchesChildModel.setName(obj.getString("name"));
-                            matchesChildModel.setPremiure(obj.getJSONObject("series").getString("name"));//series name
-                            matchesChildModel.setStatus(obj.getString("status"));//currentMatchState
-                            matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
-                            matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
-                            matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
-                            }
-                          
-                            try {
-                                String logourl1 = obj.getJSONObject("homeTeam").getString("logoUrl");
-                                String logourl2 = obj.getJSONObject("awayTeam").getString("logoUrl");
-                                matchesChildModel.setTeam1Url(logourl1);
-                                matchesChildModel.setTeam2Url(logourl2);
-
-                            } catch (JSONException je) {
-                                matchesChildModel.setTeam1Url("");
-                                matchesChildModel.setTeam2Url("");
-                            }
-
-                            matchesChildModel.setT1iIsBatting(obj.getJSONObject("homeTeam").getString("isBatting"));
-                            matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
-                            matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
-                            try {
-                            if(!obj.getJSONObject("scores").toString().isEmpty()) {
-                                JSONObject scores = obj.getJSONObject("scores");
-
-                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
-
-                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
-
-                            } catch (JSONException a) {
-
-                                matchesChildModel.setTeam1score("0");
-                                matchesChildModel.setTeam1over("0");
-
-                                matchesChildModel.setTeam2score("0");
-                                matchesChildModel.setTeam2over("0");
-
-                            }
-
-                            }
-                            //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-                            //set date to match modellist and match childmodallist;
-                            //set date to match modellist and match childmodallist;
+                            matchesChildModel.setTeam2Url(obj.getJSONObject("awayTeam").getString("logoUrl"));
                             String dateTime = obj.getString("startDateTime");
                             String[] arr = dateTime.split("T");//arr[0] gives start date
                             String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
                             //add data to parent and child list
                             String date[] = arr[0].split("-");
                             String sD = (date[2] + "-" + date[1] + "-" + date[0]);
-                            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-                            Date d = new Date();
+                            Date d = null;
+                            d=sobj.parse(sD);
+                            dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            //||matchesChildModel.getStatus().equalsIgnoreCase("LIVE") || matchesChildModel.getStartDate().equals(sobj.format(d))
-                            //if(obj.getString("status").equals("INPROGRESS") )
-                            if(matchesChildModel.getStatus().equals("COMPLETED")){
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING") ) {
                                 childList.add(matchesChildModel);
-                            }
-
-                        } catch (JSONException e) {
+                            }} catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
@@ -234,7 +175,6 @@ private void update(Boolean isAt) {
 
             return totalSize;
         }
-
         protected void onProgressUpdate(Integer... progress) {
 
         }
