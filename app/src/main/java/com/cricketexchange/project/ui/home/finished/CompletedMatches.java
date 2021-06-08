@@ -69,10 +69,29 @@ public class CompletedMatches extends Fragment {
     }
 
     private void setParentData() {
-        for (Date x : dates) {
-            MatchesModel model = new MatchesModel();
-            model.setDate(sobj.format(x));
-            modelList.add(model);            
+//        for (Date x : dates) {
+//            MatchesModel model = new MatchesModel();
+//            model.setDate(sobj.format(x));
+//            modelList.add(model);
+//        }
+        final  long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+        String dateInString = sobj.format(new Date());
+        long nextDayMilliSeconds ;
+        Date date=new Date();
+        for(int i=0;i<7;i++) {
+            MatchesModel model=new MatchesModel();
+            // Getting the next day and formatting into 'YYYY-MM-DD'
+            nextDayMilliSeconds= date.getTime() - ONE_DAY_MILLI_SECONDS;
+            Date nextDate= new Date(nextDayMilliSeconds);
+            String nextDateStr = sobj.format(nextDate);
+            model.setDate(nextDateStr);
+            modelList.add(model);
+            dateInString=nextDateStr;
+            try {
+                date = sobj.parse(dateInString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
