@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
                 .penaltyLog()
                 .build());
         schdeule schdeule=new schdeule();
-        refresh();
         //demo notify test
         String  notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
         if(notify=="true"){
@@ -78,18 +77,6 @@ public class MainActivity extends AppCompatActivity {
         //ads settings
     }
 
-    private void refresh() {
-        boolean connection=isNetworkAvailable();
-        if(connection==false){
-            startActivity(new Intent(MainActivity.this, NetworkFailureActivity.class));
-        }
-    }
-
-    public boolean isNetworkAvailable(){
-        ConnectivityManager connectivityManager=(ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
-        return networkInfo !=null;
-    }
 
     private void setFragment(int position) {
         switch (position + 1) {

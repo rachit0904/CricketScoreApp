@@ -105,13 +105,21 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         t1Name.setText(st1Name);
         t2Name.setText(st2Name);
         if(!status.equalsIgnoreCase("UPCOMING")) {
-            t1Score.setText(st1Score);
-            t2Score.setText(st2Score);
-            t1Overs.setText(st1Overs);
-            t2Overs.setText(st2Overs);
+            t1Score.setText(split(st1Score));
+            t2Score.setText(split(st2Score));
+            t1Overs.setText(split(st1Overs));
+            t2Overs.setText(split(st2Overs));
         }
         cms.setText(matchsumm);
         startdate.setText(sstartdate);
+    }
+
+    private String split(String str) {
+        if(str.contains("&")){
+            String arr[]=str.split("&");
+            return arr[0];
+        }else
+        return str;
     }
 
 
