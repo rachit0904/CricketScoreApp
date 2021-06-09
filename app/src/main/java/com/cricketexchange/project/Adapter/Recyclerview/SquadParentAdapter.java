@@ -49,7 +49,10 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
         }
 
     }
-
+    private String HOST = "";
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
     @Override
     public int getItemCount() {
         return squadModelList.size();
@@ -68,6 +71,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
             itemView.setOnClickListener(this);
         }
 
+
         @Override
         public void onClick(View v) {
             //TODO - send matchID seriesID to team details
@@ -77,6 +81,8 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
             intent.putExtra("tln", squadModelList.get(getAdapterPosition()).getSquadLogoUrl());
             intent.putExtra("tcl", squadModelList.get(getAdapterPosition()).getSquadColor());
             intent.putExtra("sname", squadModelList.get(getAdapterPosition()).getSquadFullname());
+            intent.putExtra("HOST", HOST);
+
             context.startActivity(intent);
 
             Log.e("ONCLICK", "\nTID " + squadModelList.get(getAdapterPosition()).getSquadID() + "\nTSN " + squadModelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + squadModelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + squadModelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + squadModelList.get(getAdapterPosition()).getSquadFullname())

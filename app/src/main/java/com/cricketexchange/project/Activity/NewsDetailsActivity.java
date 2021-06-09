@@ -33,6 +33,7 @@ import okhttp3.Response;
 
 public class NewsDetailsActivity extends AppCompatActivity {
 
+    private String HOST = "";
     private ImageView close;
     RecyclerView mRecyclerView;
     ArrayList<NewsModel> newslist = new ArrayList<>();
@@ -50,7 +51,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
-
+        HOST = getIntent().getStringExtra("HOST");
         close = findViewById(R.id.close);
         t_title = findViewById(R.id.title);
         i_poster = findViewById(R.id.poster);
@@ -70,6 +71,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
         // Specify an adapter.
         adapter = new NewsNormalAdapter(this, newslist);
+        adapter.setHOST(HOST);
         mRecyclerView.setAdapter(adapter);
 
 
@@ -106,7 +108,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public void load() {
         progressBar2.setVisibility(View.VISIBLE);
-        String url = Constants.HOST + "news";
+        String url = HOST + "news";
         new LoadData().execute(url);
         if (isupdated) {
             update();

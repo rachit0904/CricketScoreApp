@@ -42,6 +42,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener {
+    private String HOST = "";
     RecyclerView recyclerView;
     List<UpcomingSeriesModel> list = new ArrayList<>();
     List<SeriesModel> childList = new ArrayList<>();
@@ -65,6 +66,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         recyclerView = view.findViewById(R.id.upcomingSeriesRv);
         preferences = requireActivity().getSharedPreferences(Constants.Filter, 0);
         progressBar = view.findViewById(R.id.progressBar);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         list.clear();
         filterdcList.clear();
         childList.clear();
@@ -145,7 +147,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
                 break;
             case "league":
                 for (int i = 0; i < cList.size(); i++) {
-                     if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("test")) {
+                    if (cList.get(i).getSeriesName().toLowerCase(Locale.ROOT).contains("test")) {
                         filterdcList.add(cList.get(i));
                     }
                 }
@@ -174,6 +176,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UpcomingSeriesAdapter(getActivity(), list, filterdcList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
         //  Log.e("childList", String.valueOf(childList.size()));
 
@@ -184,7 +187,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "AllSeriesUpComing");
+        new Load().execute(HOST + "AllSeriesUpComing");
     }
 
     @Override
@@ -420,7 +423,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
                             String name = obj.getString("name");
 //                            SsriesModel.setStatus(status);
                             SsriesModel.setSid(id);
-                     //       Log.e("SERIES TYPE",SsriesModel.getType());
+                            //       Log.e("SERIES TYPE",SsriesModel.getType());
                             SsriesModel.setSeriesName(name);
 
 //                            SsriesModel.setType(type);
@@ -429,8 +432,8 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
                             SsriesModel.setStartDate(sobj.format(d));
                             dates.add(d);
                             cList.add(SsriesModel);
-                     //       Log.e("UPNAME", name);
-                      //      Log.e("UPDuration", sobj.format(d));
+                            //       Log.e("UPNAME", name);
+                            //      Log.e("UPDuration", sobj.format(d));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {

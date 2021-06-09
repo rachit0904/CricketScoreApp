@@ -30,9 +30,10 @@ import okhttp3.Response;
 
 public class SquadFrag extends Fragment {
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    SquadParentAdapter adapter;
     List<SquadModel> list = new ArrayList<>();
     String sid = "";
+    String HOST;
     ProgressBar progressBar;
 
     @Override
@@ -41,6 +42,7 @@ public class SquadFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_squad, container, false);
         recyclerView = view.findViewById(R.id.squadRv);
         sid = requireActivity().getIntent().getStringExtra("sid");
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         list.clear();
         progressBar = view.findViewById(R.id.progressBar);
         load();
@@ -49,7 +51,7 @@ public class SquadFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "AllTeamsBySID?id=" + sid);
+        new Load().execute(HOST + "AllTeamsBySID?id=" + sid);
     }
 
 
@@ -58,6 +60,7 @@ public class SquadFrag extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SquadParentAdapter(getContext(), list);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
     }
 
@@ -79,7 +82,7 @@ public class SquadFrag extends Fragment {
 
 
                         try {
-                         SquadModel model = new SquadModel(obj.getString("id"),  obj.getString("shortName"), obj.getString("name"), obj.getString("logoUrl"),obj.getString("teamColour"));
+                            SquadModel model = new SquadModel(obj.getString("id"), obj.getString("shortName"), obj.getString("name"), obj.getString("logoUrl"), obj.getString("teamColour"));
                             list.add(model);
                         } catch (JSONException e) {
                             e.printStackTrace();

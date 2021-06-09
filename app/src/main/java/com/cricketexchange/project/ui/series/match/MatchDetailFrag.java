@@ -35,6 +35,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MatchDetailFrag extends Fragment {
+    private String HOST = "";
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
     List<MatchesChildModel> childModelList = new ArrayList<>();
@@ -51,6 +52,7 @@ public class MatchDetailFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_match_detail, container, false);
         recyclerView = view.findViewById(R.id.matchDetailRv);
         progressBar = view.findViewById(R.id.progressBar);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         recyclerView.hasFixedSize();
         sid = requireActivity().getIntent().getStringExtra("sid");
         dates.clear();
@@ -64,7 +66,7 @@ public class MatchDetailFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "AllMatchesBySID?id=" + sid);
+        new Load().execute(HOST + "AllMatchesBySID?id=" + sid);
     }
 
     private void setChildDate() {
@@ -88,6 +90,7 @@ public class MatchDetailFrag extends Fragment {
         setParentData();
         setChildDate();
         MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
 
     }

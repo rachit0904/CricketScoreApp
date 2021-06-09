@@ -41,6 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class DaysFrag extends Fragment implements View.OnClickListener {
+    private String HOST = "";
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
     SharedPreferences preferences;
@@ -61,6 +62,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.days);
         progressBar = view.findViewById(R.id.progressBar);
 //        recyclerView.hasFixedSize();
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         dates.clear();
         filterdchildModelList.clear();
         childModelList.clear();
@@ -92,7 +94,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "allMatches");
+        new Load().execute(HOST + "allMatches");
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -169,6 +171,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
 
     MatchesAdapter adapter;
+
     private void update(Boolean isAt) {
 
 
@@ -177,6 +180,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         setParentData();
         adapter = new MatchesAdapter(getContext(), modelList, filterdchildModelList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
         filterdchildModelList.addAll(childModelList);
         progressBar.setVisibility(View.GONE);
@@ -293,28 +297,28 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         if (v == international) {
             if (international.isChecked())
                 filter("league");
-                international.setCloseIconEnabled(true);
-                test.setCloseIconEnabled(false);
-                t20.setCloseIconEnabled(false);
-                odi.setCloseIconEnabled(false);
-                league.setCloseIconEnabled(false);
-                all.setCloseIconEnabled(false);
-                women.setCloseIconEnabled(false);
-                international.setChipBackgroundColorResource(android.R.color.holo_green_dark);
-                t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                test.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                league.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                all.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                women.setChipBackgroundColorResource(R.color.scoreRowBackground);
-                international.setChecked(true);
-                test.setChecked(false);
-                t20.setChecked(false);
-                odi.setChecked(false);
-                league.setChecked(false);
-                all.setChecked(false);
-                women.setChecked(false);
-            }
+            international.setCloseIconEnabled(true);
+            test.setCloseIconEnabled(false);
+            t20.setCloseIconEnabled(false);
+            odi.setCloseIconEnabled(false);
+            league.setCloseIconEnabled(false);
+            all.setCloseIconEnabled(false);
+            women.setCloseIconEnabled(false);
+            international.setChipBackgroundColorResource(android.R.color.holo_green_dark);
+            t20.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            odi.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            test.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            league.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            all.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            women.setChipBackgroundColorResource(R.color.scoreRowBackground);
+            international.setChecked(true);
+            test.setChecked(false);
+            t20.setChecked(false);
+            odi.setChecked(false);
+            league.setChecked(false);
+            all.setChecked(false);
+            women.setChecked(false);
+        }
         if (v == league) {
             if (league.isChecked()) {
                 filter("league");
@@ -394,7 +398,7 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
 
                             try {
                                 matchesChildModel.setType(obj.getString("cmsMatchType"));
-                            }catch (JSONException a){
+                            } catch (JSONException a) {
                                 matchesChildModel.setType(("null"));
                             }
                             matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));

@@ -40,6 +40,7 @@ public class Commentary extends Fragment {
     List<CommentaryModal> commentaries = new ArrayList<>();
     String mid, sid, inning;
     CommantaryAdapter adapter;
+    String HOST;
     ProgressBar progressBar;
     String oover, oruns, owikts;
     ArrayList<OverBallScoreModel> overBallScoreModels = new ArrayList<>();
@@ -61,8 +62,9 @@ public class Commentary extends Fragment {
         b3 = view.findViewById(R.id.ball3);
         b4 = view.findViewById(R.id.ball4);
         b5 = view.findViewById(R.id.ball5);
-        sid=getActivity().getIntent().getStringExtra("sid");
-        mid=getActivity().getIntent().getStringExtra("mid");
+        sid = getActivity().getIntent().getStringExtra("sid");
+        mid = getActivity().getIntent().getStringExtra("mid");
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         b6 = view.findViewById(R.id.ball6);
         //SetOverBallScore();
         commentaries.clear();
@@ -95,7 +97,7 @@ public class Commentary extends Fragment {
         if ((iswikt).equalsIgnoreCase("true")) {
             runs.set("w");
         }
-   //     Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
+        //     Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
         switch (ball) {
             case 1: {
                 b1.setText(runs.get());
@@ -152,7 +154,7 @@ public class Commentary extends Fragment {
 
     private void load() {
 
-        new LoadCommentary().execute(Constants.HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
+        new LoadCommentary().execute(HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
 
     }
 

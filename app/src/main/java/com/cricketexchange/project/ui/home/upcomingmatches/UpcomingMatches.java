@@ -39,6 +39,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class UpcomingMatches extends Fragment {
+    private String HOST = "";
     RecyclerView recyclerView;
     List<MatchesModel> modelList = new ArrayList<>();
     List<MatchesChildModel> childModelList = new ArrayList<>();
@@ -55,6 +56,7 @@ public class UpcomingMatches extends Fragment {
         recyclerView = view.findViewById(R.id.upcomingMatches);
 
         progressBar = view.findViewById(R.id.progressBar);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
 
         modelList.clear();
         childModelList.clear();
@@ -63,38 +65,36 @@ public class UpcomingMatches extends Fragment {
     }
 
 
-
     private void setChildDate() {
         childModelList = childList;
     }
 
-     private void setParentData() {
+    private void setParentData() {
 //        for (Date x : dates) {
 //            MatchesModel model = new MatchesModel();
 //            model.setDate(sobj.format(x));
 //            modelList.add(model);
 //        }
-         final  long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
-         String dateInString = sobj.format(new Date());
-         long nextDayMilliSeconds ;
-         Date date=new Date();
-         for(int i=0;i<7;i++) {
-             MatchesModel model=new MatchesModel();
-             // Getting the next day and formatting into 'YYYY-MM-DD'
-             nextDayMilliSeconds= date.getTime() + ONE_DAY_MILLI_SECONDS;
-             Date nextDate= new Date(nextDayMilliSeconds);
-             String nextDateStr = sobj.format(nextDate);
-             model.setDate(nextDateStr);
-             modelList.add(model);
-             dateInString=nextDateStr;
-             try {
-                 date = sobj.parse(dateInString);
-             } catch (ParseException e) {
-                 e.printStackTrace();
-             }
-         }
+        final long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+        String dateInString = sobj.format(new Date());
+        long nextDayMilliSeconds;
+        Date date = new Date();
+        for (int i = 0; i < 7; i++) {
+            MatchesModel model = new MatchesModel();
+            // Getting the next day and formatting into 'YYYY-MM-DD'
+            nextDayMilliSeconds = date.getTime() + ONE_DAY_MILLI_SECONDS;
+            Date nextDate = new Date(nextDayMilliSeconds);
+            String nextDateStr = sobj.format(nextDate);
+            model.setDate(nextDateStr);
+            modelList.add(model);
+            dateInString = nextDateStr;
+            try {
+                date = sobj.parse(dateInString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 
 
     private void update() {
@@ -106,13 +106,16 @@ public class UpcomingMatches extends Fragment {
         setParentData();
         setChildDate();
         MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
 
     }
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "allMatches");
+        Log.e("URL", HOST + "allMatches");
+        new Load().execute(HOST + "allMatches");
+
     }
 
     private class Load extends AsyncTask<String, Integer, Long> {
@@ -151,13 +154,14 @@ public class UpcomingMatches extends Fragment {
                             String date[] = arr[0].split("-");
                             String sD = (date[2] + "-" + date[1] + "-" + date[0]);
                             Date d = null;
-                            d=sobj.parse(sD);
+                            d = sobj.parse(sD);
                             dates.add(d);
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            if (matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING") ) {
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING")) {
                                 childList.add(matchesChildModel);
-                            }} catch (JSONException e) {
+                            }
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -175,6 +179,7 @@ public class UpcomingMatches extends Fragment {
 
             return totalSize;
         }
+
         protected void onProgressUpdate(Integer... progress) {
 
         }

@@ -43,6 +43,12 @@ public class UpcomingSeriesChildAdapter extends RecyclerView.Adapter<UpcomingSer
         holder.duration.setText(seriesModel.getDuration());
     }
 
+    private String HOST = "";
+
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
+
     @Override
     public int getItemCount() {
         return modelList.size();
@@ -68,7 +74,8 @@ public class UpcomingSeriesChildAdapter extends RecyclerView.Adapter<UpcomingSer
                 Intent intent = new Intent(context, SeriesDetail.class);
                 intent.putExtra("sid", modelList.get(getAdapterPosition()).getSid());
                 intent.putExtra("name", modelList.get(getAdapterPosition()).getSeriesName());
-              //  Log.e("name", modelList.get(getAdapterPosition()).getSeriesName());
+                intent.putExtra("HOST", HOST);
+                //  Log.e("name", modelList.get(getAdapterPosition()).getSeriesName());
                 context.startActivity(intent);
 
             }

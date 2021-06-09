@@ -34,6 +34,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class teams extends Fragment {
+    private String HOST = "";
     RecyclerView recyclerView;
     SearchView searchView;
     TeamRecycleAdapter adapter;
@@ -50,6 +51,7 @@ public class teams extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         searchView = view.findViewById(R.id.search);
         searchView.setIconified(false);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -97,7 +99,7 @@ public class teams extends Fragment {
 
 
     private void load() {
-        new Load().execute(Constants.HOST + "getAllTeams");
+        new Load().execute(HOST + "getAllTeams");
     }
 
 
@@ -108,6 +110,7 @@ public class teams extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TeamRecycleAdapter(getContext(), filterd);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
         searchView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);

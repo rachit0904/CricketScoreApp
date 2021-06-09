@@ -37,8 +37,9 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     RelativeLayout t1Layout, t2Layout;
     ProgressBar progressBar;
     View view;
-    String ATseriesName="NA", ATmatchType="NA", ATvenueName="NA", ATumpires="NA", ATtumpire="NA", ATrefree="NA", ATtossMessage="NA", ATstartdate="NA",
-            t1name="NA", t1Sname="NA", t1logourl="NA", t1bg="NA", t1color="NA", t2name="NA", t2Sname="NA", t2logourl="NA", t2bg="NA", t2color="NA", t1id="NA", t2id="NA";
+    String HOST;
+    String ATseriesName = "NA", ATmatchType = "NA", ATvenueName = "NA", ATumpires = "NA", ATtumpire = "NA", ATrefree = "NA", ATtossMessage = "NA", ATstartdate = "NA",
+            t1name = "NA", t1Sname = "NA", t1logourl = "NA", t1bg = "NA", t1color = "NA", t2name = "NA", t2Sname = "NA", t2logourl = "NA", t2bg = "NA", t2color = "NA", t1id = "NA", t2id = "NA";
 //    String sid = getActivity().getIntent().getStringExtra("sid"), mid =getActivity().getIntent().getStringExtra("mid");
 
     String sid, mid;
@@ -52,6 +53,7 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
         progressBar = view.findViewById(R.id.progressBar);
         sid = requireActivity().getIntent().getStringExtra("sid");
         mid = requireActivity().getIntent().getStringExtra("mid");
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         load();
 
         seriesCard.setOnClickListener(this);
@@ -65,8 +67,8 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        Log.e("UTL",Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
-        new Load().execute(Constants.HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        Log.e("UTL", HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        new Load().execute(HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
 
     }
 

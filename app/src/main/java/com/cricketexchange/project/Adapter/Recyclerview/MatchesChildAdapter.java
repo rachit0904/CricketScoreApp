@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapter.ViewHolder> {
+
     Context context;
     List<MatchesChildModel> childModelList;
 
@@ -109,6 +110,10 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     public int getItemCount() {
         return childModelList.size();
     }
+    private String HOST = "";
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView team1, team2, status, matchSummery, startTime, league, t1score, t2score;
@@ -146,6 +151,7 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             intent.putExtra("status", childModelList.get(getAdapterPosition()).getStatus());
             intent.putExtra("sid", childModelList.get(getAdapterPosition()).getsId());
             intent.putExtra("mid", childModelList.get(getAdapterPosition()).getmId());
+            intent.putExtra("HOST", HOST);
             context.startActivity(intent);
 
         }
