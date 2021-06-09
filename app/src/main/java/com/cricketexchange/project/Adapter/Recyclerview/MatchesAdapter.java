@@ -50,6 +50,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         if (matchesChildModelList.size() > 0) {
             holder.date.setText(sD);
             MatchesChildAdapter childAdapter = new MatchesChildAdapter(context, matchesChildModelList);
+            childAdapter.setHOST(HOST);
             LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRv.getContext(), LinearLayoutManager.VERTICAL, false);
             holder.childRv.setLayoutManager(layoutManager);
             holder.childRv.hasFixedSize();
@@ -63,6 +64,12 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     @Override
     public int getItemCount() {
         return matchesModels.size();
+    }
+
+    String HOST;
+
+    public void setHOST(String host) {
+        HOST = host;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

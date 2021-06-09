@@ -27,6 +27,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
 public class MatchDetails extends AppCompatActivity implements View.OnClickListener {
     ImageView team1, team2, back;
     TextView t1Name, t2Name, t1Score, t2Score, t1Overs, t2Overs, matchTitle, cms, startdate;
@@ -35,6 +36,8 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     public ViewPager pager;
     String sid;
     String mid;
+    String HOST;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +46,17 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         textView.setText(getIntent().getStringExtra("match"));
         initializeIds();
         back.setOnClickListener(this);
+        HOST = getIntent().getStringExtra("HOST");
         MatchDetailPager matchDetailPager = new MatchDetailPager(getSupportFragmentManager(), tabLayout.getTabCount());
         pager.setAdapter(matchDetailPager);
         tabLayout.setupWithViewPager(pager);
         tabLayout.selectTab(tabLayout.getTabAt(2));
         pager.setCurrentItem(2);
-        sid=getIntent().getStringExtra("sid");
-        mid=getIntent().getStringExtra("mid");
+        sid = getIntent().getStringExtra("sid");
+        mid = getIntent().getStringExtra("mid");
         LinearLayout t1ScoreLayout = findViewById(R.id.t1ScoreLayout);
         LinearLayout t2ScoreLayout = findViewById(R.id.t2ScoreLayout);
-        RelativeLayout notifyLayout=findViewById(R.id.upcomingNotifyLayout);
+        RelativeLayout notifyLayout = findViewById(R.id.upcomingNotifyLayout);
         LinearLayout startD = findViewById(R.id.startTimerLayout);
         load();
         if (getIntent().getStringExtra("status").equalsIgnoreCase("UPCOMING")) {
@@ -96,15 +100,21 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     private void update() {
-        if (st1url.trim().length() != 0) {
-            Picasso.get().load(st1url).into(team1);
+        if (st1url != null) {
+            if (st1url.trim().length() != 0) {
+                Picasso.get().load(st1url).into(team1);
+            }
         }
-        if (st2url.trim().length() != 0) {
-            Picasso.get().load(st2url).into(team2);
+        if (st2url != null) {
+            if (st2url.trim().length() != 0) {
+                Picasso.get().load(st2url).into(team2);
+            }
         }
+
+
         t1Name.setText(st1Name);
         t2Name.setText(st2Name);
-        if(!status.equalsIgnoreCase("UPCOMING")) {
+        if (!status.equalsIgnoreCase("UPCOMING")) {
             t1Score.setText(split(st1Score));
             t2Score.setText(split(st2Score));
             t1Overs.setText(split(st1Overs));
@@ -115,17 +125,17 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     }
 
     private String split(String str) {
-        if(str.contains("&")){
-            String arr[]=str.split("&");
+        if (str.contains("&")) {
+            String arr[] = str.split("&");
             return arr[0];
-        }else
-        return str;
+        } else
+            return str;
     }
 
 
     private void load() {
-        if(!sid.isEmpty() || !mid.isEmpty()) {
-            new Load().execute(Constants.HOST + "getMatchesHighlight?sid="+Integer.parseInt(sid)+"&mid=" +Integer.parseInt(mid));
+        if (!sid.isEmpty() || !mid.isEmpty()) {
+            new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
         }
     }
 
@@ -153,7 +163,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
 
                     st1Name = hometeam.getString("shortName");
                     st2Name = awayTeam.getString("shortName");
-                    if(!status.equalsIgnoreCase("UPCOMING")) {
+                    if (!status.equalsIgnoreCase("UPCOMING")) {
                         JSONObject scores = matchSummary.getJSONObject("scores");
                         st1Score = scores.getString("homeScore");
                         st1Overs = scores.getString("homeOvers");

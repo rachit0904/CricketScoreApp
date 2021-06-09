@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.ViewHolder> {
-
+    String HOST = "";
 
     // An Activity's Context.
     private Context mContext;
@@ -41,6 +41,10 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
         return new NewsNormalAdapter.ViewHolder(menuItemLayoutView);
     }
 
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsNormalAdapter.ViewHolder menuItemHolder = holder;
@@ -55,6 +59,7 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<NewsNormalAdapter.Vi
                 intent.putExtra("title", menuItem.getMaintitle());
                 intent.putExtra("imageposter", menuItem.getPosterurl());
                 intent.putExtra("html", menuItem.getDescription());
+                intent.putExtra("HOST", HOST);
                 mContext.startActivity(intent);
             });
         }

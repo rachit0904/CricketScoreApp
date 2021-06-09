@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.ViewHolder> {
 
     Context context;
+    public String HOST;
+
+
     ArrayList<SeriesModel> seriesData;
 
     public SeriesNameAdapter(Context context, ArrayList<SeriesModel> seriesData) {
@@ -34,10 +37,15 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull SeriesNameAdapter.ViewHolder holder, int position) {
         SeriesModel model = seriesData.get(position);
         holder.textView.setText(model.getSeriesName());
+    }
+
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
     }
 
     @Override
@@ -46,6 +54,7 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         public TextView textView;
         public ImageView more;
 
@@ -56,11 +65,14 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
+
+
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, SeriesDetail.class);
             intent.putExtra("sid", seriesData.get(getAdapterPosition()).getSid());
             intent.putExtra("name", seriesData.get(getAdapterPosition()).getSeriesName());
+            intent.putExtra("HOST", HOST);
             context.startActivity(intent);
         }
     }
