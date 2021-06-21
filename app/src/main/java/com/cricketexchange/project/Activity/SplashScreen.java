@@ -24,7 +24,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 refresh();
             }
-        },5500);
+        },4500);
 
     }
 
@@ -33,8 +33,10 @@ public class SplashScreen extends AppCompatActivity {
         boolean connection=isNetworkAvailable();
         if(connection==false){
             startActivity(new Intent(SplashScreen.this, NetworkFailureActivity.class));
+            finish();
         }else{
             startActivity(new Intent(SplashScreen.this, MainActivity.class));
+            finish();
         }
     }
     public boolean isNetworkAvailable(){
