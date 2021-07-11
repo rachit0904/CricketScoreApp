@@ -59,7 +59,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 refresh();
             }
-        }, 5500);
+        },4500);
 
     }
 
@@ -68,8 +68,9 @@ public class SplashScreen extends AppCompatActivity {
         boolean connection = isNetworkAvailable();
         if (!connection) {
             startActivity(new Intent(SplashScreen.this, NetworkFailureActivity.class));
-        } else {
-            startActivity(intent);
+        }else{
+            startActivity(new Intent(SplashScreen.this, MainActivity.class));
+            finish();
         }
     }
 
