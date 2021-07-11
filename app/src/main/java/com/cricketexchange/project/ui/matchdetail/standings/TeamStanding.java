@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.matchdetail.standings;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,11 @@ public class TeamStanding extends Fragment {
         return view;
     }
 
+    private void load() {
+        new Load().execute(HOST + "getStanding?id=" + sid);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
     private List<ScoreCardModel> getData() {
         List<ScoreCardModel> modelList = new ArrayList<>();
         ScoreCardModel model1 = new ScoreCardModel("1", "", "DC",
@@ -97,10 +103,6 @@ public class TeamStanding extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void load() {
-        progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(HOST + "getStanding?id=" + sid);
-    }
 
     private class Load extends AsyncTask<String, Integer, Long> {
         protected Long doInBackground(String... urls) {

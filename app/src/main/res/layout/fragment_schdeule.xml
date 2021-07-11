@@ -27,6 +27,7 @@
        android:layout_height="wrap_content">
        <ImageView
            android:id="@+id/notifyBtn"
+           android:visibility="gone"
            android:background="@drawable/notify"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>

@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.matchdetail.commentary;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +34,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.content.ContentValues.TAG;
+
 public class Commentary extends Fragment {
-    TextView ovrs, runs, wkts;
-    Chip b1, b2, b3, b4, b5, b6;
     RecyclerView commentryRv;
     List<CommentaryModal> commentaries = new ArrayList<>();
     String mid, sid, inning;
     CommantaryAdapter adapter;
     String HOST;
     ProgressBar progressBar;
-    String oover, oruns, owikts;
-    ArrayList<OverBallScoreModel> overBallScoreModels = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,19 +53,10 @@ public class Commentary extends Fragment {
 //        mid = getActivity().getIntent().getStringExtra("mid");
         progressBar = view.findViewById(R.id.progressBar);
         //2796S51038
-        ovrs = view.findViewById(R.id.over);
-        runs = view.findViewById(R.id.runs);
-        wkts = view.findViewById(R.id.wkts);
         commentryRv = view.findViewById(R.id.commentary);
-        b1 = view.findViewById(R.id.ball1);
-        b2 = view.findViewById(R.id.ball2);
-        b3 = view.findViewById(R.id.ball3);
-        b4 = view.findViewById(R.id.ball4);
-        b5 = view.findViewById(R.id.ball5);
         sid = getActivity().getIntent().getStringExtra("sid");
         mid = getActivity().getIntent().getStringExtra("mid");
         HOST = requireActivity().getIntent().getStringExtra("HOST");
-        b6 = view.findViewById(R.id.ball6);
         //SetOverBallScore();
         commentaries.clear();
         //SetOverOverview();
@@ -77,93 +68,11 @@ public class Commentary extends Fragment {
         return view;
     }
 
-    private void SetOverOverview() {
-        ovrs.setText(oover);
-        runs.setText(oruns);
-        wkts.setText(owikts);
-    }
-
-    private int getBallColor(String isWkt) {
-        return (isWkt.equalsIgnoreCase("true")) ? android.R.color.holo_red_dark : android.R.color.holo_green_dark;
-    }
-
-    private void SetOverBallScore(String ballss, String iswikt, String runss) {
-        int ball = Integer.parseInt(ballss); //get current ball
-        int color = getBallColor(iswikt); //check isWkt to get ball color
-        AtomicReference<String> runs = new AtomicReference<>(runss); //get runs
-        if (runs.get().equals("6") || runs.get().equals("4")) {
-            color = android.R.color.holo_blue_dark;
-        }
-        if ((iswikt).equalsIgnoreCase("true")) {
-            runs.set("w");
-        }
-        //     Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
-        switch (ball) {
-            case 1: {
-                b1.setText(runs.get());
-                b1.setChipBackgroundColorResource(color);
-//                b2.setChipBackgroundColorResource(R.color.background);
-//                b3.setChipBackgroundColorResource(R.color.background);
-//                b4.setChipBackgroundColorResource(R.color.background);
-//                b5.setChipBackgroundColorResource(R.color.background);
-//                b6.setChipBackgroundColorResource(R.color.background);
-                break;
-            }
-            case 2: {
-                b2.setText(runs.get());
-                b2.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 3: {
-                b3.setText(runs.get());
-                b3.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 4: {
-                b4.setText(runs.get());
-                b4.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 5: {
-                b5.setText(runs.get());
-                b5.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 6: {
-                b6.setText(runs.get());
-                b6.setChipBackgroundColorResource(color);
-                break;
-            }
-
-        }
-    }
-
-
-//    private List<CommentaryModal> getData() {
-//        List<CommentaryModal> list = new ArrayList<>();
-//        CommentaryModal modal = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal);
-//        CommentaryModal modal2 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal2);
-//        CommentaryModal modal3 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal3);
-//        CommentaryModal modal4 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal4);
-//        return list;
-//    }
-
     private void load() {
-
-        new LoadCommentary().execute(HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
-
+                new LoadCommentary().execute(HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
     }
 
     private void update() {
-        SetOverOverview();
-        for (int i = 0; i < overBallScoreModels.size(); i++) {
-            SetOverBallScore(overBallScoreModels.get(i).getBallnumber(), overBallScoreModels.get(i).getIswicket(), overBallScoreModels.get(i).getBallrun());
-        }
-
         progressBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
@@ -187,13 +96,10 @@ public class Commentary extends Fragment {
 
                     JSONObject lastover = obj.getJSONArray("overs").getJSONObject(0);
                     JSONObject overSummary = lastover.getJSONObject("overSummary");
-                    oover = lastover.getString("number");
 //                    if(Integer.parseInt(oover) < Integer.parseInt(lastover.getString("number")))
 //                    {
 //                        Toast.makeText(getContext(), oover+" over changed ", Toast.LENGTH_SHORT).show();
 //                    }
-                    oruns = overSummary.getString("runsConcededinOver");
-                    owikts = overSummary.getString("wicketsTakeninOver");
 
                     JSONArray balls = lastover.getJSONArray("balls");
                     for (int j = 0; j < balls.length(); j++) {
@@ -206,8 +112,6 @@ public class Commentary extends Fragment {
                             if (s_runs.equals("") || s_runs == null) {
                                 s_runs = "0";
                             }
-                            Log.e("s_runs", s_runs);
-                            overBallScoreModels.add(new OverBallScoreModel(j_ball.getString("ballNumber"), s_runs, j_ball.getJSONArray("comments").getJSONObject(i).getString("isFallOfWicket")));
 
 
                         }

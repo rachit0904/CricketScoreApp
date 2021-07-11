@@ -23,17 +23,23 @@ import com.cricketexchange.project.ui.schedule.schdeule;
 import com.cricketexchange.project.ui.series.seriesFrag;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static com.cricketexchange.project.Constants.Constants.HOSTNAME;
 
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
     private AdView ss;
-    String HOST ;
+    String HOST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         HOST = getIntent().getStringExtra("HOST");
-        Log.e("onCreate: ", HOST );
+        Log.e("onCreate: ", HOST);
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .detectLeakedClosableObjects()
                 .penaltyLog()
@@ -62,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.selectTab(tabLayout.getTabAt(2));
         addFragment(new homeFrag());
@@ -82,7 +87,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        loadinterstitialads();
         //ads settings
+    }
+
+    InterstitialAd mInterstitialAd;
+
+    private void loadinterstitialads() {
+        Random rand = new Random();
+        prepareAd();
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                Log.d("TAG", " Interstitial not loaded");
+            }
+            prepareAd();
+        }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
+    }
+
+    public void prepareAd() {
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
 

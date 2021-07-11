@@ -16,6 +16,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    allprojects {
+        repositories{
+            maven { url 'https://jitpack.io' }
+        }
+    }
 
     buildTypes {
         release {
@@ -45,12 +50,13 @@ dependencies {
     implementation 'androidx.wear:wear:1.1.0'
     implementation 'junit:junit:4.13.2'
     implementation 'com.airbnb.android:lottie:3.6.1'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
-
+//image Slideshow
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
     implementation project(':nativetemplates')
 

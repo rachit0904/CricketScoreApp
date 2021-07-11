@@ -59,36 +59,76 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             case "INPROGRESS": {
             }
             case "LIVE": {
-                if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                    holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                String t1score=childModel.getTeam1score();
+                if(t1score.contains("&")){
+                    String[] s1 =t1score.split("&");
+                    t1score=s1[1];
                 }
-                if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                    holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                String t2score=childModel.getTeam2score();
+                if(t2score.contains("&")){
+                    String[] s2 =t2score.split("&");
+                    t2score=s2[1];
+                }
+                String t1over=childModel.getTeam1over();
+                if(t1over.contains("&")){
+                    String[] o1 =t1over.split("&");
+                    t1over=o1[1];
+                }
+                String t2over=childModel.getTeam2over();
+                if(t2over.contains("&")){
+                    String[] o2 =t2over.split("&");
+                    t2over=o2[1];
+                }
+                if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                    holder.t1score.setText(t1score + " (" + t1over + ")");
+                }
+                if (!t2score.equals("") && !t2over.equals("")) {
+                    holder.t2score.setText(t2score + " (" + t2over + ")");
                 }
                 holder.matchSummery.setText(childModel.getMatchSummery());
                 break;
             }
             case "COMPLETED": {
-                if (childModel.getIsDraw().contentEquals("false")) {
+                String t1score=childModel.getTeam1score();
+                if(t1score.contains("&")){
+                    String[] s1 =t1score.split("&");
+                    t1score=s1[1];
+                }
+                String t2score=childModel.getTeam2score();
+                if(t2score.contains("&")){
+                    String[] s2 =t2score.split("&");
+                    t2score=s2[1];
+                }
+                String t1over=childModel.getTeam1over();
+                if(t1over.contains("&")){
+                    String[] o1 =t1over.split("&");
+                    t1over=o1[1];
+                }
+                String t2over=childModel.getTeam2over();
+                if(t2over.contains("&")){
+                    String[] o2 =t2over.split("&");
+                    t2over=o2[1];
+                }
+                if (childModel.getIsDraw().contains("false")) {
                     holder.liveIcon.setVisibility(View.GONE);
                     holder.status.setTextColor(context.getColor(R.color.winDispColor));
                     holder.status.setText(childModel.getWinTeamName() + " Won");
-                    if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                        holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                    if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                        holder.t1score.setText(t1score + " (" + t1over + ")");
                     }
-                    if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                        holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                    if (!t2score.equals("") && !t2over.equals("")) {
+                        holder.t2score.setText(t2score + " (" + t2over + ")");
                     }
                     holder.matchSummery.setText(childModel.getMatchSummery());
                 } else {
                     holder.liveIcon.setVisibility(View.GONE);
                     holder.status.setTextColor(context.getColor(R.color.winTeamName));
                     holder.status.setText("Match Drawn");
-                    if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                        holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                    if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                        holder.t1score.setText(t1score + " (" + t1over + ")");
                     }
-                    if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                        holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                    if (!t2score.equals("") && !t2over.equals("")) {
+                        holder.t2score.setText(t2score + " (" + t2over + ")");
                     }
                     holder.matchSummery.setText(childModel.getMatchSummery());
                 }

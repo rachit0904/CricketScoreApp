@@ -1,5 +1,8 @@
 package com.cricketexchange.project.ui.home.live;
 
+import android.content.res.AssetManager;
+import android.media.Image;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +21,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesChildAdapter;
+import com.cricketexchange.project.Ads.AdUnifiedListening;
+import com.cricketexchange.project.Ads.AdsManager;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.schedule.schdeule;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.NativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -40,13 +59,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class LiveMatches extends Fragment implements View.OnClickListener {
+public class LiveMatches extends Fragment implements View.OnClickListener{
     private  String HOST = "";
     RecyclerView recyclerView;
     CardView card;
     ArrayList<MatchesChildModel> childList = new ArrayList<>();
     ProgressBar progressBar;
     RelativeLayout noMatchLayout;
+    ImageSlider adsloader;
+    List<SlideModel> Links;
     public LiveMatches() {
         super(R.layout.fragment_live_matches);
     }
@@ -57,12 +78,15 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         card = view.findViewById(R.id.upcoming);
         card.setOnClickListener(this);
+        Links = new ArrayList<>();
         noMatchLayout=view.findViewById(R.id.noMatchLayout);
         recyclerView = view.findViewById(R.id.liveMatches);
         HOST = requireActivity().getIntent().getStringExtra("HOST");
         progressBar = view.findViewById(R.id.progressBar);
+        adsloader = view.findViewById(R.id.ads_show);
         childList.clear();
         load();
+       ads_run();
     }
 
     private void load() {
@@ -70,8 +94,36 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         new Load().execute(HOST + "allMatches");
     }
 
+ private void ads_run(){
+     FirebaseStorage storage = FirebaseStorage.getInstance();
+     StorageReference listRef = storage.getReference().child("ads");
+     Log.i("adsurl","Strated");
+     listRef.listAll()
+             .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                 @Override
+                 public void onSuccess(ListResult listResult) {
+                     for (StorageReference item : listResult.getItems()) {
+                         item.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                             @Override
+                             public void onSuccess(Uri uri) {
+                                 Links.add(new SlideModel(uri.toString(), ScaleTypes.FIT));
+                                 adsloader.setImageList(Links);
+                                 Log.i("adsurl",uri.toString());
+                             }
+                         });
 
+                     }
 
+                 }
+             })
+             .addOnFailureListener(new OnFailureListener() {
+                 @Override
+                 public void onFailure(@NonNull Exception e) {
+                     Log.i("adsurl",e.toString());
+                 }
+             });
+
+ }
 
 
     public void addFragment(Fragment fragment) {
@@ -172,11 +224,11 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             try {
                                 JSONObject scores = obj.getJSONObject("scores");
 
-                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
+                                matchesChildModel.setTeam1score(scores.getString("homeScore"));
+                                matchesChildModel.setTeam1over(scores.getString("homeOvers"));
 
-                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+                                matchesChildModel.setTeam2score(scores.getString("awayScore"));
+                                matchesChildModel.setTeam2over(scores.getString("awayOvers"));
 
                             } catch (JSONException a) {
 
@@ -197,7 +249,9 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
                             Date d = new Date();
                             matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-                            if (matchesChildModel.getStatus().equalsIgnoreCase("LIVE") || matchesChildModel.getStatus().equalsIgnoreCase("INPROGRESS") && matchesChildModel.getStartDate().equals(sobj.format(d))) {
+                            if (matchesChildModel.getStatus().equalsIgnoreCase("LIVE") ||
+                                    matchesChildModel.getStatus().equalsIgnoreCase("INPROGRESS") &&
+                                            matchesChildModel.getStartDate().equals(sobj.format(d))) {
                                 childList.add(matchesChildModel);
                             }} catch (JSONException e) {
                             e.printStackTrace();

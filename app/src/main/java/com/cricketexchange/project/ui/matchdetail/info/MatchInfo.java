@@ -3,6 +3,7 @@ package com.cricketexchange.project.ui.matchdetail.info;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,9 +67,10 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     }
 
     private void load() {
+
+                new Load().execute(HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
         progressBar.setVisibility(View.VISIBLE);
-        Log.e("UTL", HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
-        new Load().execute(HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+//        Log.e("UTL", HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
 
     }
 
@@ -155,10 +157,10 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == seriesCard) {
             //pass intent to series Detail page
-            Intent intent = new Intent(getContext(), SeriesDetail.class);
-            intent.putExtra("sid", sid);
-            intent.putExtra("sname", seriesName.getText());
-            startActivity(intent);
+//            Intent intent = new Intent(getContext(), SeriesDetail.class);
+//            intent.putExtra("sid", sid);
+//            intent.putExtra("sname", seriesName.getText());
+//            startActivity(intent);
         }
         if (v == t1Layout) {
 //            pass intent to team info page

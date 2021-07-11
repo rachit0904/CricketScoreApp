@@ -2,12 +2,12 @@ package com.cricketexchange.project.Activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +15,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Pager.MatchDetailPager;
 import com.cricketexchange.project.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +26,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +46,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     String sid;
     String mid;
     String HOST;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +82,42 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
             notifyLayout.setVisibility(View.GONE);
             pager.setVisibility(View.VISIBLE);
         }
+
+
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        loadinterstitialads();
+
+    }
+
+    InterstitialAd mInterstitialAd;
+
+    private void loadinterstitialads() {
+        Random rand = new Random();
+        AtomicReference<Boolean> isShown= new AtomicReference<>(false);
+        prepareAd();
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
+            if (mInterstitialAd.isLoaded() && !isShown.get()) {
+                mInterstitialAd.show();
+                isShown.set(true);
+            } else {
+                Log.d("TAG", " Interstitial not loaded");
+            }
+            prepareAd();
+        }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
+    }
+
+    public void prepareAd() {
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
 
@@ -115,10 +161,10 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         t1Name.setText(st1Name);
         t2Name.setText(st2Name);
         if (!status.equalsIgnoreCase("UPCOMING")) {
-            t1Score.setText(split(st1Score));
-            t2Score.setText(split(st2Score));
-            t1Overs.setText(split(st1Overs));
-            t2Overs.setText(split(st2Overs));
+            t1Score.setText((st1Score));
+            t2Score.setText((st2Score));
+            t1Overs.setText((st1Overs));
+            t2Overs.setText((st2Overs));
         }
         cms.setText(matchsumm);
         startdate.setText(sstartdate);
@@ -134,9 +180,9 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
 
 
     private void load() {
-        if (!sid.isEmpty() || !mid.isEmpty()) {
-            new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
-        }
+                if (!sid.isEmpty() || !mid.isEmpty()) {
+                    new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
+                }
     }
 
 
@@ -171,6 +217,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
                         st2Overs = scores.getString("awayOvers");
                     }
                     matchsumm = matchSummary.getString("matchSummaryText");
+
                     sstartdate = matchSummary.getString("localStartTime");
                     st1url = hometeam.getString("logoUrl");
                     st2url = awayTeam.getString("logoUrl");

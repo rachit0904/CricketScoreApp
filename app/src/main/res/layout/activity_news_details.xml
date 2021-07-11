@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_overlay"
-    android:scrollbars="none"
     android:overScrollMode="never"
+    android:scrollbars="none"
     tools:context=".Activity.NewsDetailsActivity">
 
 
@@ -88,10 +88,18 @@
             android:visibility="visible"
             tools:ignore="WebViewLayout" />
 
-        <RelativeLayout
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/webview"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/admob_banner" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/adView"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -125,6 +133,7 @@
                 android:layout_below="@id/progressBar2" />
 
         </RelativeLayout>
+
     </RelativeLayout>
 
 

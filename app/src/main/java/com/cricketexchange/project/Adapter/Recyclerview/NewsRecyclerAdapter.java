@@ -38,15 +38,12 @@ import java.util.Random;
 
 public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int AD_COUNT = 2;
-    static int OFFSET = 5;
-    private static final int TYPE_AD = 0;
-    private static final int TYPE_NORMAL = 1;
+
     Context context;
-    int count = 0;
+
     String HOST = "";
     private ArrayList<Object> data = new ArrayList<>();
-    private ArrayList<UnifiedNativeAd> ads = new ArrayList<>();
+
 
     public NewsRecyclerAdapter(Context context) {
         this.context = context;
@@ -55,6 +52,19 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setData(List<Object> emp) {
         this.data.addAll(emp);
     }
+
+
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
+
+    int count = 0;
+    private static final int AD_COUNT = 2;
+    static int OFFSET = 5;
+    private static final int TYPE_AD = 0;
+    private static final int TYPE_NORMAL = 1;
+
+    private ArrayList<UnifiedNativeAd> ads = new ArrayList<>();
 
     public void MixData() {
 
@@ -77,10 +87,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         notifyDataSetChanged();
 
-    }
-
-    public void setHOST(String HOST) {
-        this.HOST = HOST;
     }
 
 
@@ -249,6 +255,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.ads.add(ads);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return data.get(position) instanceof UnifiedNativeAd ? TYPE_AD : TYPE_NORMAL;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -309,10 +320,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return data.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return data.get(position) instanceof UnifiedNativeAd ? TYPE_AD : TYPE_NORMAL;
-    }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView maintitle, secondarytitle, time;

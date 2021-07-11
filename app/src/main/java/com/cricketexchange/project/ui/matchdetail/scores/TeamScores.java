@@ -2,6 +2,8 @@ package com.cricketexchange.project.ui.matchdetail.scores;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,7 @@ public class TeamScores extends Fragment {
         battingInningModalList1.clear();
         bowlingInningModalList1.clear();
         wicketsFallModelList1.clear();
+        InningDataList.clear();
         sid = requireActivity().getIntent().getStringExtra("sid");
         mid = requireActivity().getIntent().getStringExtra("mid");
         HOST = requireActivity().getIntent().getStringExtra("HOST");
@@ -131,24 +134,34 @@ public class TeamScores extends Fragment {
     }
 
     private void load() {
-        new LoadScoreBoard().execute(HOST + "getScoreboard?sid=" + sid + "&mid=" + mid);
+                new LoadScoreBoard().execute(HOST + "getScoreboard?sid=" + sid + "&mid=" + mid);
     }
 
 
     private void update() {
-//        if(InningDataList.size()>2){
-//            for(int i=0;i<InningDataList.size()-2;i++){
-//                inningsTab.addTab(inningsTab.newTab());
-//            }
-//        }
-        for (int i = 0; i < inningsTab.getTabCount(); i++) {
-            InningModal modal = InningDataList.get(i);
-            inningsTab.selectTab(inningsTab.getTabAt(i).setText(modal.getInningName()));
+        {
+            for(int i=0;i<InningDataList.size();i++){
+                inningsTab.addTab(inningsTab.newTab());
+            }
         }
-        inningsTab.selectTab(inningsTab.getTabAt(0));
-        InningModal modal2 = InningDataList.get(0);
-        setscore(modal2.getTotalScore());
-        inningData(0);
+        for (int i = 0; i < inningsTab.getTabCount(); i++) {
+            try {
+                InningModal modal = InningDataList.get(i);
+                inningsTab.selectTab(inningsTab.getTabAt(i).setText(modal.getInningName()));
+            } catch (IndexOutOfBoundsException e) {
+                Log.d("IndexOutOfBounds", "Exception: (ln 150)" + e);
+            }
+
+        }
+
+        try {
+            inningsTab.selectTab(inningsTab.getTabAt(0));
+            InningModal modal2 = InningDataList.get(0);
+            setscore(modal2.getTotalScore());
+            inningData(0);
+        } catch (IndexOutOfBoundsException e) {
+            Log.d("IndexOutOfBounds", "Exception:(ln 161) " + e);
+        }
     }
 
     private class LoadScoreBoard extends AsyncTask<String, Integer, Long> {

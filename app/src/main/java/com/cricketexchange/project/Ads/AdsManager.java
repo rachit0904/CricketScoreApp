@@ -2,6 +2,7 @@ package com.cricketexchange.project.Ads;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -83,6 +84,7 @@ public class AdsManager
 
     public void createUnifiedAds(int numads, int unitid, AdUnifiedListening listening)
     {
+
         AdLoader.Builder builder = new AdLoader.Builder(ctx,ctx.getString(unitid));
         builder.forUnifiedNativeAd(listening);
         builder.withAdListener(listening);

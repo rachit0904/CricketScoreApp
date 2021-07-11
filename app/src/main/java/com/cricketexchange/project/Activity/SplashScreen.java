@@ -70,6 +70,7 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(new Intent(SplashScreen.this, NetworkFailureActivity.class));
         } else {
             startActivity(intent);
+            finish();
         }
     }
 

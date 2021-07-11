@@ -164,11 +164,11 @@ public class MatchDetailFrag extends Fragment {
 
                             try {
                                 JSONObject scores = obj.getJSONObject("scores");
-                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
+                                matchesChildModel.setTeam1score(scores.getString("homeScore"));
+                                matchesChildModel.setTeam1over(scores.getString("homeOvers"));
 
-                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
+                                matchesChildModel.setTeam2score(scores.getString("awayScore"));
+                                matchesChildModel.setTeam2over(scores.getString("awayOvers"));
 
                             } catch (JSONException e) {
                                 matchesChildModel.setTeam1score("0");

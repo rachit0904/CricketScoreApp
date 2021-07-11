@@ -116,6 +116,7 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_notification">FullscreenActivity</string>
     <string name="admob_banner">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admov_interstitial">ca-app-pub-3940256099942544/1033173712</string>
     <string name="seriesname">Indian Premiere League 2021</string>
     <string name="matchDate">12 May, Wednesday</string>
     <string name="winTeamName">DC Won</string>

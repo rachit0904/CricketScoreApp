@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,10 @@ import com.cricketexchange.project.Adapter.Recyclerview.PlayerDataAdapter;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +42,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -84,7 +93,40 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
             teamShortName.setTextColor(Color.parseColor(teamcolor));
         }
         load();
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        loadinterstitialads();
+        loadinterstitialads();
     }
+
+    InterstitialAd mInterstitialAd;
+
+    private void loadinterstitialads() {
+        Random rand = new Random();
+        prepareAd();
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                Log.d("TAG", " Interstitial not loaded");
+            }
+            prepareAd();
+        }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
+    }
+
+    public void prepareAd() {
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
 
     private void load() {
         new Load().execute(HOST + "getAllPlayerByTID?id=" + tid);
