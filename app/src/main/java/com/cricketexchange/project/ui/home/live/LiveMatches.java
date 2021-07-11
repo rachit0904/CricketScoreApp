@@ -41,6 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LiveMatches extends Fragment implements View.OnClickListener {
+    private  String HOST = "";
     RecyclerView recyclerView;
     CardView card;
     ArrayList<MatchesChildModel> childList = new ArrayList<>();
@@ -58,6 +59,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         card.setOnClickListener(this);
         noMatchLayout=view.findViewById(R.id.noMatchLayout);
         recyclerView = view.findViewById(R.id.liveMatches);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         progressBar = view.findViewById(R.id.progressBar);
         childList.clear();
         load();
@@ -65,7 +67,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "allMatches");
+        new Load().execute(HOST + "allMatches");
     }
 
 
@@ -100,6 +102,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         MatchesChildAdapter adapter = new MatchesChildAdapter(getContext(), childList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
     }
 

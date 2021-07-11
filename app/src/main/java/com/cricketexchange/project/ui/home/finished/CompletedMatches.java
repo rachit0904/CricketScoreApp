@@ -39,6 +39,7 @@ import okhttp3.Response;
 
 public class CompletedMatches extends Fragment {
     RecyclerView recyclerView;
+    String HOST;
     List<MatchesModel> modelList = new ArrayList<>();
     List<MatchesChildModel> childModelList = new ArrayList<>();
     List<MatchesChildModel> childList = new ArrayList<>();
@@ -46,12 +47,14 @@ public class CompletedMatches extends Fragment {
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_completed_matches, container, false);
         recyclerView = view.findViewById(R.id.finishedMatches);
         progressBar = view.findViewById(R.id.progressBar);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         modelList.clear();
         childModelList.clear();
         load();
@@ -61,7 +64,7 @@ public class CompletedMatches extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "allMatches");
+        new Load().execute(HOST + "allMatches");
     }
 
     private void setChildDate() {
@@ -74,19 +77,19 @@ public class CompletedMatches extends Fragment {
 //            model.setDate(sobj.format(x));
 //            modelList.add(model);
 //        }
-        final  long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
+        final long ONE_DAY_MILLI_SECONDS = 24 * 60 * 60 * 1000;
         String dateInString = sobj.format(new Date());
-        long nextDayMilliSeconds ;
-        Date date=new Date();
-        for(int i=0;i<7;i++) {
-            MatchesModel model=new MatchesModel();
+        long nextDayMilliSeconds;
+        Date date = new Date();
+        for (int i = 0; i < 7; i++) {
+            MatchesModel model = new MatchesModel();
             // Getting the next day and formatting into 'YYYY-MM-DD'
-            nextDayMilliSeconds= date.getTime() - ONE_DAY_MILLI_SECONDS;
-            Date nextDate= new Date(nextDayMilliSeconds);
+            nextDayMilliSeconds = date.getTime() - ONE_DAY_MILLI_SECONDS;
+            Date nextDate = new Date(nextDayMilliSeconds);
             String nextDateStr = sobj.format(nextDate);
             model.setDate(nextDateStr);
             modelList.add(model);
-            dateInString=nextDateStr;
+            dateInString = nextDateStr;
             try {
                 date = sobj.parse(dateInString);
             } catch (ParseException e) {
@@ -102,14 +105,15 @@ public class CompletedMatches extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         setParentData();
         MatchesAdapter adapter = new MatchesAdapter(getContext(), modelList, childModelList);
+        adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
     }
-
 
 
     private class Load extends AsyncTask<String, Integer, Long> {
         protected Long doInBackground(String... urls) {
             long totalSize = 0;
+            Log.e("URL", urls[0]);
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(urls[0])
@@ -216,7 +220,7 @@ public class CompletedMatches extends Fragment {
                             }
                             dates.add(d);
 
-                           matchesChildModel.setStartDate(sD);
+                            matchesChildModel.setStartDate(sD);
                             matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
 
                             if (matchesChildModel.getStatus().equalsIgnoreCase("COMPLETED")) {

@@ -43,13 +43,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickListener {
+    private String HOST = "";
     ImageView bck, teamLogo;
     TextView teamShortName, teamFullName;
     RecyclerView recyclerView;
     Toolbar materialToolbar;
     String tid = null;
     String teamsrt, teamlong, teamcolor;
-    String seriesname,teamname;
+    String seriesname, teamname;
     Boolean notifyFlag = false;
     List<PlayersDataModel> list = new ArrayList<>();
 
@@ -63,6 +64,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         teamlong = getIntent().getStringExtra("tln");
         teamcolor = getIntent().getStringExtra("tcl");
         teamname = getIntent().getStringExtra("sname");
+        HOST = getIntent().getStringExtra("HOST");
         TextView title = findViewById(R.id.title);
         title.setText(teamname);
         bck = findViewById(R.id.back);
@@ -76,19 +78,18 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
             Picasso.get().load(teamlong).into(teamLogo);
         }
         teamFullName.setText(teamname);
-        if (teamcolor.isEmpty()){
+        if (teamcolor.isEmpty()) {
             teamShortName.setTextColor(Color.WHITE);
-        }else {
+        } else {
             teamShortName.setTextColor(Color.parseColor(teamcolor));
         }
         load();
     }
 
     private void load() {
-        new Load().execute(Constants.HOST+"getAllPlayerByTID?id=" + tid);
+        new Load().execute(HOST + "getAllPlayerByTID?id=" + tid);
 
     }
-
 
 
     private void update() {
@@ -187,7 +188,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
                             playersDataModel.setName(obj.getString("fullName"));
                             playersDataModel.setBattingStyle(obj.getString("battingStyle"));
                             playersDataModel.setBowlingStyle(obj.getString("bowlingStyle"));
-                                playersDataModel.setPlayerType("NA");
+                            playersDataModel.setPlayerType("NA");
                             playersDataModel.setLogoUrl("NA");
                             if (playersDataModel.getBowlingStyle().trim().length() == 0) {
                                 playersDataModel.setBowlingStyle("NA");

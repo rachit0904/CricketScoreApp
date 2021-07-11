@@ -37,6 +37,7 @@ public class newsFrag extends Fragment {
     // The number of native ads to load.
     public static final int NUMBER_OF_ADS = 5;
     public static final int ADS_PER_POST = 4;
+    private String HOST = "";
 
 
     // The AdLoader used to load ads.
@@ -52,14 +53,13 @@ public class newsFrag extends Fragment {
     ProgressBar progressBar;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_fragment, container, false);
         //init the ads
 
-
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         progressBar = view.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         // Use this setting to improve performance if you know that changes
@@ -72,13 +72,12 @@ public class newsFrag extends Fragment {
 
         // Specify an adapter.
         adapter = new NewsRecyclerAdapter(getActivity());
+        adapter.setHOST(HOST);
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
 //        Picasso.setSingletonInstance(new Picasso.Builder(getActivity()).build());
         addMenuItemsFromJson();
-
-
 
 
         return view;
@@ -87,7 +86,7 @@ public class newsFrag extends Fragment {
 
     private void addMenuItemsFromJson() {
         progressBar.setVisibility(View.VISIBLE);
-        new LoadData().execute(Constants.HOST + "news");
+        new LoadData().execute(HOST + "news");
     }
 
 

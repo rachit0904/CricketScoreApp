@@ -42,8 +42,9 @@ public class Live extends Fragment implements View.OnClickListener {
     ImageView currentInningTeamLogo;
     RecyclerView inningBattingRv, inningYetToBat, inningPartnerShips;
     CardView showScoreCard;
-    String sid,mid;
+    String sid, mid;
     View view;
+    String HOST;
     List<battingCardModal> battingCardModalList = new ArrayList<>();
     List<battingCardModal> yetToBatList = new ArrayList<>();
     List<PartnershipsModal> partnershipsModalList = new ArrayList<>();
@@ -55,17 +56,18 @@ public class Live extends Fragment implements View.OnClickListener {
         battingCardModalList.clear();
         yetToBatList.clear();
         partnershipsModalList.clear();
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         initialize();
         setData();
         showScoreCard.setOnClickListener(this);
-        sid= requireActivity().getIntent().getStringExtra("sid");
-        mid=requireActivity().getIntent().getStringExtra("mid");
+        sid = requireActivity().getIntent().getStringExtra("sid");
+        mid = requireActivity().getIntent().getStringExtra("mid");
         load();
         return view;
     }
 
     private void load() {
-        new Load().execute(Constants.HOST + "getMatchesHighlight?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid));
+        new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
     }
 
     PartnershipsAdapter adapter3;
@@ -84,13 +86,13 @@ public class Live extends Fragment implements View.OnClickListener {
         //yet to bat RV
         inningYetToBat.hasFixedSize();
         inningYetToBat.setLayoutManager(new LinearLayoutManager(getContext()));
-            cadapter2 = new CurrentInningBattingAdapter(getContext(), yetToBatList);
-            inningYetToBat.setAdapter(cadapter2);
+        cadapter2 = new CurrentInningBattingAdapter(getContext(), yetToBatList);
+        inningYetToBat.setAdapter(cadapter2);
         //partnerships data Rv
         inningPartnerShips.hasFixedSize();
         inningPartnerShips.setLayoutManager(new LinearLayoutManager(getContext()));
-            adapter3 = new PartnershipsAdapter(getContext(), partnershipsModalList);
-            inningPartnerShips.setAdapter(adapter3);
+        adapter3 = new PartnershipsAdapter(getContext(), partnershipsModalList);
+        inningPartnerShips.setAdapter(adapter3);
     }
 
     String currentInningsId, firstbattername, firstbatterruns, firstbatterpalyedballes, secondbattername,
@@ -102,46 +104,47 @@ public class Live extends Fragment implements View.OnClickListener {
     private void update() {
         currentInningTeamScore.setText(sscore);
         //  currentInningTeamLogo.
-        if (homelogoUrl!=null){
+        if (homelogoUrl != null) {
             if (homelogoUrl.trim().length() != 0) {
                 Picasso.get().load(homelogoUrl).into(currentInningTeamLogo);
             }
         }
-        if(firstbattername!=null) {
+        if (firstbattername != null) {
             currentBatsman1.setText(firstbattername);
-        }else{
+        } else {
             currentBatsman1.setText("-");
         }
-        if(secondbattername!=null) {
+        if (secondbattername != null) {
             currentBatsman2.setText(secondbattername);
-        }else{
+        } else {
             currentBatsman2.setText("-");
         }
-        if(bollernam!=null) {
+        if (bollernam != null) {
             currentBowler.setText(bollernam);
-        }else{
+        } else {
             currentBowler.setText("-");
         }
-        if(firstbatterruns==null || firstbatterpalyedballes==null){
+        if (firstbatterruns == null || firstbatterpalyedballes == null) {
             currentBatsman1Score.setText("N.A");
-        }else {
+        } else {
             currentBatsman1Score.setText(firstbatterruns + "(" + firstbatterpalyedballes + ")");
         }
-        if(secondbatterruns==null || secondbatterpalyedballes==null){
+        if (secondbatterruns == null || secondbatterpalyedballes == null) {
             currentBatsman2Score.setText("N.A");
-        }else {
+        } else {
             currentBatsman2Score.setText(secondbatterruns + "(" + secondbatterpalyedballes + ")");
-        }if(bollerwickets==null || bollerbowlerOver==null){
+        }
+        if (bollerwickets == null || bollerbowlerOver == null) {
             currentBowlerScore.setText("N.A");
-        }else {
+        } else {
             currentBowlerScore.setText(firstbatterruns + "(" + firstbatterpalyedballes + ")");
         }
-        if(LRRR==null || LCRR==null){
+        if (LRRR == null || LCRR == null) {
             RRR.setText(LRRR);
             CRR.setText(LCRR);
-        }else if(LRRR==null){
+        } else if (LRRR == null) {
             RRR.setText("N.A");
-        }else if(LCRR==null){
+        } else if (LCRR == null) {
             CRR.setText("N.A");
         }
 
@@ -154,8 +157,8 @@ public class Live extends Fragment implements View.OnClickListener {
     private void update1() {
         cadapter.notifyDataSetChanged();
         cadapter2.notifyDataSetChanged();
-        TextView t1=view.findViewById(R.id.txt3);
-        if(yetToBatList.isEmpty()){
+        TextView t1 = view.findViewById(R.id.txt3);
+        if (yetToBatList.isEmpty()) {
             t1.setVisibility(View.GONE);
         }
         currentInningTeamName.setText(iname);
@@ -164,8 +167,8 @@ public class Live extends Fragment implements View.OnClickListener {
     @SuppressLint("NotifyDataSetChanged")
     private void update2() {
         adapter3.notifyDataSetChanged();
-        TextView t2=view.findViewById(R.id.txt4);
-        if(partnershipsModalList.isEmpty()){
+        TextView t2 = view.findViewById(R.id.txt4);
+        if (partnershipsModalList.isEmpty()) {
             t2.setVisibility(View.GONE);
         }
     }
@@ -239,7 +242,7 @@ public class Live extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(Long result) {
-            new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid));
+            new LoadScoreBoard().execute(HOST + "getScoreboard?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
             update();
         }
     }
@@ -292,7 +295,7 @@ public class Live extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(Long result) {
-            new LoadPatnerShip().execute(Constants.HOST + "getPartnerships?sid="+Integer.parseInt(sid)+"&mid="+Integer.parseInt(mid)+"&ining="+currentInningsId);
+            new LoadPatnerShip().execute(HOST + "getPartnerships?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid) + "&ining=" + currentInningsId);
             update1();
         }
     }

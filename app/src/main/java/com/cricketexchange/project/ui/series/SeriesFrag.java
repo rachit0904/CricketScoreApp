@@ -36,9 +36,10 @@ import okhttp3.Response;
 public class seriesFrag extends Fragment implements View.OnClickListener {
     RecyclerView seriesRv;
     Button seeAllBtn;
-    RecyclerView.Adapter adapter;
+    SeriesNameAdapter adapter;
     ArrayList<SeriesModel> datalist = new ArrayList<>();
     ProgressBar progressBar;
+    String HOST = "";
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,6 +47,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.series_fragment, container, false);
         seriesRv = root.findViewById(R.id.seriesRv);
         seeAllBtn = root.findViewById(R.id.allSeries);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         seeAllBtn.setOnClickListener(this);
         progressBar = root.findViewById(R.id.progressBar);
 
@@ -82,13 +84,14 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
         seriesRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new SeriesNameAdapter(getActivity(), datalist);
         seriesRv.setAdapter(adapter);
+        adapter.setHOST(HOST);
         progressBar.setVisibility(View.GONE);
 
     }
 
 
     private void load() {
-        new Load().execute(Constants.HOST + "AllSeriesInProgress");
+        new Load().execute(HOST + "AllSeriesInProgress");
     }
 
 

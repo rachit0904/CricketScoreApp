@@ -29,8 +29,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PointsTableFrag extends Fragment {
+    private String HOST = "";
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+    ScoreCardAdapter adapter;
     List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
     String sid = "";
     ProgressBar progressBar;
@@ -40,6 +41,7 @@ public class PointsTableFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_points_table, container, false);
         recyclerView = view.findViewById(R.id.scoresRowRv);
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         sid = requireActivity().getIntent().getStringExtra("sid");
         progressBar = view.findViewById(R.id.progressBar);
 
@@ -87,7 +89,7 @@ public class PointsTableFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(Constants.HOST + "getStanding?id=" + sid);
+        new Load().execute(HOST + "getStanding?id=" + sid);
     }
 
     private void update() {

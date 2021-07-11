@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.News.newsFrag;
 import com.cricketexchange.project.ui.home.homeFrag;
@@ -26,23 +28,29 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 
+import static com.cricketexchange.project.Constants.Constants.HOSTNAME;
+
 public class MainActivity extends AppCompatActivity {
     private AdView mAdView;
     private AdView ss;
+    String HOST ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        HOST = getIntent().getStringExtra("HOST");
+        Log.e("onCreate: ", HOST );
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .detectLeakedClosableObjects()
                 .penaltyLog()
                 .build());
-        schdeule schdeule=new schdeule();
+        schdeule schdeule = new schdeule();
         //demo notify test
-        String  notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
-        if(notify=="true"){
-            schdeule.upcomingMatchesNotification(getBaseContext(),"CSK Vs MI","Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
+        String notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
+        if (notify == "true") {
+            schdeule.upcomingMatchesNotification(getBaseContext(), "CSK Vs MI", "Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
         }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -110,6 +118,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
- 
 
 }

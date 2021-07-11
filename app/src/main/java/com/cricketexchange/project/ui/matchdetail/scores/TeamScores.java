@@ -39,6 +39,7 @@ public class TeamScores extends Fragment {
     RecyclerView bowlingRv;
     RecyclerView wicketsRv;
     View view;
+    String HOST;
     String sid, mid;
     List<InningModal> InningDataList = new ArrayList<>();
     List<BattingInningModal> battingInningModalList1 = new ArrayList<>();
@@ -54,6 +55,7 @@ public class TeamScores extends Fragment {
         wicketsFallModelList1.clear();
         sid = requireActivity().getIntent().getStringExtra("sid");
         mid = requireActivity().getIntent().getStringExtra("mid");
+        HOST = requireActivity().getIntent().getStringExtra("HOST");
         initialize();
         load();
         inningsTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -106,17 +108,17 @@ public class TeamScores extends Fragment {
     }
 
     private List<WicketsFallModel> getFallOfWickets(int id) {
-        InningModal modal=InningDataList.get(id);
+        InningModal modal = InningDataList.get(id);
         return modal.getWicketsFallModelList();
     }
 
     private List<BattingInningModal> getBowlingData(int id) {
-        InningModal modal=InningDataList.get(id);
+        InningModal modal = InningDataList.get(id);
         return modal.getBowlingInningModalList();
     }
 
     private List<BattingInningModal> getBattingData(int id) {
-        InningModal modal=InningDataList.get(id);
+        InningModal modal = InningDataList.get(id);
         return modal.getBattingInningModalList();
     }
 
@@ -129,7 +131,7 @@ public class TeamScores extends Fragment {
     }
 
     private void load() {
-        new LoadScoreBoard().execute(Constants.HOST + "getScoreboard?sid="+sid+"&mid="+mid);
+        new LoadScoreBoard().execute(HOST + "getScoreboard?sid=" + sid + "&mid=" + mid);
     }
 
 
@@ -139,14 +141,14 @@ public class TeamScores extends Fragment {
 //                inningsTab.addTab(inningsTab.newTab());
 //            }
 //        }
-        for(int i=0;i<inningsTab.getTabCount();i++) {
+        for (int i = 0; i < inningsTab.getTabCount(); i++) {
             InningModal modal = InningDataList.get(i);
             inningsTab.selectTab(inningsTab.getTabAt(i).setText(modal.getInningName()));
         }
-            inningsTab.selectTab(inningsTab.getTabAt(0));
-            InningModal modal2 = InningDataList.get(0);
-            setscore(modal2.getTotalScore());
-            inningData(0);
+        inningsTab.selectTab(inningsTab.getTabAt(0));
+        InningModal modal2 = InningDataList.get(0);
+        setscore(modal2.getTotalScore());
+        inningData(0);
     }
 
     private class LoadScoreBoard extends AsyncTask<String, Integer, Long> {
@@ -163,7 +165,7 @@ public class TeamScores extends Fragment {
                     JSONObject data = object.getJSONObject("data");
                     JSONObject fullScorecard = data.getJSONObject("fullScorecard");
                     JSONArray inningss = fullScorecard.getJSONArray("innings");
-                    if(inningss.length()>0) {
+                    if (inningss.length() > 0) {
                         for (int j = inningss.length() - 1; j >= 0; j--) {
                             JSONObject innings = inningss.getJSONObject(j);
                             String inningName = innings.getString("shortName");

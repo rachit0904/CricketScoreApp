@@ -38,6 +38,12 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
         return new ViewHolder(view);
     }
 
+    private String HOST = "";
+
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull UpcomingSeriesAdapter.ViewHolder holder, int position) {
         UpcomingSeriesModel matchesModel = list.get(position);
@@ -52,16 +58,17 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
                 seriesModelList.add(x);
             }
         }
-        if(seriesModelList.size()==0){
+        if (seriesModelList.size() == 0) {
             holder.month.setVisibility(View.GONE);
             holder.series.setVisibility(View.GONE);
         }
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-            holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
-            UpcomingSeriesChildAdapter adapter = new UpcomingSeriesChildAdapter(seriesModelList, context);
-            holder.series.hasFixedSize();
-            holder.series.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        holder.series.setLayoutManager(new LinearLayoutManager(holder.series.getContext()));
+        UpcomingSeriesChildAdapter adapter = new UpcomingSeriesChildAdapter(seriesModelList, context);
+        adapter.setHOST(HOST);
+        holder.series.hasFixedSize();
+        holder.series.setAdapter(adapter);
 
     }
 
@@ -86,6 +93,7 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
             Intent intent = new Intent(context, SeriesDetail.class);
             intent.putExtra("sid", childSeriesModel.get(getAdapterPosition()).getSid());
             intent.putExtra("name", childSeriesModel.get(getAdapterPosition()).getSeriesName());
+            intent.putExtra("HOST", HOST);
             context.startActivity(intent);
         }
     }

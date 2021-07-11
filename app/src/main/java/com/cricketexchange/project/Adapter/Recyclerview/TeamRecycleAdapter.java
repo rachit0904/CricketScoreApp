@@ -25,7 +25,7 @@ import java.util.List;
 public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.ViewHolder> {
     Context context;
 
-    List<SquadModel> modelList ;
+    List<SquadModel> modelList;
 
     public TeamRecycleAdapter(Context context, List<SquadModel> modelList) {
         this.context = context;
@@ -55,6 +55,12 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
         return modelList.size();
     }
 
+    private String HOST = "";
+
+    public void setHOST(String HOST) {
+        this.HOST = HOST;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView teamLogo;
         TextView teamName;
@@ -77,11 +83,7 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
             intent.putExtra("tln", modelList.get(getAdapterPosition()).getSquadLogoUrl());
             intent.putExtra("tcl", modelList.get(getAdapterPosition()).getSquadColor());
             intent.putExtra("sname", modelList.get(getAdapterPosition()).getSquadFullname());
-
-
-            Log.e("ONCLICK", "\nTID " + modelList.get(getAdapterPosition()).getSquadID()+ "\nTSN " + modelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + modelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + modelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + modelList.get(getAdapterPosition()).getSquadFullname())
-            ;
-
+            intent.putExtra("HOST", HOST);
             context.startActivity(intent);
         }
     }

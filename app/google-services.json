@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "403721742868",
+    "firebase_url": "https://admin-panel-cricketscore-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "admin-panel-cricketscore",
+    "storage_bucket": "admin-panel-cricketscore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403721742868:android:b1adaef6be283bb9af1501",
+        "android_client_info": {
+          "package_name": "com.cricketexchange.mainactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403721742868-c41hsumdiilf0a0dovns98ocrup6b8vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuUovzSS-UyyPutxzDVzsWNMAsYT7X7SE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403721742868-c41hsumdiilf0a0dovns98ocrup6b8vq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
