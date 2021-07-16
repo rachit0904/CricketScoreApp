@@ -19,6 +19,7 @@ import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -82,12 +83,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
             intent.putExtra("tcl", squadModelList.get(getAdapterPosition()).getSquadColor());
             intent.putExtra("sname", squadModelList.get(getAdapterPosition()).getSquadFullname());
             intent.putExtra("HOST", HOST);
-
             context.startActivity(intent);
-
-            Log.e("ONCLICK", "\nTID " + squadModelList.get(getAdapterPosition()).getSquadID() + "\nTSN " + squadModelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + squadModelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + squadModelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + squadModelList.get(getAdapterPosition()).getSquadFullname())
-            ;
-
         }
     }
 }

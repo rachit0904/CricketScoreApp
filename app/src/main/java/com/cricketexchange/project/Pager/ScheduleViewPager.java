@@ -22,10 +22,10 @@ public class ScheduleViewPager extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:{
-                return "Upcoming Series";
+                return "Series";
             }
             case 1:{
-                return "Days";
+                return "Matches";
             } case 2:{
                 return "Teams";
             } default:{

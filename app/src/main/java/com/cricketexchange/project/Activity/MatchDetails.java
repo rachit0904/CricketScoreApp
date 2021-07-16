@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -20,8 +22,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,14 +106,14 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
 
     private void loadinterstitialads() {
         Random rand = new Random();
-        AtomicReference<Boolean> isShown= new AtomicReference<>(false);
         prepareAd();
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            if (mInterstitialAd.isLoaded() && !isShown.get()) {
+            Boolean isShown=false;
+            if (mInterstitialAd.isLoaded() && !isShown ) {
                 mInterstitialAd.show();
-                isShown.set(true);
+                isShown=true;
             } else {
                 Log.d("TAG", " Interstitial not loaded");
             }
@@ -170,74 +178,54 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         startdate.setText(sstartdate);
     }
 
-    private String split(String str) {
-        if (str.contains("&")) {
-            String arr[] = str.split("&");
-            return arr[0];
-        } else
-            return str;
-    }
-
-
     private void load() {
                 if (!sid.isEmpty() || !mid.isEmpty()) {
-                    new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
+                    loadScores(sid,mid);
+//                    new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
                 }
     }
 
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONObject data = object.getJSONObject("data");
-                    //  JSONObject meta = data.getJSONObject("meta");
-                    //  String CRR = meta.getString("currentRunRate");
-                    //  String RRR = meta.getString("requiredRunRate");
-                    JSONObject matchDetail = data.getJSONObject("matchDetail");
-                    JSONObject matchSummary = matchDetail.getJSONObject("matchSummary");
-                    JSONObject hometeam = matchSummary.getJSONObject("homeTeam");
-                    JSONObject awayTeam = matchSummary.getJSONObject("awayTeam");
-                    status = matchSummary.getString("status");
-
-                    st1Name = hometeam.getString("shortName");
-                    st2Name = awayTeam.getString("shortName");
+    private void loadScores(String sid, String mid) {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("MatchesHighlight");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                DataSnapshot ds = snapshot.child(sid + "S" + mid).child("jsondata").child("matchDetail").child("matchSummary");
+                try {
+                    st1url = ds.child("homeTeam").child("logoUrl").getValue().toString();
+                    st2url = ds.child("awayTeam").child("logoUrl").getValue().toString();
+                status = ds.child("status").getValue().toString();
+                st1Name = ds.child("homeTeam").child("shortName").getValue().toString();
+                st2Name = ds.child("awayTeam").child("shortName").getValue().toString();
+                matchsumm = ds.child("matchSummaryText").getValue().toString();
+                sstartdate = ds.child("localStartDate").getValue().toString();
                     if (!status.equalsIgnoreCase("UPCOMING")) {
-                        JSONObject scores = matchSummary.getJSONObject("scores");
-                        st1Score = scores.getString("homeScore");
-                        st1Overs = scores.getString("homeOvers");
-                        st2Score = scores.getString("awayScore");
-                        st2Overs = scores.getString("awayOvers");
+                        st1Score = ds.child("scores").child("homeScore").getValue().toString();
+                        st1Overs = ds.child("scores").child("homeOvers").getValue().toString();
+                        st2Score = ds.child("scores").child("awayScore").getValue().toString();
+                        st2Overs = ds.child("scores").child("awayOvers").getValue().toString();
+                    }else{
+                        st1Score="";
+                        st2Score="";
+                        st1Overs="";
+                        st2Overs="";
                     }
-                    matchsumm = matchSummary.getString("matchSummaryText");
-
-                    sstartdate = matchSummary.getString("localStartTime");
-                    st1url = hometeam.getString("logoUrl");
-                    st2url = awayTeam.getString("logoUrl");
+                }catch (Exception e){
+                    status = getIntent().getExtras().getString("status");
+                    st1Name =getIntent().getExtras().getString("t1nme");
+                    st2Name = getIntent().getExtras().getString("t2nme");
+                    matchsumm = getIntent().getExtras().getString("matchSumm");
+                    sstartdate = getIntent().getExtras().getString("startTime");
+                    st1url=getIntent().getExtras().getString("t1logo");
+                    st2url=getIntent().getExtras().getString("t2logo");
                 }
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+                    update();
             }
-            return totalSize;
-        }
 
-        protected void onProgressUpdate(Integer... progress) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
+            }
+        });
     }
-
-
 }
-
-//todo upcomig->t1(gone)->t2(gone) start timer lyout(visibl) match start tme ->local star time

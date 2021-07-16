@@ -90,6 +90,11 @@ public class PointsTableFrag extends Fragment {
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
         new Load().execute(HOST + "getStanding?id=" + sid);
+        loadPointTable(sid);
+    }
+
+    private void loadPointTable(String sid) {
+
     }
 
     private void update() {

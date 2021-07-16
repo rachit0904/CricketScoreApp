@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +16,14 @@ import com.cricketexchange.project.Adapter.Recyclerview.SquadParentAdapter;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,11 +43,11 @@ public class SquadFrag extends Fragment {
     String sid = "";
     String HOST;
     ProgressBar progressBar;
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_squad, container, false);
+        view = inflater.inflate(R.layout.fragment_squad, container, false);
         recyclerView = view.findViewById(R.id.squadRv);
         sid = requireActivity().getIntent().getStringExtra("sid");
         HOST = requireActivity().getIntent().getStringExtra("HOST");
@@ -51,7 +59,36 @@ public class SquadFrag extends Fragment {
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(HOST + "AllTeamsBySID?id=" + sid);
+        loadSeriesTeams(sid);
+    }
+
+    private void loadSeriesTeams(String sid) {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Teams");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for(int i=0;i<snapshot.child(sid).child("jsondata").child("seriesTeams").child("teams").getChildrenCount();i++) {
+                    String id = snapshot.child(sid).child("jsondata").child("seriesTeams").child("teams").child(String.valueOf(i)).child("id").getValue().toString();
+                    String shorName = snapshot.child(sid).child("jsondata").child("seriesTeams").child("teams").child(String.valueOf(i)).child("shortName").getValue().toString();
+                    String name = snapshot.child(sid).child("jsondata").child("seriesTeams").child("teams").child(String.valueOf(i)).child("name").getValue().toString();
+                    String logoUrl = snapshot.child(sid).child("jsondata").child("seriesTeams").child("teams").child(String.valueOf(i)).child("logoUrl").getValue().toString();
+                    String color="#FFFFFF";
+                    SquadModel model = new SquadModel(
+                            id,
+                            shorName,
+                            name,
+                            logoUrl,
+                            color);
+                    list.add(model);
+                }
+                update();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -63,51 +100,5 @@ public class SquadFrag extends Fragment {
         adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
     }
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONArray data = object.getJSONArray("data");
-
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject obj = data.getJSONObject(i);
-
-
-                        try {
-                            SquadModel model = new SquadModel(obj.getString("id"), obj.getString("shortName"), obj.getString("name"), obj.getString("logoUrl"), obj.getString("teamColour"));
-                            list.add(model);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            return totalSize;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
-    }
-
 
 }

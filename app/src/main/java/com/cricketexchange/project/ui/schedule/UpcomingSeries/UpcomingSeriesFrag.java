@@ -22,7 +22,13 @@ import com.cricketexchange.project.Models.UpcomingSeriesModel;
 import com.cricketexchange.project.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +63,7 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
     UpcomingSeriesAdapter adapter;
     ProgressBar progressBar;
     String status;
+    DatabaseReference databaseReference;
     String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
 
     @Override
@@ -71,7 +78,6 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         filterdcList.clear();
         childList.clear();
         tours = view.findViewById(R.id.tours);
-        tours.setVisibility(View.GONE);
         all = view.findViewById(R.id.all);
         t20 = view.findViewById(R.id.t20);
         odi = view.findViewById(R.id.odi);
@@ -89,7 +95,6 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         league.setOnClickListener(this);
         international.setOnClickListener(this);
         women.setOnClickListener(this);
-
         load();
 
         return view;
@@ -169,25 +174,20 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         adapter.notifyDataSetChanged();
     }
 
-    private void update(@NonNull Boolean isAt) {
+    private void update() {
         filterdcList.addAll(cList);
-        tours.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UpcomingSeriesAdapter(getActivity(), list, filterdcList);
         adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
-        //  Log.e("childList", String.valueOf(childList.size()));
-
         setParentData();
-
-
     }
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(HOST + "AllSeriesUpComing");
+        loadLiveSeries();
     }
 
     @Override
@@ -385,79 +385,46 @@ public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener
         }
     }
 
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(@NonNull String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONArray data = object.getJSONArray("data");
-
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject obj = data.getJSONObject(i);
-
-
-                        try {
-                            SeriesModel SsriesModel = new SeriesModel();
-                            //fetch all data into childModelList but for date
-                            String id = obj.getString("id");
-                            status = obj.getString("status");
-                            String startDateTime = obj.getString("startDateTime");
-                            String date[] = startDateTime.split("/");
-                            String enddate = obj.getString("endDateTime"); //take start date here format [mm dd yyyy]
-                            String date2[] = enddate.split("/");
-                            //  dates.add(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
-                            //  childModal.setStartDate(arr[Integer.parseInt(date[0]) - 1] + " " + date[2]);
-                            //[start date to end date]
-                            String sD = (date[1] + " " + arr[Integer.parseInt(date[0]) - 1]), eD = (date2[1] + " " + arr[Integer.parseInt(date2[0]) - 1]);
-                            SsriesModel.setDuration(sD + "  to  " + eD);
-                            String type = obj.getString("type");
-                            SsriesModel.setType(type);
-                            String name = obj.getString("name");
-//                            SsriesModel.setStatus(status);
-                            SsriesModel.setSid(id);
-                            //       Log.e("SERIES TYPE",SsriesModel.getType());
-                            SsriesModel.setSeriesName(name);
-
-//                            SsriesModel.setType(type);
-                            Date d = null;
-                            d = sobj.parse(date[0] + "-" + date[2]);
-                            SsriesModel.setStartDate(sobj.format(d));
-                            dates.add(d);
-                            cList.add(SsriesModel);
-                            //       Log.e("UPNAME", name);
-                            //      Log.e("UPDuration", sobj.format(d));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
+    private void loadLiveSeries() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Series");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                int j = (int) snapshot.child("1").child("jsondata").child("seriesList").child("series").getChildrenCount() - 1;
+                for (int i = 0; i <= j; i++) {
+                    SeriesModel SsriesModel = new SeriesModel();
+                    //fetch all data into childModelList but for date
+                    String id = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("id").getValue().toString();
+                    String name = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("name").getValue().toString();
+                    String status = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("status").getValue().toString();
+                    String startDateTime = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("startDateTime").getValue().toString();
+                    String date[] = startDateTime.split("/");
+                    String enddate = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("endDateTime").getValue().toString();
+                    String date2[] = enddate.split("/");
+                    String sD = (date[1] + " " + arr[Integer.parseInt(date[0]) - 1]), eD = (date2[1] + " " + arr[Integer.parseInt(date2[0]) - 1]);
+                    SsriesModel.setDuration(sD + "  to  " + eD);
+                    SsriesModel.setSid(id);
+                    SsriesModel.setSeriesName(name);
+                    Date d = null;
+                    try {
+                        d = sobj.parse(date[0] + "-" + date[2]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    SsriesModel.setStartDate(sobj.format(d));
+                    if(status.equalsIgnoreCase("UPCOMING") ) {
+                        dates.add(d);
+                        cList.add(SsriesModel);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                update();
             }
-            return totalSize;
-        }
 
-        protected void onProgressUpdate(Integer... progress) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        }
-
-        protected void onPostExecute(Long result) {
-            update(true);
-        }
+            }
+        });
     }
-
 
 }

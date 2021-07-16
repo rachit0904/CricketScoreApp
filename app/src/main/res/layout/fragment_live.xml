@@ -23,7 +23,6 @@
             android:layout_marginTop="20dp"
             android:translationZ="5dp"
             android:elevation="5dp"
-
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/darkCardBackground"
@@ -41,23 +40,23 @@
                     android:textSize="13sp"
                     android:gravity="center"
                     android:text="-"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/currentBatsmanScore"
                     android:layout_marginTop="5dp"
-                    android:text="N.A."
+                    android:text="Current Batsman"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
                 android:padding="15dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="7pt"
-                android:layout_gravity="center|center_vertical"
+                android:layout_gravity="end|center_vertical"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
@@ -67,19 +66,20 @@
                     android:textSize="13sp"
                     android:gravity="center"
                     android:text="-"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/currentBowlerScore"
                     android:layout_marginTop="5dp"
-                    android:text="N.A."
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
+                    android:text="Current Bowler"
                     android:gravity="center"
-                    android:layout_width="75dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
                 android:padding="15dp"
                 android:layout_marginEnd="5dp"
                 android:layout_gravity="end|center_vertical"
@@ -165,29 +165,9 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:id="@+id/hideData"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/rateCard"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:elevation="5dp"
-            android:orientation="horizontal">
-            <TextView
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="Match Completed !"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/overScore"
             android:gravity="center"
-            android:layout_below="@id/hideData"
+            android:layout_below="@id/rateCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -658,10 +638,10 @@
 
                 <TextView
                     android:id="@+id/currentTeamName"
-                    android:layout_width="190dp"
-                    android:maxLines="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:maxLines="1"
                     android:text="-"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

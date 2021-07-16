@@ -3,9 +3,11 @@ package com.cricketexchange.project.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.admin.SystemUpdateInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -31,24 +33,36 @@ public class SplashScreen extends AppCompatActivity {
     LottieAnimationView animationView;
     DatabaseReference mDatabase;
     Intent intent;
-
+    SharedPreferences sharedPreferences,sharedPreferences2;
+    SharedPreferences.Editor myEdit;
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        sharedPreferences = getSharedPreferences("prefixData",MODE_PRIVATE);
+        sharedPreferences2 = getSharedPreferences("prefixData",MODE_APPEND);
+        myEdit = sharedPreferences.edit();
         animationView = findViewById(R.id.loadingAnim);
-
         intent = new Intent(this, MainActivity.class);
-
         mDatabase = FirebaseDatabase.getInstance().getReference("Hosts");
         mDatabase.child("HOST").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(SplashScreen.this, "Something Wents Wrong", Toast.LENGTH_SHORT).show();
+                    intent.putExtra("HOST", Constants.HOST + sharedPreferences2.getString("hostIP","") + HOSTSUFFIX);
+//                    Toast.makeText(SplashScreen.this, "Something Wents Wrong", Toast.LENGTH_SHORT).show();
                 } else {
-                    intent.putExtra("HOST", Constants.HOST + (task.getResult()).getValue() + HOSTSUFFIX);
-                    Log.e("HOST", String.valueOf(task.getResult().getValue()));
+                    myEdit.putString("hostIp", (task.getResult()).getValue().toString());
+                    myEdit.commit();
+                    if(sharedPreferences2.getString("hostIP","").isEmpty() ||
+                            !sharedPreferences2.getString("hostIP","").equalsIgnoreCase((task.getResult()).getValue().toString())) {
+                        myEdit.putString("hostIp", (task.getResult()).getValue().toString());
+                        myEdit.commit();
+                        intent.putExtra("HOST", Constants.HOST + sharedPreferences2.getString("hostIP","") + HOSTSUFFIX);
+                    }else{
+                        intent.putExtra("HOST", Constants.HOST + sharedPreferences2.getString("hostIP","") + HOSTSUFFIX);
+                    }
                 }
             }
         });

@@ -188,7 +188,13 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             Intent intent = new Intent(context, MatchDetails.class);
             String match = childModelList.get(getAdapterPosition()).getTeam1() + " vs " + childModelList.get(getAdapterPosition()).getTeam2();
             intent.putExtra("match", match);
+            intent.putExtra("matchSumm", childModelList.get(getAdapterPosition()).getMatchSummery());
             intent.putExtra("status", childModelList.get(getAdapterPosition()).getStatus());
+            intent.putExtra("startTime", childModelList.get(getAdapterPosition()).getStartTime());
+            intent.putExtra("t1logo", childModelList.get(getAdapterPosition()).getTeam1Url());
+            intent.putExtra("t2logo", childModelList.get(getAdapterPosition()).getTeam2Url());
+            intent.putExtra("t1nme", childModelList.get(getAdapterPosition()).getTeam1());
+            intent.putExtra("t2nme", childModelList.get(getAdapterPosition()).getTeam2());
             intent.putExtra("sid", childModelList.get(getAdapterPosition()).getsId());
             intent.putExtra("mid", childModelList.get(getAdapterPosition()).getmId());
             intent.putExtra("HOST", HOST);

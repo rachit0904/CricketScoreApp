@@ -2,10 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:scrollbars="vertical"
     android:background="@color/black_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:overScrollMode="never"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.series.seriesFrag">
 
@@ -29,12 +30,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="18pt"
-                android:text="All Series"
+                android:layout_gravity="center"
+                android:text="Live Series"
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 android:textStyle="bold" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -65,7 +66,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="140dp"
         android:paddingTop="13dp"
         android:paddingBottom="13dp"
         android:textAllCaps="false"

@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +112,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
             String testhtml = "<html><head><style>body{background:#FF000000;color:white}</style></head><body>" + description + "</body></html>";
             des.setBackgroundColor(000);
             des.loadDataWithBaseURL(null, testhtml, "text/html", null, null);
-            Log.e("Testhtml", testhtml);
             progressBar.setVisibility(View.GONE);
             load();
 
@@ -130,8 +136,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            if (mInterstitialAd.isLoaded()) {
+            Boolean isShown=false;
+            if (mInterstitialAd.isLoaded() && !isShown ) {
                 mInterstitialAd.show();
+                isShown=true;
             } else {
                 Log.d("TAG", " Interstitial not loaded");
             }
@@ -148,6 +156,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
 
     public void update() {
+        adapter.setData(newslist);
         adapter.MixData();
         progressBar2.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
@@ -156,8 +165,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public void load() {
         progressBar2.setVisibility(View.VISIBLE);
-        String url = HOST + "news";
-        new LoadData().execute(url);
+        loadNewsDetail();
         if (isupdated) {
             update();
         }
@@ -165,67 +173,32 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     }
 
-    private class LoadData extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            String url = null;
-            long a = 34534534;
-            int count = urls.length;
-            for (int j = 0; j < count; j++) {
-                url = urls[j];
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(url)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
+    private void loadNewsDetail() {
 
-
-                        try {
-                            Log.e("RESPONSE", "TRUE");
-                            JSONObject jsonObject = new JSONObject(response.body().string());
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < 10; i++) {
-
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String id = object.getString("_id");
-                                String Maintitle = object.getString("tit");
-                                String Secondarytitle = object.getString("des");
-                                String img = object.getString("img");
-                                String con = object.getString("con");
-                                Log.e("RESPONSE :id :", id);
-                                NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
-
-                                if (!extras.equals(id)) {
-                                    newslist.add(newsModel);
-                                }
-                            }
-                            adapter.setData(newslist);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("News");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for( DataSnapshot ds : snapshot.getChildren() ){
+                    String id =ds.child("_id").getValue().toString();
+                    String Maintitle = ds.child("tit").getValue().toString();
+                    String Secondarytitle = ds.child("des").getValue().toString();
+                    String img = ds.child("img").getValue().toString();
+                    String con = ds.child("con").getValue().toString();
+                    String author=ds.child("aut").getValue().toString();
+                    NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle,author , img, con);
+                    if(!id.equalsIgnoreCase(extras)) {
+                        newslist.add(newsModel);
                     }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-
-
-                if (isCancelled()) break;
+                update();
             }
-            return a;
-        }
 
-        protected void onProgressUpdate(Integer... progress) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
+            }
+        });
     }
-
 
 }

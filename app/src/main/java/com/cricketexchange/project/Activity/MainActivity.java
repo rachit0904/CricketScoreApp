@@ -54,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 .build());
         schdeule schdeule = new schdeule();
         //demo notify test
-        String notify = String.valueOf(getSharedPreferences("prefs", 0).getBoolean("notify user", false));
-        if (notify == "true") {
-            schdeule.upcomingMatchesNotification(getBaseContext(), "CSK Vs MI", "Hey ! hold on to your seat and get your popcorn bucket ready the game starts in 30 mins");
-        }
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -99,8 +95,10 @@ public class MainActivity extends AppCompatActivity {
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            if (mInterstitialAd.isLoaded()) {
+            Boolean isShown=false;
+            if (mInterstitialAd.isLoaded() && !isShown ) {
                 mInterstitialAd.show();
+                isShown=true;
             } else {
                 Log.d("TAG", " Interstitial not loaded");
             }

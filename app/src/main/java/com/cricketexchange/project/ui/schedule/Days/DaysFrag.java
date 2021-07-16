@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,13 @@ import com.cricketexchange.project.Models.MatchesModel;
 import com.cricketexchange.project.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +55,8 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
     List<MatchesChildModel> childModelList = new ArrayList<>();
     List<MatchesChildModel> filterdchildModelList = new ArrayList<>();
     ChipGroup tours;
+    MatchesAdapter adapter;
+    List<String> series =new ArrayList<>();
     View view;
     Chip all, test, t20, odi, international, league, women;
     Set<Date> dates = new TreeSet<>();
@@ -86,16 +95,147 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         league.setOnClickListener(this);
         international.setOnClickListener(this);
         women.setOnClickListener(this);
-
-
+        series.clear();
         load();
         return view;
     }
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        new Load().execute(HOST + "allMatches");
+        loadAllSeries();
+        loadSeriesMatches();
     }
+
+    private void loadAllSeries() {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Series");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for(int i=0;i<snapshot.child("1").child("jsondata").child("seriesIdList").getChildrenCount();i++){
+                    series.add(snapshot.child("1").child("jsondata").child("seriesIdList").child(String.valueOf(i)).getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void loadSeriesMatches() {
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Matches");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                childModelList.clear();
+                for(String sid : series){
+                    DataSnapshot dataSnapshot = snapshot.child(sid).child("jsondata").child("matchList").child("matches");
+                    int i;
+                    for ( i = 0; i < dataSnapshot.getChildrenCount(); i++) {
+                        MatchesChildModel matchesChildModel = new MatchesChildModel();
+                        matchesChildModel.setsId(sid);
+                        String mid = String.valueOf(dataSnapshot.child(String.valueOf(i)).child("id").getValue());
+                        matchesChildModel.setmId(mid);
+                        matchesChildModel.setPremiure(dataSnapshot.child(String.valueOf(i)).child("series").child("name").getValue().toString());//series name
+                        matchesChildModel.setStatus(dataSnapshot.child(String.valueOf(i)).child("status").getValue().toString());//currentMatchState
+                        matchesChildModel.setIsDraw(dataSnapshot.child(String.valueOf(i)).child("isMatchDrawn").getValue().toString());//status upcomming mandatory//currentMatchState
+                        matchesChildModel.setTeam1(dataSnapshot.child(String.valueOf(i)).child("homeTeam").child("shortName").getValue().toString());
+                        matchesChildModel.setTeam2(dataSnapshot.child(String.valueOf(i)).child("awayTeam").child("shortName").getValue().toString());
+                        matchesChildModel.setIsmultiday(dataSnapshot.child(String.valueOf(i)).child("isMultiDay").getValue().toString());
+                        matchesChildModel.setIswomen(dataSnapshot.child(String.valueOf(i)).child("isWomensMatch").getValue().toString());
+                        try {
+                            matchesChildModel.setType(dataSnapshot.child(String.valueOf(i)).child("cmsMatchType").getValue().toString());
+                        }catch (Exception e){
+                            matchesChildModel.setType("null");
+                        }
+                        String team1id = (dataSnapshot.child(String.valueOf(i)).child("homeTeam").child("id").getValue().toString());
+                        String team2id = (dataSnapshot.child(String.valueOf(i)).child("awayTeam").child("id").getValue().toString());
+//                        //in case of match
+                        {
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("MatchesHighlight");
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                    try {
+                                        String winnigteamid = snapshot.child(sid + "S" + mid).child("jsondata").child("matchDetail").child("matchSummary").child("winningTeamId").getValue().toString();
+                                        if (winnigteamid.equals(team1id)) {
+                                            matchesChildModel.setWinTeamName(matchesChildModel.getTeam1());
+                                        }
+                                        else if (winnigteamid.equals(team2id)) {
+                                            matchesChildModel.setWinTeamName(matchesChildModel.getTeam2());
+                                        }else{
+                                            matchesChildModel.setWinTeamName("N.A");
+                                        }
+                                    }catch (Exception e){
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                        try{
+                            String logourl1 = dataSnapshot.child(String.valueOf(i)).child("homeTeam").child("logoUrl").getValue().toString();
+                            String logourl2 = dataSnapshot.child(String.valueOf(i)).child("awayTeam").child("logoUrl").getValue().toString();
+                            if(!logourl1.isEmpty() || !logourl2.isEmpty()) {
+                                matchesChildModel.setTeam1Url(logourl1);
+                                matchesChildModel.setTeam2Url(logourl2);
+                            }else{
+                                matchesChildModel.setTeam1Url("");
+                                matchesChildModel.setTeam2Url("");
+                            }
+                        }catch (Exception e){
+                            matchesChildModel.setTeam1Url("");
+                            matchesChildModel.setTeam2Url("");
+                        }
+                        matchesChildModel.setMatchSummery(dataSnapshot.child(String.valueOf(i)).child("matchSummaryText").getValue().toString());
+                        try {
+                            matchesChildModel.setTeam1score(dataSnapshot.child(String.valueOf(i)).child("scores").child("homeScore").getValue().toString());
+                            matchesChildModel.setTeam1over(dataSnapshot.child(String.valueOf(i)).child("scores").child("homeOvers").getValue().toString());
+                            matchesChildModel.setTeam2score(dataSnapshot.child(String.valueOf(i)).child("scores").child("awayScore").getValue().toString());
+                            matchesChildModel.setTeam2over(dataSnapshot.child(String.valueOf(i)).child("scores").child("awayOvers").getValue().toString());
+                        }catch (Exception e){
+                            matchesChildModel.setTeam1score("-");
+                            matchesChildModel.setTeam1over("-");
+                            matchesChildModel.setTeam2score("-");
+                            matchesChildModel.setTeam2over("-");
+                        }
+                        String dateTime = dataSnapshot.child(String.valueOf(i)).child("startDateTime").getValue().toString();
+                        String[] arr = dateTime.split("T");//arr[0] gives start date
+                        String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
+                        //add data to parent and child list
+                        String date[] = arr[0].split("-");
+                        String sD = (date[2] + "-" + date[1] + "-" + date[0]);
+                        SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
+                        Date d = null;
+                        try {
+                            d = sobj.parse(sD);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        dates.add(d);
+                        matchesChildModel.setStartDate(sD);
+                        matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
+                         if(matchesChildModel.getStatus().equalsIgnoreCase("UPCOMING")){
+                            childModelList.add(matchesChildModel);
+                        }
+                    }
+                }
+                update();
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 
     @SuppressLint("NotifyDataSetChanged")
     private void filter(String type) {
@@ -169,22 +309,18 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
         }
     }
 
-
-    MatchesAdapter adapter;
-
-    private void update(Boolean isAt) {
-
-
-        tours.setVisibility(View.VISIBLE);
+    private void update() {
+//        tours.setVisibility(View.VISIBLE);
         recyclerView.hasFixedSize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager=new LinearLayoutManager(getContext());
+        manager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(manager);
         setParentData();
         adapter = new MatchesAdapter(getContext(), modelList, filterdchildModelList);
         adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
         filterdchildModelList.addAll(childModelList);
         progressBar.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -372,147 +508,5 @@ public class DaysFrag extends Fragment implements View.OnClickListener {
             }
         }
     }
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONArray data = object.getJSONArray("data");
-
-                    for (int i = data.length() - 1; i > 0; i--) {
-                        JSONObject obj = data.getJSONObject(i);
-                        Log.i("DAYSFRAGMENT", "FFFOOOORRR\n\n\n\n\n\n");
-
-
-                        try {
-
-                            MatchesChildModel matchesChildModel = new MatchesChildModel();
-                            //fetch all data into childModelList but for date
-
-                            try {
-                                matchesChildModel.setType(obj.getString("cmsMatchType"));
-                            } catch (JSONException a) {
-                                matchesChildModel.setType(("null"));
-                            }
-                            matchesChildModel.setIsmultiday(obj.getString("isMultiDay"));
-                            matchesChildModel.setIswomen(obj.getString("isWomensMatch"));
-                            matchesChildModel.setsId(obj.getJSONObject("series").getString("id"));
-                            matchesChildModel.setmId(obj.getString("id"));
-                            matchesChildModel.setName(obj.getString("name"));
-                            matchesChildModel.setPremiure(obj.getJSONObject("series").getString("name"));//series name
-                            matchesChildModel.setStatus(obj.getString("status"));//currentMatchState
-                            matchesChildModel.setIsDraw(obj.getString("isMatchDrawn"));//status upcomming mandatory//currentMatchState
-                            matchesChildModel.setTeam1(obj.getJSONObject("homeTeam").getString("shortName"));
-                            matchesChildModel.setTeam2(obj.getJSONObject("awayTeam").getString("shortName"));
-                            String winnigteamid;
-
-                            try {
-                                winnigteamid = obj.getString("winningTeamId");
-                            } catch (JSONException e) {
-                                winnigteamid = "";
-                            }
-                            if (winnigteamid != null) {
-                                String team1id = (obj.getJSONObject("homeTeam").getString("shortName"));
-                                // String team2id = (obj.getJSONObject("awayTeam").getString("shortName"));
-                                if (winnigteamid.equals(team1id)) {
-
-                                    matchesChildModel.setWinTeamName(obj.getJSONObject("homeTeam").getString("shortName"));
-                                } else {
-
-                                    matchesChildModel.setWinTeamName(obj.getJSONObject("awayTeam").getString("shortName"));
-                                }
-
-
-                            }
-                            try {
-                                String logourl1 = obj.getJSONObject("homeTeam").getString("logoUrl");
-                                String logourl2 = obj.getJSONObject("awayTeam").getString("logoUrl");
-                                matchesChildModel.setTeam1Url(logourl1);
-                                matchesChildModel.setTeam2Url(logourl2);
-
-                            } catch (JSONException je) {
-                                matchesChildModel.setTeam1Url("");
-                                matchesChildModel.setTeam2Url("");
-                            }
-
-                            matchesChildModel.setT1iIsBatting(obj.getJSONObject("homeTeam").getString("isBatting"));
-                            matchesChildModel.setT2IsBatting(obj.getJSONObject("awayTeam").getString("isBatting"));
-                            matchesChildModel.setMatchSummery(obj.getString("matchSummaryText"));
-                            try {
-                                JSONObject scores = obj.getJSONObject("scores");
-
-                                matchesChildModel.setTeam1score(scores.getString("homeScore").split("&")[0].trim());
-                                matchesChildModel.setTeam1over(scores.getString("homeOvers").split("&")[0].trim());
-
-                                matchesChildModel.setTeam2score(scores.getString("awayScore").split("&")[0].trim());
-                                matchesChildModel.setTeam2over(scores.getString("awayOvers").split("&")[0].trim());
-
-                            } catch (JSONException a) {
-
-                                matchesChildModel.setTeam1score("0");
-                                matchesChildModel.setTeam1over("0");
-
-                                matchesChildModel.setTeam2score("0");
-                                matchesChildModel.setTeam2over("0");
-
-                            }
-
-                            //matchesChildModel.setMatchSummery("Delhi capitals win by 7 wickets");
-                            //set date to match modellist and match childmodallist;
-                            //set date to match modellist and match childmodallist;
-                            String dateTime = obj.getString("startDateTime");
-                            String[] arr = dateTime.split("T");//arr[0] gives start date
-                            String[] arr2 = arr[1].split("Z");//arr2[0] gives start time
-                            //add data to parent and child list
-                            String date[] = arr[0].split("-");
-                            String sD = (date[2] + "-" + date[1] + "-" + date[0]);
-                            SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
-                            Date d = null;
-                            try {
-                                d = sobj.parse(sD);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            dates.add(d);
-
-                            matchesChildModel.setStartDate(sD);
-                            matchesChildModel.setStartTime(arr2[0].split(":")[0] + ":" + arr2[0].split(":")[1]);
-
-                            childModelList.add(matchesChildModel);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //Log.e("ASYNCTASK Child", String.valueOf(childList.size()));
-            //   Log.e("ASYNCTASK Dates", String.valueOf(dates.size()));
-
-            return totalSize;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update(true);
-        }
-    }
-
 
 }
