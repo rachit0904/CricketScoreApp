@@ -2,6 +2,7 @@ package com.cricketexchange.project.Ads;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 public class AdsManager
 {
     private static InterstitialAd interstitialAd;
-    private Context ctx;
+    private final Context ctx;
     public AdsManager(Context ctx)
     {
         this.ctx = ctx;
@@ -72,18 +73,19 @@ public class AdsManager
         });
         adview.loadAd(adRequest);
     }
-    public void createUnifiedAds(int unitid, AdUnifiedListening listening)
+    public void createUnifiedAds(String unitid, AdUnifiedListening listening)
     {
-        AdLoader.Builder builder = new AdLoader.Builder(ctx,ctx.getString(unitid));
+        AdLoader.Builder builder = new AdLoader.Builder(ctx,unitid);
         builder.forUnifiedNativeAd(listening);
         builder.withAdListener(listening);
         AdLoader adload= builder.build();
         adload.loadAd(new AdRequest.Builder().build());
     }
 
-    public void createUnifiedAds(int numads, int unitid, AdUnifiedListening listening)
+    public void createUnifiedAds(int numads, String unitid, AdUnifiedListening listening)
     {
-        AdLoader.Builder builder = new AdLoader.Builder(ctx,ctx.getString(unitid));
+
+        AdLoader.Builder builder = new AdLoader.Builder(ctx,unitid);
         builder.forUnifiedNativeAd(listening);
         builder.withAdListener(listening);
         AdLoader adload= builder.build();

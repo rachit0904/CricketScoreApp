@@ -1,7 +1,8 @@
 package com.cricketexchange.project.Models;
 
 public class MatchesChildModel {
-    String team1, team2, premiure, winTeamName, matchSummery, status, startTime, startDate, team1Url, Team2Url, team1score, team2score, team1over, team2over, isDraw, t1iIsBatting, t2IsBatting, mId, sId;
+    String team1, team2, premiure, winTeamName, matchSummery, status, startTime, startDate, team1Url, Team2Url,
+            team1score, team2score, team1over, team2over, isDraw, t1iIsBatting, t2IsBatting, mId, sId;
     String name;
 
     public String getName() {

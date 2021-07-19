@@ -27,17 +27,7 @@
             app:tabIndicator="@android:color/holo_green_dark"
             app:tabIndicatorFullWidth="false">
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/t1InningsTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="T1 Innings" />
 
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/t2InningsTab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="T2 Innings" />
         </com.google.android.material.tabs.TabLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/totScore"
@@ -157,6 +147,7 @@
             android:layout_height="wrap_content"/>
 
         <TableLayout
+            android:id="@+id/wktTble"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"

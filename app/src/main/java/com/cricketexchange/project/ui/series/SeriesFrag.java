@@ -2,6 +2,7 @@ package com.cricketexchange.project.ui.series;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,15 @@ import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.schedule.schdeule;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,26 +45,22 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
     RecyclerView seriesRv;
     Button seeAllBtn;
     SeriesNameAdapter adapter;
-    ArrayList<SeriesModel> datalist = new ArrayList<>();
+    final ArrayList<SeriesModel> datalist = new ArrayList<>();
     ProgressBar progressBar;
+    DatabaseReference databaseReference;
     String HOST = "";
-
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.series_fragment, container, false);
+        root= inflater.inflate(R.layout.series_fragment, container, false);
         seriesRv = root.findViewById(R.id.seriesRv);
         seeAllBtn = root.findViewById(R.id.allSeries);
         HOST = requireActivity().getIntent().getStringExtra("HOST");
         seeAllBtn.setOnClickListener(this);
         progressBar = root.findViewById(R.id.progressBar);
-
-        if (datalist.size() > 0) {
-        } else {
-            load();
-        }
-
-
+        datalist.clear();
+        load();
         return root;
     }
 
@@ -91,65 +95,38 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
 
 
     private void load() {
-        new Load().execute(HOST + "AllSeriesInProgress");
+        loadLiveSeries();
     }
 
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONArray data = object.getJSONArray("data");
-
-                    for (int i = 0; i < data.length(); i++) {
-                        JSONObject obj = data.getJSONObject(i);
-
-
-                        try {
-                            String id = obj.getString("id");
-                            String name = obj.getString("name");
-                            String statisticsProvider = obj.getString("statisticsProvider");
-                            String shieldImageUrl = obj.getString("shieldImageUrl");
-                            String status = obj.getString("status");
-                            String startDateTime = obj.getString("startDateTime");
-                            String endDateTime = obj.getString("endDateTime");
-                            SeriesModel model = new SeriesModel();
-
-                            model.setSeriesName(name);
-                            model.setSid(id);
-                            model.setStartDate(startDateTime);
-                            model.setStatus(status);
-
-                            datalist.add(model);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+    private void loadLiveSeries() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Series");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                int j = (int) snapshot.child("1").child("jsondata").child("seriesList").child("series").getChildrenCount() - 1;
+                for (int i = 0; i <= j; i++) {
+                    String id = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("id").getValue().toString();
+                    String name = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("name").getValue().toString();
+                    String status = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("status").getValue().toString();
+                    String startDateTime = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("startDateTime").getValue().toString();
+                    String endDateTime = snapshot.child("1").child("jsondata").child("seriesList").child("series").child(String.valueOf(i)).child("endDateTime").getValue().toString();
+                    SeriesModel model = new SeriesModel();
+                    model.setSeriesName(name);
+                    model.setSid(id);
+                    model.setStartDate(startDateTime);
+                    model.setStatus(status);
+                    if(status.equalsIgnoreCase("LIVE") || status.equalsIgnoreCase("INPROGRESS")) {
+                        datalist.add(model);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
+                update();
             }
-            return totalSize;
-        }
 
-        protected void onProgressUpdate(Integer... progress) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
+            }
+        });
     }
 
 }

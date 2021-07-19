@@ -1,100 +1,21 @@
 <resources>
-    <string name="app_name">CricketExchange</string>
+    <string name="sample_title">Title</string>
+    <string name="app_name">CricketScore</string>
     <string name="News">News</string>
     <string name="Series">Series</string>
     <string name="Home">Home</string>
     <string name="Schedule">Schedule</string>
     <string name="More">more</string>
+
     <string name="api_key">4S6Q3dyhOU5kT7iJHHUBUi93k</string>
     <string name="api_Secret_Key">YS5mJHMRJLhpnZT81QDZo1TiXUeMCEmyuUDrStCC3QqTNYhAQw</string>
     <string name="bearer_Token">AAAAAAAAAAAAAAAAAAAAAO%2BLPMRJLhpnZT81QDZo1TiXUeMCEmyuUDrStCC%3DWCdNwAwQAAzE2CHsyUqEUkrKSgVj9ncnH6HW4YRyphBNcMiDxL</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="admob_nativ_ads_id1">	ca-app-pub-3940256099942544/2247696110</string>
-    <string name="sample_title">Ishan Kishan &amp; Mumbai Indians: A saga that might see epilogue soon</string>
     <string name="sampleimageurl">https://www.learningcontainer.com/wp-content/uploads/2020/07/Sample-JPEG-Image-File-Download-scaled.jpg</string>
-    <string name="sample_description">Shardul Thakur has had an interesting trajectory in his one and a half game-long Test career. On his debut against West Indies back in 2018, he walked off after bowling just 10 deliveries to never return. After waiting for three long years to have his next game in whites, he capitalised on the opportunity, albeit interestingly. On his return, Shardul made incredible contributions in arguably India’s greatest Test match victory, rapidly putting him on the upper echelons of the country’s cricketing folklore.
+    <string name="admov_interstitial">ca-app-pub-3940256099942544/1033173712</string>
 
-In fact, if it were not for Rishabh Pant’s incredible final day exploits, it probably would have Thakur who would have gotten the man of the match trophy after bagging seven wickets and scoring 67 runs at the ‘Fortress Gabba’.
-
-
-After scalping three wickets in the first innings of the game, earlier in January, he walked out to bat in the series decider, when India were on their knees having lost all their main batsmen of an already depleted side.
-
-A tough first gig, one has to say for a debutant, who toured Down Under for the first time. However, rather than quivering at the sheer magnitude of the event, Shardul had other ideas. He stitched a valiant partnership with Washington Sundar to bail India out of trouble, and then bowled brilliantly in the company of Mohammed Siraj to make India dare to go for an unlikely win.
-
-All his heroics have not gone to waste as the selection committee has trusted him to do the job in England in the coming months as well. The fact that there was no first-class cricket this season due to the covid-19 pandemic might have played into Thakur’s hands as well.
-
-Heroics aside, Shardul at the moment is not a starter for the Indian Test team. Despite his performance in the final Test against Australia, he was sidelined in the next series against England after the squad returned to full strength. And, it is noteworthy that he had only found his way into the team when India ran out of options in the last game of the series in Australia.
-
-Shardul’s inclusion is on the expected lines however it has happened when neither Hardik Pandya nor Buvneshwar Kumar has found a place in the squads for a six-match long tour of England.
-
-Pandya has been ruled out of the longest format for some time owing to his back injury which does not let him bowl long spells while Bhuvneshwar Kumar has not been in the scheme of things since January 2018.
-
-One could owe Kumar’s absence to his injuries, but given it is a long series and India could have taken a longer squad in the covid-stricken era; it would be an educated guess that the management is not looking at him as a first-choice long format asset anymore.
-
-Looking at Bhuvneshwar or Hardik while picking Shardul?
-
-The answer to that question is very likely.
-
-Shardul’s inclusion and the exclusion of Bhuvneshwar and Hardik Pandya can’t be separated from one another in terms of the approach of the Indian team management and the selectors.
-
-Both of them have not played the Test format for a long time and also there are question marks over the fitness of both Bhuvneshwar and Hardik. At the same time, Shardul has impressed with his credential in limited opportunities with the bat.
-
-What Shardul brings to the table?
-
-Shardul Thakur has been one of the frontline bowlers for Mumbai in the Ranji Trophy side and has taken a lot of wickets mainly due to his abilities to swing the ball and surprising the batsmen with varieties such as skidding bouncers.
-
-He had troubled Australian opener Marcus Harris and skipper Tim Paine with astute variation in lengths and accounted for them on sharp bouncers. Also, he had scalped Paine with a classical outswinger dismissal inducing a drive of a fuller length ball to edge him to slip in the first innings and Cameron Green in a similar manner in the second innings of the Gabba Test.
-
-
-He was fluent with the bat and played sublime strokes against Cummins and Starc that had left all cricket pundits impressed. He was dismissive against off-spinner Nathan Lyon and backed his attacking game against the pace trio of Starc, Cummins and Hazlewood.
-
-
-Some, at that point in time, might even have said - ‘Shardulkar’ has arrived.
-
-As an overall package, Shardul’s credentials put him above Hardik Pandya in terms of bowling abilities while giving equal if not better promises than Bhuvneshwar’s batting form.
-
-How can Virat Kohli use Shardul in England?
-
-From the limited pieces of evidence, Shardul can come in handy in England where his ability to swing the ball will allow Virat Kohli to have another line of attack after taking off some of the loads from the pace trio of Jasprit Bumrah, Ishant Sharma and Mohammed Shami.
-
-If India will be playing on flatter surfaces, they will need an enforcer who can run-in with a big heart and look to swing the ball with the Duke cherry.
-
-It’s highly unlikely that India will be fielding four out-and-out pace bowlers including Mohammed Siraj howsoever suitable the pitches might be but Shardul can come in handy as the fourth pacer who can contribute heavily with the bat.
-
-Kohli will have a far more comfortable cushion than Hardik Pandya with Shardul in the team.
-
-Who will Shardul replace if Kohli picks him?
-
-Virat Kohli has a habit of pulling a rabbit out of his hat and the trend is not likely to end anytime soon. If India will be offered flatter surfaces but with good carry, Kohli can think of having Shardul as enforcement in the bowling department and giving up on R Ashwin’s off-spin.
-
-The move could look a big one from the outset but Kohli has not been wary of playing horses for courses and Shardul indeed can be a wily horse who can provide him 10-15 overs of pace bowling.
-
-He can swing the ball and can also use his bouncers to good effect to never let Kohli miss what Hardik Pandya could have offered.
-
-Shardul, 29, has a weight of 63 first-class matches behind him where he has taken more than 200 wickets at an impressive set of numbers such as economy, strike rate and average. If he had thought of making an impact in the Indian team, this upcoming tour of England would be the perfect opportunity to stamp his authority with good showings, at least with the ball.
-
-Over a short period of time, Shardul has earned the reputation of being a man who gets the job done in limited-overs cricket albeit he goes for a lot of runs. Virat Kohli would need a lot more control in the longest format where batsmen will not come at him and gift their wickets. Kohli, too, from his side, will have to help him in purchasing wickets or make a clear roadmap of what the team needs from him.
-
-If India adopt an all-out approach in team selection on flat pitches, Shardul Thakur may very well walk out in the Indian cap. But, will Kohli take that call? Or, will Shardul stand up and make that opportunity count both for himself and the team?
-
-Whatever will be the outcome, it looks like a riveting prospect for an underdog cricketer from Palghar who has shown an immense appetite to fight hard for his success.</string>
     <string name="title_activity_news_details">NewsDetails</string>
-
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="title_activity_test">TestActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="report_a_problem">Report a problem</string>
     <string name="check_for_update">Check For Update</string>
     <string name="rate_us">Rate Us</string>
@@ -115,7 +36,6 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_notification">FullscreenActivity</string>
-    <string name="admob_banner">ca-app-pub-3940256099942544/6300978111</string>
     <string name="seriesname">Indian Premiere League 2021</string>
     <string name="matchDate">12 May, Wednesday</string>
     <string name="winTeamName">DC Won</string>
@@ -123,4 +43,6 @@ Whatever will be the outcome, it looks like a riveting prospect for an underdog 
     <string name="title_activity_main">MainActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -24,8 +24,8 @@ import java.util.List;
 
 public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapter.ViewHolder> {
 
-    Context context;
-    List<MatchesChildModel> childModelList;
+    final Context context;
+    final List<MatchesChildModel> childModelList;
 
     public MatchesChildAdapter(Context context, List<MatchesChildModel> childModelList) {
         this.context = context;
@@ -59,36 +59,76 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             case "INPROGRESS": {
             }
             case "LIVE": {
-                if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                    holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                String t1score=childModel.getTeam1score();
+                if(t1score.contains("&")){
+                    String[] s1 =t1score.split("&");
+                    t1score=s1[1];
                 }
-                if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                    holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                String t2score=childModel.getTeam2score();
+                if(t2score.contains("&")){
+                    String[] s2 =t2score.split("&");
+                    t2score=s2[1];
+                }
+                String t1over=childModel.getTeam1over();
+                if(t1over.contains("&")){
+                    String[] o1 =t1over.split("&");
+                    t1over=o1[1];
+                }
+                String t2over=childModel.getTeam2over();
+                if(t2over.contains("&")){
+                    String[] o2 =t2over.split("&");
+                    t2over=o2[1];
+                }
+                if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                    holder.t1score.setText(t1score + " (" + t1over + ")");
+                }
+                if (!t2score.equals("") && !t2over.equals("")) {
+                    holder.t2score.setText(t2score + " (" + t2over + ")");
                 }
                 holder.matchSummery.setText(childModel.getMatchSummery());
                 break;
             }
             case "COMPLETED": {
-                if (childModel.getIsDraw().contentEquals("false")) {
+                String t1score=childModel.getTeam1score();
+                if(t1score.contains("&")){
+                    String[] s1 =t1score.split("&");
+                    t1score=s1[1];
+                }
+                String t2score=childModel.getTeam2score();
+                if(t2score.contains("&")){
+                    String[] s2 =t2score.split("&");
+                    t2score=s2[1];
+                }
+                String t1over=childModel.getTeam1over();
+                if(t1over.contains("&")){
+                    String[] o1 =t1over.split("&");
+                    t1over=o1[1];
+                }
+                String t2over=childModel.getTeam2over();
+                if(t2over.contains("&")){
+                    String[] o2 =t2over.split("&");
+                    t2over=o2[1];
+                }
+                if (childModel.getIsDraw().contains("false")) {
                     holder.liveIcon.setVisibility(View.GONE);
                     holder.status.setTextColor(context.getColor(R.color.winDispColor));
                     holder.status.setText(childModel.getWinTeamName() + " Won");
-                    if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                        holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                    if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                        holder.t1score.setText(t1score + " (" + t1over + ")");
                     }
-                    if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                        holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                    if (!t2score.equals("") && !t2over.equals("")) {
+                        holder.t2score.setText(t2score + " (" + t2over + ")");
                     }
                     holder.matchSummery.setText(childModel.getMatchSummery());
                 } else {
                     holder.liveIcon.setVisibility(View.GONE);
                     holder.status.setTextColor(context.getColor(R.color.winTeamName));
                     holder.status.setText("Match Drawn");
-                    if (!childModel.getTeam1score().isEmpty() || !childModel.getTeam1over().isEmpty()) {
-                        holder.t1score.setText(childModel.getTeam1score() + " (" + childModel.getTeam1over() + ")");
+                    if (!t1score.isEmpty() || !t1over.isEmpty()) {
+                        holder.t1score.setText(t1score + " (" + t1over + ")");
                     }
-                    if (!childModel.getTeam2score().equals("") && !childModel.getTeam2over().equals("")) {
-                        holder.t2score.setText(childModel.getTeam2score() + " (" + childModel.getTeam2over() + ")");
+                    if (!t2score.equals("") && !t2over.equals("")) {
+                        holder.t2score.setText(t2score + " (" + t2over + ")");
                     }
                     holder.matchSummery.setText(childModel.getMatchSummery());
                 }
@@ -116,12 +156,20 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView team1, team2, status, matchSummery, startTime, league, t1score, t2score;
-        LinearLayout startTimeLayout;
-        RelativeLayout layout;
-        RelativeLayout matchCard;
-        ImageView team1Icon, team2Icon;
-        LottieAnimationView liveIcon;
+        final TextView team1;
+        final TextView team2;
+        final TextView status;
+        final TextView matchSummery;
+        final TextView startTime;
+        final TextView league;
+        final TextView t1score;
+        final TextView t2score;
+        final LinearLayout startTimeLayout;
+        final RelativeLayout layout;
+        final RelativeLayout matchCard;
+        final ImageView team1Icon;
+        final ImageView team2Icon;
+        final LottieAnimationView liveIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,7 +196,13 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
             Intent intent = new Intent(context, MatchDetails.class);
             String match = childModelList.get(getAdapterPosition()).getTeam1() + " vs " + childModelList.get(getAdapterPosition()).getTeam2();
             intent.putExtra("match", match);
+            intent.putExtra("matchSumm", childModelList.get(getAdapterPosition()).getMatchSummery());
             intent.putExtra("status", childModelList.get(getAdapterPosition()).getStatus());
+            intent.putExtra("startTime", childModelList.get(getAdapterPosition()).getStartTime());
+            intent.putExtra("t1logo", childModelList.get(getAdapterPosition()).getTeam1Url());
+            intent.putExtra("t2logo", childModelList.get(getAdapterPosition()).getTeam2Url());
+            intent.putExtra("t1nme", childModelList.get(getAdapterPosition()).getTeam1());
+            intent.putExtra("t2nme", childModelList.get(getAdapterPosition()).getTeam2());
             intent.putExtra("sid", childModelList.get(getAdapterPosition()).getsId());
             intent.putExtra("mid", childModelList.get(getAdapterPosition()).getmId());
             intent.putExtra("HOST", HOST);

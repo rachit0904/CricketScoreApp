@@ -40,27 +40,31 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
-            android:elevation="@dimen/cardview_compat_inset_shadow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:background="#191919"
-            app:tabMode="auto"
+            android:elevation="@dimen/cardview_compat_inset_shadow"
             app:tabIndicatorColor="@android:color/holo_green_light"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
+            app:tabMode="auto"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
             app:tabTextColor="@android:color/white">
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Matches" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Squad" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,10 +74,17 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
-        android:overScrollMode="never"
-        android:layout_below="@id/appBarLayout"
+        android:layout_marginBottom="68sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <RelativeLayout
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+      />
 </RelativeLayout>

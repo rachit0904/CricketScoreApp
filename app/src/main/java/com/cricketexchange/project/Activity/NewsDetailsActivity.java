@@ -1,5 +1,6 @@
 package com.cricketexchange.project.Activity;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +8,11 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +21,32 @@ import com.cricketexchange.project.Adapter.Recyclerview.NewsNormalAdapter;
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -35,14 +56,18 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     private String HOST = "";
     private ImageView close;
+    public static final int NUMBER_OF_ADS = 5;
+    public static final int ADS_PER_POST = 4;
+    private AdLoader adLoader;
+    private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     RecyclerView mRecyclerView;
-    ArrayList<NewsModel> newslist = new ArrayList<>();
+    final ArrayList<Object> newslist = new ArrayList<>();
     NewsNormalAdapter adapter;
     TextView t_title;
     ImageView i_poster;
     ProgressBar progressBar, progressBar2;
     String id = null;
-    boolean isupdated = false;
+    final boolean isupdated = false;
     String title, imageposter, description;
     WebView des;
     String extras;
@@ -70,10 +95,11 @@ public class NewsDetailsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Specify an adapter.
-        adapter = new NewsNormalAdapter(this, newslist);
+        adapter = new NewsNormalAdapter(this);
         adapter.setHOST(HOST);
         mRecyclerView.setAdapter(adapter);
-
+        MobileAds.initialize(this, initializationStatus -> {
+        });
 
         extras = getIntent().getStringExtra("id");
         if (extras == null) {
@@ -89,27 +115,70 @@ public class NewsDetailsActivity extends AppCompatActivity {
             String testhtml = "<html><head><style>body{background:#FF000000;color:white}</style></head><body>" + description + "</body></html>";
             des.setBackgroundColor(000);
             des.loadDataWithBaseURL(null, testhtml, "text/html", null, null);
-            Log.e("Testhtml", testhtml);
             progressBar.setVisibility(View.GONE);
             load();
+
+
+            MobileAds.initialize(this, initializationStatus -> {
+            });
+
+            SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+            String s1 = sharedPreferences.getString("ban1", "ca-app-pub-3940256099942544/6300978111");
+
+           RelativeLayout mAdView = findViewById(R.id.adView);
+            mAdView.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+            AdView mAdview = new AdView(this);
+
+            mAdview.setAdSize(AdSize.BANNER);
+            mAdview.setAdUnitId(s1);
+            mAdView.addView(mAdview);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdview.loadAd(adRequest);
+            loadinterstitialads();
         }
 
 
     }
 
+    InterstitialAd mInterstitialAd;
+
+    private void loadinterstitialads() {
+        Random rand = new Random();
+        prepareAd();
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+
+            } else {
+                prepareAd();
+            }
+
+        }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
+    }
+
+    public void prepareAd() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String i1 = sharedPreferences.getString("in2", "ca-app-pub-3940256099942544%2F1033173712");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(i1);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
 
     public void update() {
+        adapter.setData(newslist);
+        adapter.MixData();
         progressBar2.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
-
-
     }
 
 
     public void load() {
         progressBar2.setVisibility(View.VISIBLE);
-        String url = HOST + "news";
-        new LoadData().execute(url);
+        loadNewsDetail();
         if (isupdated) {
             update();
         }
@@ -117,66 +186,32 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     }
 
-    private class LoadData extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            String url = null;
-            long a = 34534534;
-            int count = urls.length;
-            for (int j = 0; j < count; j++) {
-                url = urls[j];
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(url)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
+    private void loadNewsDetail() {
 
-
-                        try {
-                            Log.e("RESPONSE", "TRUE");
-                            JSONObject jsonObject = new JSONObject(response.body().string());
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < 6; i++) {
-
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String id = object.getString("_id");
-                                String Maintitle = object.getString("tit");
-                                String Secondarytitle = object.getString("des");
-                                String img = object.getString("img");
-                                String con = object.getString("con");
-                                Log.e("RESPONSE :id :", id);
-                                NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
-
-                                if (!extras.equals(id)) {
-                                    newslist.add(newsModel);
-                                }
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("News");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String id = ds.child("_id").getValue().toString();
+                    String Maintitle = ds.child("tit").getValue().toString();
+                    String Secondarytitle = ds.child("des").getValue().toString();
+                    String img = ds.child("img").getValue().toString();
+                    String con = ds.child("con").getValue().toString();
+                    String author = ds.child("aut").getValue().toString();
+                    NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, author, img, con);
+                    if (!id.equalsIgnoreCase(extras)) {
+                        newslist.add(newsModel);
                     }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-
-
-                if (isCancelled()) break;
+                update();
             }
-            return a;
-        }
 
-        protected void onProgressUpdate(Integer... progress) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
+            }
+        });
     }
-
 
 }

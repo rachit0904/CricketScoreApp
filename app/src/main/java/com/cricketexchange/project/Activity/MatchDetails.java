@@ -1,7 +1,9 @@
 package com.cricketexchange.project.Activity;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,19 +11,38 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Pager.MatchDetailPager;
 import com.cricketexchange.project.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,6 +58,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     String sid;
     String mid;
     String HOST;
+    private RelativeLayout mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +94,60 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
             notifyLayout.setVisibility(View.GONE);
             pager.setVisibility(View.VISIBLE);
         }
+
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String s1 = sharedPreferences.getString("ban1", "ca-app-pub-3940256099942544/6300978111");
+
+        mAdView = findViewById(R.id.adView);
+        mAdView.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        AdView mAdview = new AdView(this);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) mAdView.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        mAdview.setLayoutParams(layoutParams);
+        mAdview.setAdSize(AdSize.BANNER);
+        mAdview.setAdUnitId(s1);
+        mAdView.addView(mAdview);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdview.loadAd(adRequest);
+
+        loadinterstitialads();
+
+    }
+
+    InterstitialAd mInterstitialAd;
+
+    private void loadinterstitialads() {
+        Random rand = new Random();
+        prepareAd();
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
+
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                prepareAd();
+                Log.d("TAG", " Interstitial not loaded");
+            }
+
+        }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
+    }
+
+    public void prepareAd() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String i1 = sharedPreferences.getString("in2", "ca-app-pub-3940256099942544%2F1033173712");
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(i1);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
 
@@ -115,82 +191,63 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         t1Name.setText(st1Name);
         t2Name.setText(st2Name);
         if (!status.equalsIgnoreCase("UPCOMING")) {
-            t1Score.setText(split(st1Score));
-            t2Score.setText(split(st2Score));
-            t1Overs.setText(split(st1Overs));
-            t2Overs.setText(split(st2Overs));
+            t1Score.setText((st1Score));
+            t2Score.setText((st2Score));
+            t1Overs.setText((st1Overs));
+            t2Overs.setText((st2Overs));
         }
         cms.setText(matchsumm);
         startdate.setText(sstartdate);
     }
 
-    private String split(String str) {
-        if (str.contains("&")) {
-            String arr[] = str.split("&");
-            return arr[0];
-        } else
-            return str;
-    }
-
-
     private void load() {
-        if (!sid.isEmpty() || !mid.isEmpty()) {
-            new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
-        }
-    }
-
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONObject data = object.getJSONObject("data");
-                    //  JSONObject meta = data.getJSONObject("meta");
-                    //  String CRR = meta.getString("currentRunRate");
-                    //  String RRR = meta.getString("requiredRunRate");
-                    JSONObject matchDetail = data.getJSONObject("matchDetail");
-                    JSONObject matchSummary = matchDetail.getJSONObject("matchSummary");
-                    JSONObject hometeam = matchSummary.getJSONObject("homeTeam");
-                    JSONObject awayTeam = matchSummary.getJSONObject("awayTeam");
-                    status = matchSummary.getString("status");
-
-                    st1Name = hometeam.getString("shortName");
-                    st2Name = awayTeam.getString("shortName");
-                    if (!status.equalsIgnoreCase("UPCOMING")) {
-                        JSONObject scores = matchSummary.getJSONObject("scores");
-                        st1Score = scores.getString("homeScore");
-                        st1Overs = scores.getString("homeOvers");
-                        st2Score = scores.getString("awayScore");
-                        st2Overs = scores.getString("awayOvers");
-                    }
-                    matchsumm = matchSummary.getString("matchSummaryText");
-                    sstartdate = matchSummary.getString("localStartTime");
-                    st1url = hometeam.getString("logoUrl");
-                    st2url = awayTeam.getString("logoUrl");
+                if (!sid.isEmpty() || !mid.isEmpty()) {
+                    loadScores(sid,mid);
+//                    new Load().execute(HOST + "getMatchesHighlight?sid=" + Integer.parseInt(sid) + "&mid=" + Integer.parseInt(mid));
                 }
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-            return totalSize;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
     }
 
+    private void loadScores(String sid, String mid) {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("MatchesHighlight");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                DataSnapshot ds = snapshot.child(sid + "S" + mid).child("jsondata").child("matchDetail").child("matchSummary");
+                try {
+                    st1url = ds.child("homeTeam").child("logoUrl").getValue().toString();
+                    st2url = ds.child("awayTeam").child("logoUrl").getValue().toString();
+                status = ds.child("status").getValue().toString();
+                st1Name = ds.child("homeTeam").child("shortName").getValue().toString();
+                st2Name = ds.child("awayTeam").child("shortName").getValue().toString();
+                matchsumm = ds.child("matchSummaryText").getValue().toString();
+                sstartdate = ds.child("localStartDate").getValue().toString();
+                    if (!status.equalsIgnoreCase("UPCOMING")) {
+                        st1Score = ds.child("scores").child("homeScore").getValue().toString();
+                        st1Overs = ds.child("scores").child("homeOvers").getValue().toString();
+                        st2Score = ds.child("scores").child("awayScore").getValue().toString();
+                        st2Overs = ds.child("scores").child("awayOvers").getValue().toString();
+                    }else{
+                        st1Score="";
+                        st2Score="";
+                        st1Overs="";
+                        st2Overs="";
+                    }
+                }catch (Exception e){
+                    status = getIntent().getExtras().getString("status");
+                    st1Name =getIntent().getExtras().getString("t1nme");
+                    st2Name = getIntent().getExtras().getString("t2nme");
+                    matchsumm = getIntent().getExtras().getString("matchSumm");
+                    sstartdate = getIntent().getExtras().getString("startTime");
+                    st1url=getIntent().getExtras().getString("t1logo");
+                    st2url=getIntent().getExtras().getString("t2logo");
+                }
+                    update();
+            }
 
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
 }
-
-//todo upcomig->t1(gone)->t2(gone) start timer lyout(visibl) match start tme ->local star time

@@ -15,7 +15,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd;
 
 public class AdTemplateViewHolder extends RecyclerView.ViewHolder
 {
-    TemplateView templateView;
+    final TemplateView templateView;
     public AdTemplateViewHolder(@NonNull View itemView)
     {
         super(itemView);

@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.ViewHolder> {
 
-    Context context;
+    final Context context;
     public String HOST;
 
 
-    ArrayList<SeriesModel> seriesData;
+    final ArrayList<SeriesModel> seriesData;
 
     public SeriesNameAdapter(Context context, ArrayList<SeriesModel> seriesData) {
         this.context = context;
@@ -55,7 +55,7 @@ public class SeriesNameAdapter extends RecyclerView.Adapter<SeriesNameAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView textView;
+        public final TextView textView;
         public ImageView more;
 
         public ViewHolder(@NonNull View itemView) {

@@ -1,238 +1,96 @@
 package com.cricketexchange.project.ui.matchdetail.commentary;
 
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.cricketexchange.project.Adapter.Recyclerview.CommantaryAdapter;
-import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.CommentaryModal;
-import com.cricketexchange.project.Models.OverBallScoreModel;
 import com.cricketexchange.project.R;
-import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class Commentary extends Fragment {
-    TextView ovrs, runs, wkts;
-    Chip b1, b2, b3, b4, b5, b6;
     RecyclerView commentryRv;
-    List<CommentaryModal> commentaries = new ArrayList<>();
-    String mid, sid, inning;
+    final List<CommentaryModal> commentaries = new ArrayList<>();
+    String mid, sid;
     CommantaryAdapter adapter;
     String HOST;
     ProgressBar progressBar;
-    String oover, oruns, owikts;
-    ArrayList<OverBallScoreModel> overBallScoreModels = new ArrayList<>();
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_commentary, container, false);
-//        sid = getActivity().getIntent().getStringExtra("sid");
-//        mid = getActivity().getIntent().getStringExtra("mid");
+        view= inflater.inflate(R.layout.fragment_commentary, container, false);
         progressBar = view.findViewById(R.id.progressBar);
-        //2796S51038
-        ovrs = view.findViewById(R.id.over);
-        runs = view.findViewById(R.id.runs);
-        wkts = view.findViewById(R.id.wkts);
         commentryRv = view.findViewById(R.id.commentary);
-        b1 = view.findViewById(R.id.ball1);
-        b2 = view.findViewById(R.id.ball2);
-        b3 = view.findViewById(R.id.ball3);
-        b4 = view.findViewById(R.id.ball4);
-        b5 = view.findViewById(R.id.ball5);
         sid = getActivity().getIntent().getStringExtra("sid");
         mid = getActivity().getIntent().getStringExtra("mid");
         HOST = requireActivity().getIntent().getStringExtra("HOST");
-        b6 = view.findViewById(R.id.ball6);
         //SetOverBallScore();
         commentaries.clear();
         //SetOverOverview();
-        commentryRv.hasFixedSize();
-        commentryRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CommantaryAdapter(getContext(), commentaries);
-        commentryRv.setAdapter(adapter);
         load();
         return view;
     }
 
-    private void SetOverOverview() {
-        ovrs.setText(oover);
-        runs.setText(oruns);
-        wkts.setText(owikts);
-    }
-
-    private int getBallColor(String isWkt) {
-        return (isWkt.equalsIgnoreCase("true")) ? android.R.color.holo_red_dark : android.R.color.holo_green_dark;
-    }
-
-    private void SetOverBallScore(String ballss, String iswikt, String runss) {
-        int ball = Integer.parseInt(ballss); //get current ball
-        int color = getBallColor(iswikt); //check isWkt to get ball color
-        AtomicReference<String> runs = new AtomicReference<>(runss); //get runs
-        if (runs.get().equals("6") || runs.get().equals("4")) {
-            color = android.R.color.holo_blue_dark;
-        }
-        if ((iswikt).equalsIgnoreCase("true")) {
-            runs.set("w");
-        }
-        //     Toast.makeText(getContext(), ball+" "+color+" "+runs.get(), Toast.LENGTH_SHORT).show();
-        switch (ball) {
-            case 1: {
-                b1.setText(runs.get());
-                b1.setChipBackgroundColorResource(color);
-//                b2.setChipBackgroundColorResource(R.color.background);
-//                b3.setChipBackgroundColorResource(R.color.background);
-//                b4.setChipBackgroundColorResource(R.color.background);
-//                b5.setChipBackgroundColorResource(R.color.background);
-//                b6.setChipBackgroundColorResource(R.color.background);
-                break;
-            }
-            case 2: {
-                b2.setText(runs.get());
-                b2.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 3: {
-                b3.setText(runs.get());
-                b3.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 4: {
-                b4.setText(runs.get());
-                b4.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 5: {
-                b5.setText(runs.get());
-                b5.setChipBackgroundColorResource(color);
-                break;
-            }
-            case 6: {
-                b6.setText(runs.get());
-                b6.setChipBackgroundColorResource(color);
-                break;
-            }
-
-        }
-    }
-
-
-//    private List<CommentaryModal> getData() {
-//        List<CommentaryModal> list = new ArrayList<>();
-//        CommentaryModal modal = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal);
-//        CommentaryModal modal2 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal2);
-//        CommentaryModal modal3 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal3);
-//        CommentaryModal modal4 = new CommentaryModal("Legit OffBat !", "Saqib Mahmood to Adam Lyth. Length ball, defending, Played to short leg for no runs");
-//        list.add(modal4);
-//        return list;
-//    }
-
     private void load() {
+        progressBar.setVisibility(View.VISIBLE);
+        loadCommentary(sid,mid);
+    }
 
-        new LoadCommentary().execute(HOST + "getCommentary?sid=" + sid + "&mid=" + mid);
+    private void loadCommentary(String sid, String mid) {
+        try {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Commentary").child(sid + "S" + mid).child("jsondata")
+                                                    .child("commentary").child("innings").child("0")
+                                                    .child("overs").child("0").child("balls");
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    commentaries.clear();
+                    for(int i =Integer.parseInt(String.valueOf(snapshot.getChildrenCount()-1)); i>=0;i--) {
+                        CommentaryModal modal = new CommentaryModal(
+                                snapshot.child(String.valueOf(i)).child("comments").child("0").child("ballType").getValue().toString(),
+                                snapshot.child(String.valueOf(i)).child("comments").child("0").child("text").getValue().toString());
+                        commentaries.add(modal);
+                    }
+                    update();
+                }
 
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                    Snackbar.make(view, "Match data NA", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        }catch (Exception e){
+            Snackbar.make(view, "Match data NA", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     private void update() {
-        SetOverOverview();
-        for (int i = 0; i < overBallScoreModels.size(); i++) {
-            SetOverBallScore(overBallScoreModels.get(i).getBallnumber(), overBallScoreModels.get(i).getIswicket(), overBallScoreModels.get(i).getBallrun());
-        }
-
         progressBar.setVisibility(View.GONE);
+        commentryRv.hasFixedSize();
+        LinearLayoutManager manager=new LinearLayoutManager(getContext());
+        commentryRv.setLayoutManager(manager);
+        manager.setStackFromEnd(true);
+        adapter = new CommantaryAdapter(getContext(), commentaries);
+        commentryRv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
-
-    private class LoadCommentary extends AsyncTask<String, Integer, Long> {
-
-        @Override
-        protected Long doInBackground(String... strings) {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(strings[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONArray Innings = object.getJSONObject("data").getJSONObject("commentary").getJSONArray("innings");
-                    JSONObject obj = Innings.getJSONObject(0);
-                    String innigid = obj.getString("id");
-
-                    JSONObject lastover = obj.getJSONArray("overs").getJSONObject(0);
-                    JSONObject overSummary = lastover.getJSONObject("overSummary");
-                    oover = lastover.getString("number");
-//                    if(Integer.parseInt(oover) < Integer.parseInt(lastover.getString("number")))
-//                    {
-//                        Toast.makeText(getContext(), oover+" over changed ", Toast.LENGTH_SHORT).show();
-//                    }
-                    oruns = overSummary.getString("runsConcededinOver");
-                    owikts = overSummary.getString("wicketsTakeninOver");
-
-                    JSONArray balls = lastover.getJSONArray("balls");
-                    for (int j = 0; j < balls.length(); j++) {
-                        JSONObject j_ball = balls.getJSONObject(j);
-
-
-                        for (int i = 0; i < j_ball.getJSONArray("comments").length(); i++) {
-                            commentaries.add(new CommentaryModal(j_ball.getJSONArray("comments").getJSONObject(i).getString("ballType"), j_ball.getJSONArray("comments").getJSONObject(i).getString("text")));
-                            String s_runs = j_ball.getJSONArray("comments").getJSONObject(i).getString("runs");
-                            if (s_runs.equals("") || s_runs == null) {
-                                s_runs = "0";
-                            }
-                            Log.e("s_runs", s_runs);
-                            overBallScoreModels.add(new OverBallScoreModel(j_ball.getString("ballNumber"), s_runs, j_ball.getJSONArray("comments").getJSONObject(i).getString("isFallOfWicket")));
-
-
-                        }
-
-
-                    }
-
-
-                }
-            } catch (JSONException | IOException jsonException) {
-                jsonException.printStackTrace();
-            }
-            return (long) 513;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-
-        }
-
-    }
-
 
 }

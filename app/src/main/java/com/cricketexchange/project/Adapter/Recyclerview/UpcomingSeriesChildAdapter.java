@@ -22,7 +22,7 @@ import java.util.List;
 
 public class UpcomingSeriesChildAdapter extends RecyclerView.Adapter<UpcomingSeriesChildAdapter.ViewHolder> {
     List<SeriesModel> modelList = new ArrayList<>();
-    Context context;
+    final Context context;
 
     public UpcomingSeriesChildAdapter(List<SeriesModel> modelList, Context context) {
         this.modelList = modelList;
@@ -55,8 +55,9 @@ public class UpcomingSeriesChildAdapter extends RecyclerView.Adapter<UpcomingSer
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView seriesName, duration;
-        CardView cardView;
+        final TextView seriesName;
+        final TextView duration;
+        final CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

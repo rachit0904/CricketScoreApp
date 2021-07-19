@@ -19,14 +19,15 @@ import com.cricketexchange.project.Activity.TeamPlayersInfo;
 import com.cricketexchange.project.Models.SeriesModel;
 import com.cricketexchange.project.Models.SquadModel;
 import com.cricketexchange.project.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.ViewHolder> {
-    Context context;
-    List<SquadModel> squadModelList;
+    final Context context;
+    final List<SquadModel> squadModelList;
 
     public SquadParentAdapter(Context context, List<SquadModel> squadModelList) {
         this.context = context;
@@ -59,8 +60,8 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView squadLogo;
-        TextView SquadName;
+        final ImageView squadLogo;
+        final TextView SquadName;
         CoordinatorLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -82,12 +83,7 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
             intent.putExtra("tcl", squadModelList.get(getAdapterPosition()).getSquadColor());
             intent.putExtra("sname", squadModelList.get(getAdapterPosition()).getSquadFullname());
             intent.putExtra("HOST", HOST);
-
             context.startActivity(intent);
-
-            Log.e("ONCLICK", "\nTID " + squadModelList.get(getAdapterPosition()).getSquadID() + "\nTSN " + squadModelList.get(getAdapterPosition()).getSquadName() + "\nLOGO " + squadModelList.get(getAdapterPosition()).getSquadLogoUrl() + " \nCOLOR " + squadModelList.get(getAdapterPosition()).getSquadColor() + "\nseries" + squadModelList.get(getAdapterPosition()).getSquadFullname())
-            ;
-
         }
     }
 }

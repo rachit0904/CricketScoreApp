@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,13 @@ import com.cricketexchange.project.R;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +51,7 @@ public class newsFrag extends Fragment {
     private AdLoader adLoader;
 
     // List of MenuItems and native ads that populate the RecyclerView.
-    private List<Object> mRecyclerViewItems = new ArrayList<>();
+    private final List<Object> mRecyclerViewItems = new ArrayList<>();
 
     // List of native ads that have been successfully loaded.
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
@@ -76,83 +83,50 @@ public class newsFrag extends Fragment {
         mRecyclerView.setAdapter(adapter);
         MobileAds.initialize(getActivity(), initializationStatus -> {
         });
+        mRecyclerViewItems.clear();
 //        Picasso.setSingletonInstance(new Picasso.Builder(getActivity()).build());
         addMenuItemsFromJson();
-
-
         return view;
     }
 
 
     private void addMenuItemsFromJson() {
         progressBar.setVisibility(View.VISIBLE);
-        new LoadData().execute(HOST + "news");
+        loadNews();
+    }
+
+    private void loadNews() {
+
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("News");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for( DataSnapshot ds : snapshot.getChildren() ){
+                    String id =ds.child("_id").getValue().toString();
+                    String Maintitle = ds.child("tit").getValue().toString();
+                    String Secondarytitle = ds.child("des").getValue().toString();
+                    String img = ds.child("img").getValue().toString();
+                    String con = ds.child("con").getValue().toString();
+                    String author=ds.child("aut").getValue().toString();
+                    NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle,author , img, con);
+                    mRecyclerViewItems.add(newsModel);
+                }
+                update();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
 
     private void update() {
+        adapter.setData(mRecyclerViewItems);
         adapter.MixData();
         progressBar.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
     }
-
-    private class LoadData extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            String url = null;
-            long a = 34534534;
-            int count = urls.length;
-            for (int j = 0; j < count; j++) {
-                url = urls[j];
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url(url)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.body().string());
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-
-                                JSONObject object = jsonArray.getJSONObject(i);
-                                String id = object.getString("_id");
-                                String Maintitle = object.getString("tit");
-                                String Secondarytitle = object.getString("des");
-                                String img = object.getString("img");
-                                String con = object.getString("con");
-                                NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, "Few Hour Ago", img, con);
-                                mRecyclerViewItems.add(newsModel);
-
-                            }
-                            adapter.setData(mRecyclerViewItems);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                if (isCancelled()) break;
-            }
-            return a;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
-    }
-
 
 }

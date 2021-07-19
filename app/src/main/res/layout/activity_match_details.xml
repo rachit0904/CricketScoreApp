@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/black_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_overlay"
     tools:context=".Activity.MatchDetails">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -40,36 +40,42 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout4"
-            android:overScrollMode="never"
-            android:elevation="@dimen/cardview_compat_inset_shadow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:background="#191919"
-            app:tabMode="auto"
+            android:elevation="@dimen/cardview_compat_inset_shadow"
+            android:overScrollMode="never"
             app:tabIndicatorColor="@android:color/holo_green_light"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
+            app:tabMode="auto"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
             app:tabTextColor="@android:color/white">
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Commentary" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Info" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Live" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scores" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,216 +85,244 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/highlightCard"
-        app:cardCornerRadius="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/matchDetailAppBar"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:elevation="5dp"
         android:translationZ="5dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/matchDetailAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="10dp">
+
         <RelativeLayout
-            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@color/darkCardBackground"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:padding="10dp">
+
             <RelativeLayout
-                android:layout_alignParentStart="true"
                 android:id="@+id/r1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/lay1"
-                android:gravity="center"
-                android:layout_marginStart="10pt"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/t1icon"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/trophyicon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"/>
-            <TextView
-                android:id="@+id/t1Name"
-                android:layout_marginTop="10dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:text="-"
-                android:gravity="center"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/t1ScoreLayout"
-                android:visibility="visible"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/lay1"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/t1Score"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:text="-"
-                    android:maxLines="1"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/t1Overs"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:text="N.A"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            </RelativeLayout>
-            <LinearLayout
-                android:id="@+id/startTimerLayout"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:visibility="visible"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="35pt"
-                android:layout_marginEnd="20pt"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/white"
-                    android:text="Starts in"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/matchStartTime"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/winDispColor"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:text="-"
-                    android:maxLines="1"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/r2"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true">
+
                 <LinearLayout
-                    android:id="@+id/t2ScoreLayout"
-                    android:visibility="visible"
-                    android:gravity="center"
-                    android:layout_marginStart="35dp"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical"
+                    android:id="@+id/lay1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/t2Score"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10pt"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/t1icon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:src="@drawable/trophyicon" />
+
+                    <TextView
+                        android:id="@+id/t1Name"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="-"
-                        android:maxLines="1"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/t2Overs"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/t1ScoreLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/lay1"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/t1Score"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/t1Overs"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="N.A"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_toRightOf="@id/t2ScoreLayout"
-                    android:gravity="center"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="10pt"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/t2icon"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/trophyicon"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"/>
-                    <TextView
-                        android:id="@+id/t2Name"
-                        android:layout_marginTop="10dp"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:text="-"
-                        android:layout_gravity="center"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/startTimerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="35pt"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20pt"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Starts in"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/matchStartTime"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="-"
+                    android:textColor="@color/winDispColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/r2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <LinearLayout
+                    android:id="@+id/t2ScoreLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="35dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/t2Score"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/t2Overs"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="N.A"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10pt"
+                    android:layout_toRightOf="@id/t2ScoreLayout"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/t2icon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/trophyicon" />
+
+                    <TextView
+                        android:id="@+id/t2Name"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/cms"
-                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/r1"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="30dp"
                 android:gravity="center"
                 android:text="NA"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_below="@id/r1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:textSize="12sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/matchDetailPager"
-        android:background="@color/black_overlay"
-        android:overScrollMode="never"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/highlightCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/highlightCard"
+        android:layout_marginTop="10dp"
+        android:background="@color/black_overlay"
+        android:overScrollMode="never" />
 
     <RelativeLayout
         android:id="@+id/upcomingNotifyLayout"
-        android:background="@color/black_overlay"
-        android:elevation="18dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/highlightCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/highlightCard"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="65sp"
+        android:background="@color/black_overlay"
+        android:elevation="18dp">
+
         <TextView
-            android:textSize="16dp"
-            android:text="Match not Started yet!"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Match not Started yet!"
+            android:textSize="16dp" />
+
     </RelativeLayout>
+
+    <RelativeLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        />
+
 
 </RelativeLayout>

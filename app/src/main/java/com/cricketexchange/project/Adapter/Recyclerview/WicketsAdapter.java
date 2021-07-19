@@ -18,7 +18,7 @@ import java.util.List;
 
 public class WicketsAdapter extends RecyclerView.Adapter<WicketsAdapter.ViewHolder> {
     Context context;
-    List<WicketsFallModel> list;
+    final List<WicketsFallModel> list;
 
     public WicketsAdapter(Context context, List<WicketsFallModel> list) {
         this.context = context;
@@ -47,7 +47,9 @@ public class WicketsAdapter extends RecyclerView.Adapter<WicketsAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName,score,over;
+        final TextView playerName;
+        final TextView score;
+        final TextView over;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             playerName=itemView.findViewById(R.id.player);

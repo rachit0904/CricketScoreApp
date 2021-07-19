@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.ViewHolder> {
-    List<ScoreCardModel> scoreCardModelList;
+    final List<ScoreCardModel> scoreCardModelList;
     Context context;
 
     public ScoreCardAdapter(Context context, List<ScoreCardModel> scoreCardModelList) {
@@ -63,9 +63,16 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView teamLogo;
-        public TextView rowCount, teamName, p, w, l, nr, pts, nrr;
-        public TableRow row;
+        public final ImageView teamLogo;
+        public final TextView rowCount;
+        public final TextView teamName;
+        public final TextView p;
+        public final TextView w;
+        public final TextView l;
+        public final TextView nr;
+        public final TextView pts;
+        public final TextView nrr;
+        public final TableRow row;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

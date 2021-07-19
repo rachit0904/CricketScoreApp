@@ -18,7 +18,7 @@ import java.util.List;
 
 public class PartnershipsAdapter extends RecyclerView.Adapter<PartnershipsAdapter.ViewHolder> {
     Context context;
-    List<PartnershipsModal> partnershipsModalList;
+    final List<PartnershipsModal> partnershipsModalList;
 
     public PartnershipsAdapter(Context context, List<PartnershipsModal> partnershipsModalList) {
         this.context = context;
@@ -48,7 +48,10 @@ public class PartnershipsAdapter extends RecyclerView.Adapter<PartnershipsAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView p1Name,p2Name,p2Score,p1Score;
+        final TextView p1Name;
+        final TextView p2Name;
+        final TextView p2Score;
+        final TextView p1Score;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             p1Name=itemView.findViewById(R.id.p1);

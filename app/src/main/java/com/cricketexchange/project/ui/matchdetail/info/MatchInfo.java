@@ -1,9 +1,6 @@
 package com.cricketexchange.project.ui.matchdetail.info;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +9,20 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
-import com.cricketexchange.project.Activity.SeriesDetail;
-import com.cricketexchange.project.Activity.TeamPlayersInfo;
-import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class MatchInfo extends Fragment implements View.OnClickListener {
+public class MatchInfo extends Fragment  {
     TextView tossResult, seriesName, matchType, startDateTime, venue, pt1SName, pt1FName, pt2SName, pt2FName, primaryUmpire, thirdUmpire, refree;
     CardView seriesCard;
     ImageView t1Logo, t2Logo;
@@ -40,7 +32,6 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
     String HOST;
     String ATseriesName = "NA", ATmatchType = "NA", ATvenueName = "NA", ATumpires = "NA", ATtumpire = "NA", ATrefree = "NA", ATtossMessage = "NA", ATstartdate = "NA",
             t1name = "NA", t1Sname = "NA", t1logourl = "NA", t1bg = "NA", t1color = "NA", t2name = "NA", t2Sname = "NA", t2logourl = "NA", t2bg = "NA", t2color = "NA", t1id = "NA", t2id = "NA";
-//    String sid = getActivity().getIntent().getStringExtra("sid"), mid =getActivity().getIntent().getStringExtra("mid");
 
     String sid, mid;
 
@@ -55,21 +46,55 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
         mid = requireActivity().getIntent().getStringExtra("mid");
         HOST = requireActivity().getIntent().getStringExtra("HOST");
         load();
-
-        seriesCard.setOnClickListener(this);
-        t1Layout.setOnClickListener(this);
-        t2Layout.setOnClickListener(this);
         return view;
-    }
-
-    private void setData() {
     }
 
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
-        Log.e("UTL", HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
-        new Load().execute(HOST + "getMatchesHighlight?sid=" + sid + "&mid=" + mid + "");
+        loadMatchInfo(sid,mid);
+    }
 
+    private void loadMatchInfo(String sid, String mid) {
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("MatchesHighlight").child(sid+"S"+mid).child("jsondata").child("matchDetail");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                String tossMsg;
+                try {
+                    tossMsg = snapshot.child("tossMessage").getValue().toString();
+                    String sName = snapshot.child("matchSummary").child("series").child("name").getValue().toString();
+                    String seriesType = snapshot.child("matchSummary").child("cmsMatchAssociatedType").getValue().toString();
+                    String startTime = snapshot.child("matchSummary").child("localStartDate").getValue().toString() + "," + snapshot.child("matchSummary").child("localStartTime").getValue().toString();
+                    ;
+                    ;
+                    String venue = snapshot.child("matchSummary").child("venue").child("name").getValue().toString();
+                    ;
+                    ;
+                    String t1FullName = snapshot.child("matchSummary").child("homeTeam").child("name").getValue().toString(),
+                            t1ShortName = snapshot.child("matchSummary").child("homeTeam").child("shortName").getValue().toString(),
+                            t1logoUrl = snapshot.child("matchSummary").child("homeTeam").child("logoUrl").getValue().toString();
+                    String t2FullName = snapshot.child("matchSummary").child("awayTeam").child("name").getValue().toString(),
+                            t2ShortName = snapshot.child("matchSummary").child("awayTeam").child("shortName").getValue().toString(),
+                            t2logoUrl = snapshot.child("matchSummary").child("awayTeam").child("logoUrl").getValue().toString();
+
+                    String u1 = snapshot.child("umpires").child("firstUmpire").child("name").getValue().toString(),
+                            u2 = snapshot.child("umpires").child("secondUmpire").child("name").getValue().toString(),
+                            u3 = snapshot.child("umpires").child("thirdUmpire").child("name").getValue().toString(),
+                            ref = snapshot.child("umpires").child("referee").child("name").getValue().toString();
+                    ATseriesName = sName;ATmatchType = seriesType;ATvenueName = venue;ATumpires = u1 + "," + u2;ATtumpire = u3;ATrefree = ref;ATtossMessage = tossMsg;
+                    ATstartdate = startTime;t1name = t1FullName;t1Sname = t1ShortName;t1logourl = t1logoUrl;t1bg = "NA";t1color = "NA";t2name = t2FullName;
+                    t2Sname = t2ShortName;t2logourl = t2logoUrl;t2bg = "NA";t2color = "NA";t1id = "NA";t2id = "NA";
+                }catch (Exception e){
+
+                }
+                update();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void initialize() {
@@ -150,91 +175,5 @@ public class MatchInfo extends Fragment implements View.OnClickListener {
 
 
     }
-
-    @Override
-    public void onClick(View v) {
-        if (v == seriesCard) {
-            //pass intent to series Detail page
-            Intent intent = new Intent(getContext(), SeriesDetail.class);
-            intent.putExtra("sid", sid);
-            intent.putExtra("sname", seriesName.getText());
-            startActivity(intent);
-        }
-        if (v == t1Layout) {
-//            pass intent to team info page
-//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-//            intent.putExtra("tid", t1id);
-//            startActivity(intent);
-        }
-        if (v == t2Layout) {
-//            pass intent to team info page
-//            Intent intent = new Intent(getContext(), TeamPlayersInfo.class);
-//            intent.putExtra("tid", t2id);
-//            startActivity(intent);
-        }
-    }
-
-
-    private class Load extends AsyncTask<String, Integer, Long> {
-        protected Long doInBackground(String... urls) {
-            long totalSize = 0;
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(urls[0])
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    JSONObject object = new JSONObject(response.body().string());
-                    JSONObject data = object.getJSONObject("data");
-
-                    ATseriesName = data.getJSONObject("meta").getJSONObject("series").getString("name");
-                    ATmatchType = data.getJSONObject("meta").getString("matchType");
-                    ATvenueName = data.getJSONObject("meta").getString("venueName");
-                    JSONObject umpires = data.getJSONObject("matchDetail").getJSONObject("umpires");
-                    ATumpires = umpires.getJSONObject("firstUmpire").getString("name") + " , " + umpires.getJSONObject("secondUmpire").getString("name");
-                    try {
-                        ATtumpire = umpires.getJSONObject("thirdUmpire").getString("name");
-                    } catch (JSONException e) {
-                        ATtumpire = "NA";
-                    }
-                    ATrefree = umpires.getJSONObject("referee").getString("name");
-                    ATtossMessage = data.getJSONObject("matchDetail").getString("tossMessage");
-                    JSONObject hometeam = data.getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("homeTeam");
-                    JSONObject awayTeam = data.getJSONObject("matchDetail").getJSONObject("matchSummary").getJSONObject("awayTeam");
-                    t1name = hometeam.getString("name");
-                    t1id = hometeam.getString("id");
-                    t1Sname = hometeam.getString("shortName");
-                    t1logourl = hometeam.getString("logoUrl");
-                    t1bg = hometeam.getString("backgroundImageUrl");
-                    t1color = hometeam.getString("teamColour");
-                    t2name = awayTeam.getString("name");
-                    t2id = awayTeam.getString("id");
-                    t2logourl = awayTeam.getString("logoUrl");
-                    t2Sname = awayTeam.getString("shortName");
-                    t2bg = awayTeam.getString("backgroundImageUrl");
-                    t2color = awayTeam.getString("teamColour");
-                    String ATstartdat = data.getJSONObject("matchDetail").getJSONObject("matchSummary").getString("startDateTime");
-                    ATstartdate = ATstartdat.split("T")[0] + " " + ATstartdat.split("T")[1].split("Z")[0];
-
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return totalSize;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-
-        }
-
-        protected void onPostExecute(Long result) {
-            update();
-        }
-    }
-
 
 }
