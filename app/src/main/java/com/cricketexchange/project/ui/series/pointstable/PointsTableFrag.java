@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.ScoreCardAdapter;
-import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.ScoreCardModel;
 import com.cricketexchange.project.R;
 
@@ -32,7 +31,7 @@ public class PointsTableFrag extends Fragment {
     private String HOST = "";
     RecyclerView recyclerView;
     ScoreCardAdapter adapter;
-    List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
+    final List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
     String sid = "";
     ProgressBar progressBar;
 
@@ -90,10 +89,10 @@ public class PointsTableFrag extends Fragment {
     private void load() {
         progressBar.setVisibility(View.VISIBLE);
         new Load().execute(HOST + "getStanding?id=" + sid);
-        loadPointTable(sid);
+        loadPointTable();
     }
 
-    private void loadPointTable(String sid) {
+    private void loadPointTable() {
 
     }
 

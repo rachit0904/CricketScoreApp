@@ -1,5 +1,6 @@
 package com.cricketexchange.project.Activity;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +19,12 @@ import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Pager.MatchDetailPager;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,7 +58,7 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
     String sid;
     String mid;
     String HOST;
-    private AdView mAdView;
+    private RelativeLayout mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +96,28 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        MobileAds.initialize(this, initializationStatus -> {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String s1 = sharedPreferences.getString("ban1", "ca-app-pub-3940256099942544/6300978111");
+
         mAdView = findViewById(R.id.adView);
+        mAdView.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        AdView mAdview = new AdView(this);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) mAdView.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        mAdview.setLayoutParams(layoutParams);
+        mAdview.setAdSize(AdSize.BANNER);
+        mAdview.setAdUnitId(s1);
+        mAdView.addView(mAdview);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdview.loadAd(adRequest);
+
         loadinterstitialads();
 
     }
@@ -110,21 +130,23 @@ public class MatchDetails extends AppCompatActivity implements View.OnClickListe
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            Boolean isShown=false;
-            if (mInterstitialAd.isLoaded() && !isShown ) {
+
+            if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
-                isShown=true;
             } else {
+                prepareAd();
                 Log.d("TAG", " Interstitial not loaded");
             }
-            prepareAd();
+
         }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
     }
 
     public void prepareAd() {
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String i1 = sharedPreferences.getString("in2", "ca-app-pub-3940256099942544%2F1033173712");
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.setAdUnitId(i1);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 

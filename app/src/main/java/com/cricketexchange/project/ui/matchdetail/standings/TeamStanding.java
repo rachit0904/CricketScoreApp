@@ -35,7 +35,7 @@ public class TeamStanding extends Fragment {
     ProgressBar progressBar;
     String HOST;
     //    String sid=getActivity().getIntent().getStringExtra("sid");
-    List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
+    final List<ScoreCardModel> scoreCardModelList = new ArrayList<>();
     String sid, mid;
 
     @Override

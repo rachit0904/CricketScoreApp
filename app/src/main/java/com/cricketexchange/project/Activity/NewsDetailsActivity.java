@@ -1,5 +1,6 @@
 package com.cricketexchange.project.Activity;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.cricketexchange.project.Models.NewsModel;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -58,13 +61,13 @@ public class NewsDetailsActivity extends AppCompatActivity {
     private AdLoader adLoader;
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();
     RecyclerView mRecyclerView;
-    ArrayList<Object> newslist = new ArrayList<>();
+    final ArrayList<Object> newslist = new ArrayList<>();
     NewsNormalAdapter adapter;
     TextView t_title;
     ImageView i_poster;
     ProgressBar progressBar, progressBar2;
     String id = null;
-    boolean isupdated = false;
+    final boolean isupdated = false;
     String title, imageposter, description;
     WebView des;
     String extras;
@@ -119,9 +122,18 @@ public class NewsDetailsActivity extends AppCompatActivity {
             MobileAds.initialize(this, initializationStatus -> {
             });
 
-            AdView mAdView = findViewById(R.id.adView);
+            SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+            String s1 = sharedPreferences.getString("ban1", "ca-app-pub-3940256099942544/6300978111");
+
+           RelativeLayout mAdView = findViewById(R.id.adView);
+            mAdView.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+            AdView mAdview = new AdView(this);
+
+            mAdview.setAdSize(AdSize.BANNER);
+            mAdview.setAdUnitId(s1);
+            mAdView.addView(mAdview);
             AdRequest adRequest = new AdRequest.Builder().build();
-            mAdView.loadAd(adRequest);
+            mAdview.loadAd(adRequest);
             loadinterstitialads();
         }
 
@@ -136,21 +148,22 @@ public class NewsDetailsActivity extends AppCompatActivity {
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            Boolean isShown=false;
-            if (mInterstitialAd.isLoaded() && !isShown ) {
+            if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
-                isShown=true;
+
             } else {
-                Log.d("TAG", " Interstitial not loaded");
+                prepareAd();
             }
-            prepareAd();
+
         }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
     }
 
     public void prepareAd() {
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String i1 = sharedPreferences.getString("in2", "ca-app-pub-3940256099942544%2F1033173712");
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.setAdUnitId(i1);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
@@ -175,19 +188,19 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     private void loadNewsDetail() {
 
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("News");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("News");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for( DataSnapshot ds : snapshot.getChildren() ){
-                    String id =ds.child("_id").getValue().toString();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String id = ds.child("_id").getValue().toString();
                     String Maintitle = ds.child("tit").getValue().toString();
                     String Secondarytitle = ds.child("des").getValue().toString();
                     String img = ds.child("img").getValue().toString();
                     String con = ds.child("con").getValue().toString();
-                    String author=ds.child("aut").getValue().toString();
-                    NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle,author , img, con);
-                    if(!id.equalsIgnoreCase(extras)) {
+                    String author = ds.child("aut").getValue().toString();
+                    NewsModel newsModel = new NewsModel(id, Maintitle, Secondarytitle, author, img, con);
+                    if (!id.equalsIgnoreCase(extras)) {
                         newslist.add(newsModel);
                     }
                 }

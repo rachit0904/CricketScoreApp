@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CommantaryAdapter extends RecyclerView.Adapter<CommantaryAdapter.ViewHolder> {
     Context context;
-    List<CommentaryModal> commentaries;
+    final List<CommentaryModal> commentaries;
 
     public CommantaryAdapter(Context context, List<CommentaryModal> commentaries) {
         this.context = context;
@@ -47,7 +47,8 @@ public class CommantaryAdapter extends RecyclerView.Adapter<CommantaryAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView ballType,commentaryText;
+        final TextView ballType;
+        final TextView commentaryText;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             ballType=itemView.findViewById(R.id.ballType);

@@ -52,7 +52,8 @@ public class CurrentInningBattingAdapter extends RecyclerView.Adapter<CurrentInn
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName,score;
+        final TextView playerName;
+        final TextView score;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             playerName=itemView.findViewById(R.id.playerName);

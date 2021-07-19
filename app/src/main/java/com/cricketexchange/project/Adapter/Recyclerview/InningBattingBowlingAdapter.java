@@ -19,7 +19,7 @@ import java.util.List;
 
 public class InningBattingBowlingAdapter extends RecyclerView.Adapter<InningBattingBowlingAdapter.ViewHolder> {
     Context context;
-    List<BattingInningModal> list;
+    final List<BattingInningModal> list;
 
     public InningBattingBowlingAdapter(Context context, List<BattingInningModal> list) {
         this.context = context;
@@ -56,7 +56,13 @@ public class InningBattingBowlingAdapter extends RecyclerView.Adapter<InningBatt
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView playerName,outBy,c1,c2,c3,c4,c5;
+        final TextView playerName;
+        final TextView outBy;
+        final TextView c1;
+        final TextView c2;
+        final TextView c3;
+        final TextView c4;
+        final TextView c5;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             playerName=itemView.findViewById(R.id.batsmanName);

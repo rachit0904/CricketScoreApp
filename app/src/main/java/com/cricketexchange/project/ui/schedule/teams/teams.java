@@ -45,9 +45,9 @@ public class teams extends Fragment {
     RecyclerView recyclerView;
     SearchView searchView;
     TeamRecycleAdapter adapter;
-    List<String> series = new ArrayList<>();
-    List<SquadModel> list = new ArrayList<>();//list
-    List<SquadModel> filterd = new ArrayList<>();
+    final List<String> series = new ArrayList<>();
+    final List<SquadModel> list = new ArrayList<>();//list
+    final List<SquadModel> filterd = new ArrayList<>();
     ProgressBar progressBar;
 
     @Override

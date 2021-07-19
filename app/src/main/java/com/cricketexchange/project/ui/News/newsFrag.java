@@ -51,7 +51,7 @@ public class newsFrag extends Fragment {
     private AdLoader adLoader;
 
     // List of MenuItems and native ads that populate the RecyclerView.
-    private List<Object> mRecyclerViewItems = new ArrayList<>();
+    private final List<Object> mRecyclerViewItems = new ArrayList<>();
 
     // List of native ads that have been successfully loaded.
     private List<UnifiedNativeAd> mNativeAds = new ArrayList<>();

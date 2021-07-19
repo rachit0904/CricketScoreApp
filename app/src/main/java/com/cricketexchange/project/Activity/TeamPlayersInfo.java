@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.PlayersDataModel;
 import com.cricketexchange.project.R;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -66,7 +68,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     String tid = null;
     String teamsrt, teamlong, teamcolor;
     String teamname;
-    List<PlayersDataModel> list = new ArrayList<>();
+    final List<PlayersDataModel> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +101,25 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         MobileAds.initialize(this, initializationStatus -> {
         });
 
-        AdView mAdView = findViewById(R.id.adView);
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String s1 = sharedPreferences.getString("ban1", "ca-app-pub-3940256099942544/6300978111");
+
+        RelativeLayout mAdView = findViewById(R.id.adView);
+        mAdView.setGravity(RelativeLayout.CENTER_HORIZONTAL);
+        AdView mAdview = new AdView(this);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) mAdView.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        mAdview.setLayoutParams(layoutParams);
+        mAdview.setAdSize(AdSize.BANNER);
+        mAdview.setAdUnitId(s1);
+        mAdView.addView(mAdview);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdview.loadAd(adRequest);
+
+
+
+
         loadinterstitialads();
         loadinterstitialads();
     }
@@ -114,21 +132,23 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
         ScheduledExecutorService scheduler =
                 Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> runOnUiThread(() -> {
-            Boolean isShown=false;
-            if (mInterstitialAd.isLoaded() && !isShown ) {
+            if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
-                isShown=true;
+
             } else {
+                prepareAd();
                 Log.d("TAG", " Interstitial not loaded");
             }
-            prepareAd();
+
         }), rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, rand.nextInt(Constants.ADENDRANGE) + Constants.ADSTARTRANGE, TimeUnit.SECONDS);
     }
 
     public void prepareAd() {
 
+        SharedPreferences sharedPreferences = getSharedPreferences("Admob", MODE_PRIVATE);
+        String i1 = sharedPreferences.getString("in2", "ca-app-pub-3940256099942544%2F1033173712");
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.admov_interstitial));
+        mInterstitialAd.setAdUnitId(i1);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
@@ -138,7 +158,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadTeamPlayers(String tid) {
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Players");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Players");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -167,7 +187,7 @@ public class TeamPlayersInfo extends AppCompatActivity implements View.OnClickLi
                     } else {
 
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }

@@ -50,17 +50,17 @@ import okhttp3.Response;
 public class DaysFrag extends Fragment implements View.OnClickListener {
     private String HOST = "";
     RecyclerView recyclerView;
-    List<MatchesModel> modelList = new ArrayList<>();
+    final List<MatchesModel> modelList = new ArrayList<>();
     SharedPreferences preferences;
-    List<MatchesChildModel> childModelList = new ArrayList<>();
-    List<MatchesChildModel> filterdchildModelList = new ArrayList<>();
+    final List<MatchesChildModel> childModelList = new ArrayList<>();
+    final List<MatchesChildModel> filterdchildModelList = new ArrayList<>();
     ChipGroup tours;
     MatchesAdapter adapter;
-    List<String> series =new ArrayList<>();
+    final List<String> series =new ArrayList<>();
     View view;
     Chip all, test, t20, odi, international, league, women;
-    Set<Date> dates = new TreeSet<>();
-    SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
+    final Set<Date> dates = new TreeSet<>();
+    final SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     ProgressBar progressBar;
 
     @Override

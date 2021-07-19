@@ -47,15 +47,16 @@ import okhttp3.Response;
 public class CompletedMatches extends Fragment {
     RecyclerView recyclerView;
     String HOST;
-    List<MatchesModel> modelList = new ArrayList<>();
-    List<MatchesChildModel> childModelList = new ArrayList<>();
+    final List<MatchesModel> modelList = new ArrayList<>();
+    final List<MatchesChildModel> childModelList = new ArrayList<>();
     List<MatchesChildModel> childList = new ArrayList<>();
-    Set<Date> dates = new TreeSet<>();
+    final Set<Date> dates = new TreeSet<>();
     MatchesAdapter adapter;
     @SuppressLint("SimpleDateFormat")
+    final
     SimpleDateFormat sobj = new SimpleDateFormat("dd-MM-yyyy");
     ProgressBar progressBar;
-    List<String> series =new ArrayList<>();
+    final List<String> series =new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

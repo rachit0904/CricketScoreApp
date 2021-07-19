@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
-import com.cricketexchange.project.Activity.AboutActivity;
 import com.cricketexchange.project.BuildConfig;
 import com.cricketexchange.project.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -66,8 +65,8 @@ public class moreFrag extends Fragment implements View.OnClickListener {
                 changeLanguage();
                 break;
             case R.id.l2: //Notification
-                myIntent = new Intent(getActivity(), AboutActivity.class);
-                getActivity().startActivity(myIntent);
+//                myIntent = new Intent(getActivity(), AboutActivity.class);
+//                getActivity().startActivity(myIntent);
                 break;
             case R.id.l3: //fb
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(FBPAGEURL)));
@@ -85,20 +84,20 @@ public class moreFrag extends Fragment implements View.OnClickListener {
                 share();
                 break;
             case R.id.l19: //about
-                myIntent = new Intent(getActivity(), AboutActivity.class);
-                getActivity().startActivity(myIntent);
+//                myIntent = new Intent(getActivity(), AboutActivity.class);
+//                getActivity().startActivity(myIntent);
                 break;
             case R.id.l10: //privacy
-                myIntent = new Intent(getActivity(), AboutActivity.class);
-                getActivity().startActivity(myIntent);
+//                myIntent = new Intent(getActivity(), AboutActivity.class);
+//                getActivity().startActivity(myIntent);
                 break;
             case R.id.l11: //terms
-                myIntent = new Intent(getActivity(), AboutActivity.class);
-                getActivity().startActivity(myIntent);
+//                myIntent = new Intent(getActivity(), AboutActivity.class);
+//                getActivity().startActivity(myIntent);
                 break;
             case R.id.l12: //contact
-                myIntent = new Intent(getActivity(), AboutActivity.class);
-                getActivity().startActivity(myIntent);
+//                myIntent = new Intent(getActivity(), AboutActivity.class);
+//                getActivity().startActivity(myIntent);
                 break;
             default:
                 Toast.makeText(getActivity(), "Something Wents Wrong", Toast.LENGTH_SHORT).show();

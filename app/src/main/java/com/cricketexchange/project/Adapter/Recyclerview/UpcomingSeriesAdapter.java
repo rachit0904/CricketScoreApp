@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAdapter.ViewHolder> {
-    Context context;
-    List<UpcomingSeriesModel> list;
-    List<SeriesModel> childSeriesModel;
+    final Context context;
+    final List<UpcomingSeriesModel> list;
+    final List<SeriesModel> childSeriesModel;
 
     public UpcomingSeriesAdapter(Context context, List<UpcomingSeriesModel> list, List<SeriesModel> childSeriesModel) {
         this.context = context;
@@ -78,8 +78,8 @@ public class UpcomingSeriesAdapter extends RecyclerView.Adapter<UpcomingSeriesAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView month;
-        RecyclerView series;
+        final TextView month;
+        final RecyclerView series;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
-    Context context;
-    List<MatchesModel> matchesModels;
-    List<MatchesChildModel> childModelList;
+    final Context context;
+    final List<MatchesModel> matchesModels;
+    final List<MatchesChildModel> childModelList;
 
     public MatchesAdapter(Context context, List<MatchesModel> matchesModels, List<MatchesChildModel> childModelList) {
         this.context = context;
@@ -73,8 +73,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView date;
-        RecyclerView childRv;
+        final TextView date;
+        final RecyclerView childRv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

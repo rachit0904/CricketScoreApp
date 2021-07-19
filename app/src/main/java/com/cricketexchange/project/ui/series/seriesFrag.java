@@ -45,7 +45,7 @@ public class seriesFrag extends Fragment implements View.OnClickListener {
     RecyclerView seriesRv;
     Button seeAllBtn;
     SeriesNameAdapter adapter;
-    ArrayList<SeriesModel> datalist = new ArrayList<>();
+    final ArrayList<SeriesModel> datalist = new ArrayList<>();
     ProgressBar progressBar;
     DatabaseReference databaseReference;
     String HOST = "";

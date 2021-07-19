@@ -22,7 +22,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/adView"
+                android:layout_below="@id/customAdview"
                 android:layout_gravity="bottom"
                 android:background="#131313"
                 android:elevation="@dimen/cardview_default_radius"
@@ -71,12 +71,23 @@
 
             </com.google.android.material.tabs.TabLayout>
 
-            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
+            <ImageView
+                android:id="@+id/customAdview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/admob_banner" />
+                android:layout_below="@id/adView"
+                android:contentDescription="TODO"
+                android:elevation="6sp"
+                android:src="@drawable/banner"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/adView"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+            </RelativeLayout>
 
 
         </RelativeLayout>

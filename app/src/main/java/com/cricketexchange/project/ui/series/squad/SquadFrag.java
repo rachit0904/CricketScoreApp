@@ -39,7 +39,7 @@ import okhttp3.Response;
 public class SquadFrag extends Fragment {
     RecyclerView recyclerView;
     SquadParentAdapter adapter;
-    List<SquadModel> list = new ArrayList<>();
+    final List<SquadModel> list = new ArrayList<>();
     String sid = "";
     String HOST;
     ProgressBar progressBar;

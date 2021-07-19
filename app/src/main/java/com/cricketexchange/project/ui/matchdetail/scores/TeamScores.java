@@ -52,10 +52,10 @@ public class TeamScores extends Fragment {
     View view;
     String HOST;
     String sid, mid;
-    List<InningModal> InningDataList = new ArrayList<>();
-    List<BattingInningModal> battingInningModalList1 = new ArrayList<>();
-    List<BattingInningModal> bowlingInningModalList1 = new ArrayList<>();
-    List<WicketsFallModel> wicketsFallModelList1 = new ArrayList<>();
+    final List<InningModal> InningDataList = new ArrayList<>();
+    final List<BattingInningModal> battingInningModalList1 = new ArrayList<>();
+    final List<BattingInningModal> bowlingInningModalList1 = new ArrayList<>();
+    final List<WicketsFallModel> wicketsFallModelList1 = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

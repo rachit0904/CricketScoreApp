@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Commentary extends Fragment {
     RecyclerView commentryRv;
-    List<CommentaryModal> commentaries = new ArrayList<>();
+    final List<CommentaryModal> commentaries = new ArrayList<>();
     String mid, sid;
     CommantaryAdapter adapter;
     String HOST;

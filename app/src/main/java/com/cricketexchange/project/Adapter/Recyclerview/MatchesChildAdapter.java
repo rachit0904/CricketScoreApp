@@ -24,8 +24,8 @@ import java.util.List;
 
 public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapter.ViewHolder> {
 
-    Context context;
-    List<MatchesChildModel> childModelList;
+    final Context context;
+    final List<MatchesChildModel> childModelList;
 
     public MatchesChildAdapter(Context context, List<MatchesChildModel> childModelList) {
         this.context = context;
@@ -156,12 +156,20 @@ public class MatchesChildAdapter extends RecyclerView.Adapter<MatchesChildAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView team1, team2, status, matchSummery, startTime, league, t1score, t2score;
-        LinearLayout startTimeLayout;
-        RelativeLayout layout;
-        RelativeLayout matchCard;
-        ImageView team1Icon, team2Icon;
-        LottieAnimationView liveIcon;
+        final TextView team1;
+        final TextView team2;
+        final TextView status;
+        final TextView matchSummery;
+        final TextView startTime;
+        final TextView league;
+        final TextView t1score;
+        final TextView t2score;
+        final LinearLayout startTimeLayout;
+        final RelativeLayout layout;
+        final RelativeLayout matchCard;
+        final ImageView team1Icon;
+        final ImageView team2Icon;
+        final LottieAnimationView liveIcon;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

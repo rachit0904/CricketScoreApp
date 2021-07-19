@@ -52,10 +52,10 @@ public class Live extends Fragment {
     String sscore, homelogoUrl;
     View view;
     String HOST;
-    List<battingCardModal> battingCardModalList = new ArrayList<>();
-    List<battingCardModal> yetToBatList = new ArrayList<>();
-    List<PartnershipsModal> partnershipsModalList = new ArrayList<>();
-    List<SessionsDataModel> sessionsDataModelList=new ArrayList<>();
+    final List<battingCardModal> battingCardModalList = new ArrayList<>();
+    final List<battingCardModal> yetToBatList = new ArrayList<>();
+    final List<PartnershipsModal> partnershipsModalList = new ArrayList<>();
+    final List<SessionsDataModel> sessionsDataModelList=new ArrayList<>();
     SessionRecyclerAdapter sessionRecyclerAdapter;
     DatabaseReference mDatabase;
     PartnershipsAdapter adapter3;
@@ -63,7 +63,7 @@ public class Live extends Fragment {
     String oover, oruns, owikts;
     TextView ovrs, runs, wkts;
     Chip b1, b2, b3, b4, b5, b6;
-    ArrayList<OverBallScoreModel> overBallScoreList = new ArrayList<>();
+    final ArrayList<OverBallScoreModel> overBallScoreList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.ViewHolder> {
-    Context context;
+    final Context context;
 
-    List<SquadModel> modelList;
+    final List<SquadModel> modelList;
 
     public TeamRecycleAdapter(Context context, List<SquadModel> modelList) {
         this.context = context;
@@ -62,8 +62,8 @@ public class TeamRecycleAdapter extends RecyclerView.Adapter<TeamRecycleAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView teamLogo;
-        TextView teamName;
+        final ImageView teamLogo;
+        final TextView teamName;
         CoordinatorLayout layout;
 
         public ViewHolder(@NonNull View itemView) {

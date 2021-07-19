@@ -2,6 +2,7 @@ package com.cricketexchange.project.Adapter.Recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,10 +43,10 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     String HOST = "";
 
     // An Activity's Context.
-    private Context mContext;
+    private final Context mContext;
 
     // The list of Native ads and menu items.
-    private ArrayList<Object> mRecyclerViewItems = new ArrayList<>();
+    private final ArrayList<Object> mRecyclerViewItems = new ArrayList<>();
 
     public NewsNormalAdapter(Context mContext) {
         this.mContext = mContext;
@@ -74,11 +75,11 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     int count = 0;
     private static final int AD_COUNT = 2;
-    static int OFFSET = 5;
+    static final int OFFSET = 5;
     private static final int TYPE_AD = 0;
     private static final int TYPE_NORMAL = 1;
 
-    private ArrayList<UnifiedNativeAd> ads = new ArrayList<>();
+    private final ArrayList<UnifiedNativeAd> ads = new ArrayList<>();
 
     public void MixData() {
 
@@ -280,7 +281,11 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (viewtype == TYPE_AD) {
             AdTemplateViewHolder vh = (AdTemplateViewHolder) holder;
             AdsManager adsManager = new AdsManager(mContext);
-            adsManager.createUnifiedAds(5, R.string.admob_nativ_ads_id1, new AdUnifiedListening() {
+
+            SharedPreferences sharedPreferences = mContext.getSharedPreferences("Admob", mContext.MODE_PRIVATE);
+            String i1 = sharedPreferences.getString("nt2", "ca-app-pub-3940256099942544%2F1033173712");
+
+            adsManager.createUnifiedAds(5, i1, new AdUnifiedListening() {
                 @Override
                 public void onAdFailedToLoad(LoadAdError loadAdError) {
                     Log.e("LoadAdError", loadAdError.getMessage());
@@ -321,9 +326,10 @@ public class NewsNormalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView secondarytitle, time;
-        ImageView poster;
-        CardView card;
+        final TextView secondarytitle;
+        final TextView time;
+        final ImageView poster;
+        final CardView card;
 
         public ViewHolder(@NonNull View v) {
             super(v);

@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.ViewHolder> {
-    Context context;
-    List<SquadModel> squadModelList;
+    final Context context;
+    final List<SquadModel> squadModelList;
 
     public SquadParentAdapter(Context context, List<SquadModel> squadModelList) {
         this.context = context;
@@ -60,8 +60,8 @@ public class SquadParentAdapter extends RecyclerView.Adapter<SquadParentAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView squadLogo;
-        TextView SquadName;
+        final ImageView squadLogo;
+        final TextView SquadName;
         CoordinatorLayout layout;
 
         public ViewHolder(@NonNull View itemView) {

@@ -49,7 +49,13 @@ public class SessionRecyclerAdapter extends RecyclerView.Adapter<SessionRecycler
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView overStatus,overRuns,op,min,max,yes,no;
+        final TextView overStatus;
+        final TextView overRuns;
+        final TextView op;
+        final TextView min;
+        final TextView max;
+        final TextView yes;
+        final TextView no;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             overStatus=itemView.findViewById(R.id.oversStatus);

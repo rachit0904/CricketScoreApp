@@ -50,21 +50,21 @@ import okhttp3.Response;
 public class UpcomingSeriesFrag extends Fragment implements View.OnClickListener {
     private String HOST = "";
     RecyclerView recyclerView;
-    List<UpcomingSeriesModel> list = new ArrayList<>();
-    List<SeriesModel> childList = new ArrayList<>();
-    Set<Date> dates = new TreeSet<>();
+    final List<UpcomingSeriesModel> list = new ArrayList<>();
+    final List<SeriesModel> childList = new ArrayList<>();
+    final Set<Date> dates = new TreeSet<>();
     SharedPreferences preferences;
-    List<SeriesModel> cList = new ArrayList<>();
+    final List<SeriesModel> cList = new ArrayList<>();
     HorizontalScrollView scrollView;
     ChipGroup tours;
     Chip all, test, t20, odi, international, league, women;
-    List<SeriesModel> filterdcList = new ArrayList<>();
-    SimpleDateFormat sobj = new SimpleDateFormat("MM-yyyy");
+    final List<SeriesModel> filterdcList = new ArrayList<>();
+    final SimpleDateFormat sobj = new SimpleDateFormat("MM-yyyy");
     UpcomingSeriesAdapter adapter;
     ProgressBar progressBar;
     String status;
     DatabaseReference databaseReference;
-    String arr[] = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
+    final String[] arr = {"Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sept", "Oct", "Nov", "Dec"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

@@ -27,27 +27,20 @@
         <activity android:name=".Activity.MatchDetails" />
         <activity android:name=".Activity.TeamPlayersInfo" />
         <activity android:name=".Activity.NetworkFailureActivity" />
-        <activity android:name=".Activity.ContactActivity" />
-        <activity android:name=".Activity.PrivacyActivity" />
-        <activity android:name=".Activity.TermsActivity" />
-        <activity android:name=".Activity.ReportActivity" />
+
         <activity
             android:name=".Activity.NotificationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_notification"
             android:theme="@style/Theme.CricketExchange.Fullscreen" />
-        <activity
-            android:name=".Activity.AboutActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_about"
-            android:theme="@style/Theme.CricketExchange.Fullscreen" />
+
         <activity
             android:name=".Activity.NewsDetailsActivity"
             android:usesCleartextTraffic="true" />
         <activity android:name=".Activity.SeriesDetail" />
         <activity
             android:name=".Activity.MainActivity"
-            android:hardwareAccelerated="true"></activity>
+            android:hardwareAccelerated="true" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

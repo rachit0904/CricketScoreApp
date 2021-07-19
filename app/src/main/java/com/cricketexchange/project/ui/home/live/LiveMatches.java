@@ -1,9 +1,8 @@
 package com.cricketexchange.project.ui.home.live;
 
-import android.content.res.AssetManager;
-import android.media.Image;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,23 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cricketexchange.project.Adapter.Recyclerview.MatchesChildAdapter;
-import com.cricketexchange.project.Ads.AdUnifiedListening;
-import com.cricketexchange.project.Ads.AdsManager;
-import com.cricketexchange.project.Constants.Constants;
 import com.cricketexchange.project.Models.MatchesChildModel;
 import com.cricketexchange.project.R;
 import com.cricketexchange.project.ui.schedule.schdeule;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.formats.NativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,32 +39,25 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import static android.content.ContentValues.TAG;
 
 public class LiveMatches extends Fragment implements View.OnClickListener{
     private  String HOST = "";
     RecyclerView recyclerView;
     CardView card;
-    ArrayList<MatchesChildModel> childList = new ArrayList<>();
+    final ArrayList<MatchesChildModel> childList = new ArrayList<>();
     ProgressBar progressBar;
     RelativeLayout noMatchLayout;
     ImageSlider adsloader;
     MatchesChildAdapter adapter;
     List<SlideModel> Links;
-    List<String> series =new ArrayList<>();
+    final List<String> series =new ArrayList<>();
     public LiveMatches() {
         super(R.layout.fragment_live_matches);
     }
@@ -83,6 +66,7 @@ public class LiveMatches extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        printmeta();
         card = view.findViewById(R.id.upcoming);
         card.setOnClickListener(this);
         Links = new ArrayList<>();
@@ -279,10 +263,10 @@ public class LiveMatches extends Fragment implements View.OnClickListener{
 
     private void update() {
         progressBar.setVisibility(View.GONE);
-        if(childList.size()>0){
+        if (childList.size() > 0) {
             recyclerView.setVisibility(View.VISIBLE);
             noMatchLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             recyclerView.setVisibility(View.GONE);
             noMatchLayout.setVisibility(View.VISIBLE);
         }
@@ -292,5 +276,21 @@ public class LiveMatches extends Fragment implements View.OnClickListener{
         adapter.setHOST(HOST);
         recyclerView.setAdapter(adapter);
     }
+
+    void printmeta() {
+//        ApplicationInfo ai = null;
+//        try {
+//            ai = requireActivity().getPackageManager().getApplicationInfo(requireActivity().getPackageName(), PackageManager.GET_META_DATA);
+//            Bundle bundle = ai.metaData;
+//            String myApiKey = bundle.getString("com.google.android.gms.ads.APPLICATION_ID");
+//            Log.d(TAG, myApiKey);
+//            Toast.makeText(requireContext(), "" + myApiKey, Toast.LENGTH_SHORT).show();
+//
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+    }
+
 
 }

@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class PlayerDataAdapter extends RecyclerView.Adapter<PlayerDataAdapter.ViewHolder> {
-    List<PlayersDataModel> list;
+    final List<PlayersDataModel> list;
 
     public PlayerDataAdapter(List<PlayersDataModel> list) {
         this.list = list;
@@ -48,10 +48,14 @@ public class PlayerDataAdapter extends RecyclerView.Adapter<PlayerDataAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        Chip playerType,battingStyle,bowlingStyle;
-        TextView playerName;
-        ImageView playerImg,collapseBtn;
-        RelativeLayout layout,layout2;
+        final Chip playerType;
+        final Chip battingStyle;
+        final Chip bowlingStyle;
+        final TextView playerName;
+        ImageView playerImg;
+        final ImageView collapseBtn;
+        final RelativeLayout layout;
+        final RelativeLayout layout2;
         Boolean flag=false;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
